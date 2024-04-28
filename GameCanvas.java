@@ -8,26 +8,30 @@ import java.util.*;
 import javax.swing.Timer;
 
 public class GameCanvas extends JComponent {
-
-    // input private CLASS NAME here
+    private Player p1;
 
     public GameCanvas() {
-
+        p1 = new Player(100, 100, 20, 20, 0, 0);
         // input NAME = new CLASS here
 
+        //
+    }
 
-
-        // 
-}
-@Override
+    @Override
     protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
         RenderingHints rh = new RenderingHints(
-            RenderingHints.KEY_ANTIALIASING,
-            RenderingHints.VALUE_ANTIALIAS_ON);
+                RenderingHints.KEY_ANTIALIASING,
+                RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.setRenderingHints(rh);
+        p1.draw(g2d);
         AffineTransform reset = g2d.getTransform();
         // NAME.draw(g2d);
 
-}
+    }
+
+    public Player getPlayer1() {
+        return p1;
+    }
 }
