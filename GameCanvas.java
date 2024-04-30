@@ -27,7 +27,6 @@ public class GameCanvas extends JComponent {
         g2d.setRenderingHints(rh);
         p1.draw(g2d);
         AffineTransform reset = g2d.getTransform();
-        // NAME.draw(g2d);
 
     }
 

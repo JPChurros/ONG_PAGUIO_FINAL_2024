@@ -24,7 +24,7 @@ public class GameFrame extends JFrame {
         up = false;
         down = false;
         left = false;
-        right = true;
+        right = false;
     }
 
     private void setUpAnimationTimer() {
@@ -32,26 +32,31 @@ public class GameFrame extends JFrame {
         ActionListener al = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                System.out.println("Timer Started");
-                // GC.getPlayer1().move();
-                // System.out.println(player1.getXPos());
-                if (up == true) {
+                if (up == true) { // NO WORKY
                     GC.getPlayer1().changeYSpeed(-10);
-                    GC.getPlayer1().move();
                 }
+
                 if (down == true) {
                     GC.getPlayer1().changeYSpeed(10);
-                    GC.getPlayer1().move();
                 }
-                if (left == true) {
-                    GC.getPlayer1().changeXSpeed(-10);
-                    GC.getPlayer1().move();
-                }
+
                 if (right == true) {
                     GC.getPlayer1().changeXSpeed(10);
-                    GC.getPlayer1().move();
                 }
+
+                if (left == true) { // NO WORKY
+                    GC.getPlayer1().changeXSpeed(-10);
+                }
+
+                GC.getPlayer1().move();
                 GC.repaint();
+                if (up == false || down == false) {
+                    GC.getPlayer1().changeYSpeed(0);
+                }
+                if (right == false || left == false) {
+                    GC.getPlayer1().changeXSpeed(0);
+                }
+
             }
         };
         animationTimer = new Timer(interval, al);
@@ -67,15 +72,19 @@ public class GameFrame extends JFrame {
                 int keyCode = ke.getKeyCode();
                 switch (keyCode) {
                     case KeyEvent.VK_UP:
+                        System.out.println("UP PRESSED");
                         up = true;
                         break;
                     case KeyEvent.VK_DOWN:
+                        System.out.println("DOWN PRESSED");
                         down = true;
                         break;
                     case KeyEvent.VK_LEFT:
+                        System.out.println("LEFT PRESSED");
                         left = true;
                         break;
                     case KeyEvent.VK_RIGHT:
+                        System.out.println("RIGHT PRESSED");
                         right = true;
                         break;
                 }
@@ -83,6 +92,7 @@ public class GameFrame extends JFrame {
 
             public void keyReleased(KeyEvent ke) {
                 int keyCode = ke.getKeyCode();
+                System.out.println("Key has been released");
                 switch (keyCode) {
                     case KeyEvent.VK_UP:
                         up = false;
@@ -99,8 +109,8 @@ public class GameFrame extends JFrame {
                 }
             }
         };
-        contentPane.addKeyListener(kl);
-        contentPane.setFocusable(true);
+        this.addKeyListener(kl);
+        this.setFocusable(true);
     }
 
     public void setUpGUI() {
@@ -112,6 +122,7 @@ public class GameFrame extends JFrame {
         GC = new GameCanvas();
         contentPane.add(GC);
         this.setVisible(true);
+        this.setLayout(null);
         setUpAnimationTimer();
         setUpKeyListener();
     }
