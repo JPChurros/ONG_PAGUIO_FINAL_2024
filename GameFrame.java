@@ -59,11 +59,23 @@ public class GameFrame extends JFrame {
                 }
 
                 //collision of player to platform (we should make a for loop on this)
-
             }
         };
+        //the problem rn v
+        //Timer collideTimer = new Timer(1000/120, collideChecker -> {
+            //if (player1.isColliding(testPlatform1)) {
+                // Determine collision direction
+                //int direction = player1.collodingDirection(testPlatform1);
+            
+                // Adjust player's position based on collision direction
+                //if(direction == 1){
+                    //GC.getPlayer1().setYPos(GC.getPlatform().getYPos() - GC.getPlayer1().getHeight());
+                //}
+            //}
+        //});
         animationTimer = new Timer(interval, al);
         animationTimer.start();
+        //collideTimer.start();
     }
 
     private void setUpKeyListener() { // I HAVENT FINISHED THIS YET. BRO CANNOT MOVE.

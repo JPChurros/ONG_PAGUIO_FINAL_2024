@@ -36,4 +36,7 @@ public class GameCanvas extends JComponent {
     public Player getPlayer1() {
         return p1;
     }
+    public Platform getPlatform(){
+        return platformtest;
+    }
 }

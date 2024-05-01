@@ -42,6 +42,14 @@ public class Player {
     public int getYPos() {
         return yPos;
     }
+
+    public void setXPos(int tempVal) {
+        xPos = tempVal;
+    }
+
+    public void setYPos(int tempVal) {
+        yPos = tempVal;
+    }
     
     public int getWidth(){
         return width;
@@ -71,6 +79,25 @@ public class Player {
         else{
             return true;
         }
+    }
+    public int collodingDirection(Platform other){
+        if(yPos + height >= other.getYPos() && yPos + height < other.getYPos() + other.getHeight() && yPos < other.getYPos()){
+            //  NORTH/TOP OF PLATFORM HIT
+            return 1;
+        }
+        else if(yPos <= other.getYPos() + other.getHeight() && yPos > other.getYPos() + other.getHeight() && yPos + height > other.getYPos() + other.getHeight()){
+            //  SOUTH/BOTTOM OF PLATFORM HIT
+            return 2;
+        }
+        else  if(xPos + width >= other.getXPos() && xPos < other.getXPos()){
+            //  WEST/LEFT OF PLATFORM HIT
+            return 3;
+        }
+        else if(xPos <= other.getXPos() + other.getWidth() && xPos + width > other.getXPos() + other.getWidth()){
+            //  EAST/RIGHT OF PLATFORM HIT
+            return 4;
+        }
+        else{return 0;}
     }
 }
 

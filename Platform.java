@@ -30,19 +30,19 @@ public class Platform{
         
     }
 
-    public double getXPos(){
+    public int getXPos(){
         return this.x;
     }
 
-    public double getYPos(){
+    public int getYPos(){
         return this.y;
     }
     
-    public double getWidth(){
+    public int getWidth(){
         return this.width;
     }
 
-    public double getHeight(){
+    public int getHeight(){
         return this.height;
     }
 
