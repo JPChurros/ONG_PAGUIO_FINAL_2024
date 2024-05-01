@@ -9,9 +9,11 @@ import javax.swing.Timer;
 
 public class GameCanvas extends JComponent {
     private Player p1;
+    private Platform platformtest;
 
     public GameCanvas() {
         p1 = new Player(100, 100, 20, 20, 0, 0);
+        platformtest = new Platform(200, 200, 500, 20, Color.yellow);
         // input NAME = new CLASS here
 
         //
@@ -26,6 +28,7 @@ public class GameCanvas extends JComponent {
                 RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.setRenderingHints(rh);
         p1.draw(g2d);
+        platformtest.draw(g2d);
         AffineTransform reset = g2d.getTransform();
 
     }

@@ -15,6 +15,7 @@ public class GameFrame extends JFrame {
     private Timer animationTimer;
     private Player player1, player2;
     private boolean up, down, left, right;
+    private Platform testPlatform1;
 
     public GameFrame(int w, int h) {
         width = w;
@@ -56,6 +57,8 @@ public class GameFrame extends JFrame {
                 if (right == false || left == false) {
                     GC.getPlayer1().changeXSpeed(0);
                 }
+
+                //collision of player to platform (we should make a for loop on this)
 
             }
         };

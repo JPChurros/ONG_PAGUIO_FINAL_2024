@@ -42,6 +42,14 @@ public class Player {
     public int getYPos() {
         return yPos;
     }
+    
+    public int getWidth(){
+        return width;
+    }
+
+    public int getHeight(){
+        return height;
+    }
 
     public int getXSpeed() {
         return xSpeed;
@@ -49,6 +57,20 @@ public class Player {
 
     public int getYSpeed() {
         return ySpeed;
+    }
+
+    public boolean isColliding(Platform other){
+        if(
+        xPos + this.width < other.getXPos() ||
+        xPos >= other.getXPos() + other.getWidth() ||
+        yPos + this.height <= other.getYPos() ||
+        yPos >= other.getYPos() + other.getHeight()
+        ){
+            return false;
+        }
+        else{
+            return true;
+        }
     }
 }
 
