@@ -33,6 +33,9 @@ public class GameFrame extends JFrame {
         ActionListener al = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
+
+
+
                 if (up == true) { // NO WORKY
                     GC.getPlayer1().changeYSpeed(-10);
                 }
@@ -48,13 +51,6 @@ public class GameFrame extends JFrame {
                 if (left == true) { // NO WORKY
                     GC.getPlayer1().changeXSpeed(-10);
                 }
-
-                for(Platform platform : GC.getPlatformList()){
-                    if (down == true && platform.isSoft() == true) {
-                        GC.getPlayer1().changeYSpeed(10);
-                    }
-                }
-
                 GC.getPlayer1().move();
                 // System.out.println(GC.getPlayer1().getXPos());
                 // System.out.println(GC.getPlayer1().getYPos());
