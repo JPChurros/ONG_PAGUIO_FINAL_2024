@@ -10,10 +10,13 @@ import javax.swing.Timer;
 public class GameCanvas extends JComponent {
     private Player p1;
     private Platform platformtest;
+    private ArrayList<Platform> platformlist;
 
     public GameCanvas() {
         p1 = new Player(100, 100, 20, 20, 0, 0);
         platformtest = new Platform(200, 200, 500, 20, Color.yellow);
+        platformlist = new ArrayList<Platform>();
+        platformlist.add(platformtest);
         // input NAME = new CLASS here
 
         //
@@ -36,7 +39,8 @@ public class GameCanvas extends JComponent {
     public Player getPlayer1() {
         return p1;
     }
-    public Platform getPlatform(){
-        return platformtest;
+
+    public ArrayList<Platform> getPlatformList() {
+        return platformlist;
     }
 }

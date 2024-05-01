@@ -50,6 +50,8 @@ public class GameFrame extends JFrame {
                 }
 
                 GC.getPlayer1().move();
+                // System.out.println(GC.getPlayer1().getXPos());
+                // System.out.println(GC.getPlayer1().getYPos());
                 GC.repaint();
                 if (up == false || down == false) {
                     GC.getPlayer1().changeYSpeed(0);
@@ -57,28 +59,44 @@ public class GameFrame extends JFrame {
                 if (right == false || left == false) {
                     GC.getPlayer1().changeXSpeed(0);
                 }
-
-                //collision of player to platform (we should make a for loop on this)
+                for (Platform platform : GC.getPlatformList()) {
+                    /**
+                     * System.out.println(platform.getXPos() + " " + platform.getYPos() + " " +
+                     * platform.getWidth() + " "
+                     * + platform.getHeight());
+                     * System.out.println(player1.getXPos() + " " + player1.getYPos() + " " +
+                     * player1.getWidth()
+                     * + " " + player1.getHeight());
+                     */
+                    if (GC.getPlayer1().isColliding(platform)) {
+                        System.out.println("Colliding");
+                        int direction = GC.getPlayer1().collidingDirection(platform);
+                        if (direction == 1) { // TOP WALL
+                            System.out.println("direction = 1");
+                            GC.getPlayer1().setYPos(platform.getYPos() - GC.getPlayer1().getHeight());
+                        }
+                        if (direction == 2) {
+                            System.out.println("direction = 2");
+                            GC.getPlayer1().setYPos(platform.getYPos() + platform.getHeight());
+                        }
+                        if (direction == 3) { // LEFT WALL
+                            System.out.println("Direction == 3");
+                            GC.getPlayer1().setXPos(platform.getXPos() - GC.getPlayer1().getWidth());
+                        }
+                        if (direction == 4) { // RIGHT WALL
+                            System.out.println("Direction = 4");
+                            GC.getPlayer1()
+                                    .setXPos(platform.getXPos() + platform.getWidth());
+                        }
+                    }
+                }
             }
         };
-        //the problem rn v
-        //Timer collideTimer = new Timer(1000/120, collideChecker -> {
-            //if (player1.isColliding(testPlatform1)) {
-                // Determine collision direction
-                //int direction = player1.collodingDirection(testPlatform1);
-            
-                // Adjust player's position based on collision direction
-                //if(direction == 1){
-                    //GC.getPlayer1().setYPos(GC.getPlatform().getYPos() - GC.getPlayer1().getHeight());
-                //}
-            //}
-        //});
         animationTimer = new Timer(interval, al);
         animationTimer.start();
-        //collideTimer.start();
     }
 
-    private void setUpKeyListener() { // I HAVENT FINISHED THIS YET. BRO CANNOT MOVE.
+    private void setUpKeyListener() {
         KeyListener kl = new KeyListener() {
             public void keyTyped(KeyEvent ke) {
             }
@@ -87,19 +105,19 @@ public class GameFrame extends JFrame {
                 int keyCode = ke.getKeyCode();
                 switch (keyCode) {
                     case KeyEvent.VK_UP:
-                        System.out.println("UP PRESSED");
+                        // System.out.println("UP PRESSED");
                         up = true;
                         break;
                     case KeyEvent.VK_DOWN:
-                        System.out.println("DOWN PRESSED");
+                        // System.out.println("DOWN PRESSED");
                         down = true;
                         break;
                     case KeyEvent.VK_LEFT:
-                        System.out.println("LEFT PRESSED");
+                        // System.out.println("LEFT PRESSED");
                         left = true;
                         break;
                     case KeyEvent.VK_RIGHT:
-                        System.out.println("RIGHT PRESSED");
+                        // System.out.println("RIGHT PRESSED");
                         right = true;
                         break;
                 }

@@ -17,8 +17,10 @@ public class Player {
     }
 
     public void move() {
-        xPos += xSpeed;
-        yPos += ySpeed;
+        this.setXPos(this.xPos += xSpeed);
+        this.setYPos(this.yPos += ySpeed);
+        // System.out.println(this.getXPos());
+        // System.out.println(this.getYPos());
     }
 
     public void draw(Graphics2D g) {
@@ -36,26 +38,26 @@ public class Player {
     }
 
     public int getXPos() {
-        return xPos;
+        return this.xPos;
     }
 
     public int getYPos() {
-        return yPos;
+        return this.yPos;
     }
 
     public void setXPos(int tempVal) {
-        xPos = tempVal;
+        this.xPos = tempVal;
     }
 
     public void setYPos(int tempVal) {
-        yPos = tempVal;
+        this.yPos = tempVal;
     }
-    
-    public int getWidth(){
+
+    public int getWidth() {
         return width;
     }
 
-    public int getHeight(){
+    public int getHeight() {
         return height;
     }
 
@@ -67,37 +69,36 @@ public class Player {
         return ySpeed;
     }
 
-    public boolean isColliding(Platform other){
-        if(
-        xPos + this.width < other.getXPos() ||
-        xPos >= other.getXPos() + other.getWidth() ||
-        yPos + this.height <= other.getYPos() ||
-        yPos >= other.getYPos() + other.getHeight()
-        ){
+    public boolean isColliding(Platform other) {
+        if (xPos + this.width < other.getXPos() ||
+                xPos >= other.getXPos() + other.getWidth() ||
+                yPos + this.height <= other.getYPos() ||
+                yPos >= other.getYPos() + other.getHeight()) {
+            // System.out.println(this.getXPos());
+            // System.out.println(this.getYPos());
             return false;
-        }
-        else{
+        } else {
             return true;
         }
     }
-    public int collodingDirection(Platform other){
-        if(yPos + height >= other.getYPos() && yPos + height < other.getYPos() + other.getHeight() && yPos < other.getYPos()){
-            //  NORTH/TOP OF PLATFORM HIT
+
+    public int collidingDirection(Platform other) {
+        if (yPos + height >= other.getYPos() && yPos + height < other.getYPos() + other.getHeight()
+                && yPos < other.getYPos()) {
+            // NORTH/TOP OF PLATFORM HIT
             return 1;
-        }
-        else if(yPos <= other.getYPos() + other.getHeight() && yPos > other.getYPos() + other.getHeight() && yPos + height > other.getYPos() + other.getHeight()){
-            //  SOUTH/BOTTOM OF PLATFORM HIT
+        } else if (yPos <= other.getYPos() + other.getHeight() && yPos + height > other.getYPos() + other.getHeight()) {
+            // SOUTH/BOTTOM OF PLATFORM HIT ->>>>> FIX THIS ONE
             return 2;
-        }
-        else  if(xPos + width >= other.getXPos() && xPos < other.getXPos()){
-            //  WEST/LEFT OF PLATFORM HIT
+        } else if (xPos + width >= other.getXPos() && xPos < other.getXPos()) {
+            // WEST/LEFT OF PLATFORM HIT
             return 3;
-        }
-        else if(xPos <= other.getXPos() + other.getWidth() && xPos + width > other.getXPos() + other.getWidth()){
-            //  EAST/RIGHT OF PLATFORM HIT
+        } else if (xPos <= other.getXPos() + other.getWidth() && xPos + width > other.getXPos() + other.getWidth()) {
+            // EAST/RIGHT OF PLATFORM HIT
             return 4;
+        } else {
+            return 0;
         }
-        else{return 0;}
     }
 }
 
