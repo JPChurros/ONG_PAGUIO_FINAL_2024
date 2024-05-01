@@ -13,7 +13,7 @@ public class GameCanvas extends JComponent {
     private ArrayList<Platform> platformlist;
 
     public GameCanvas() {
-        p1 = new Player(100, 100, 20, 20, 0, 0);
+        p1 = new Player(100, 100, 20, 20, 0, 0, 0);
         platformtest = new Platform(200, 200, 500, 20, Color.yellow, false);
         platformSoftTest = new Platform(200, 450, 500, 20, Color.red, true);
         platformlist = new ArrayList<Platform>();

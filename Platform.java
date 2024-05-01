@@ -23,14 +23,6 @@ public class Platform {
         g2d.fill(temp);
     }
 
-    public void adjustX(double distance) {
-
-    }
-
-    public void animateX(double multiplier) {
-
-    }
-
     public int getXPos() {
         return x;
     }

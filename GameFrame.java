@@ -8,14 +8,15 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
 
-public class GameFrame extends JFrame {
-    private int width, height;
+public class GameFrame extends JFrame implements MouseListener{
+    private int width, height, xCord, yCord;
     private Container contentPane;
     private GameCanvas GC;
     private Timer animationTimer;
     private Player player1, player2;
-    private boolean up, down, left, right;
+    private boolean up, down, left, right, sKey;
     private Platform testPlatform1;
+    private JLabel label;
 
     public GameFrame(int w, int h) {
         width = w;
@@ -50,6 +51,9 @@ public class GameFrame extends JFrame {
 
                 if (left == true) { // NO WORKY
                     GC.getPlayer1().changeXSpeed(-10);
+                }
+                if (sKey == true){//shooting mech
+                    GC.getPlayer1().shoot();
                 }
                 GC.getPlayer1().move();
                 // System.out.println(GC.getPlayer1().getXPos());
@@ -115,6 +119,36 @@ public class GameFrame extends JFrame {
         animationTimer.start();
     }
 
+    @Override
+    public void mouseClicked(MouseEvent e){
+        System.out.println("Mouse has been clicked!");
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e){
+        
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e){
+        
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e){
+        
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e){
+        xCord = e.getX() - GC.getPlayer1().getXPos();
+        yCord = GC.getPlayer1().getYPos() - e.getY();
+        float result = (float) yCord / xCord;
+        System.out.println(String.format("%.4f", result));
+        System.out.println(xCord);
+        System.out.println(yCord);
+    }
+
     private void setUpKeyListener() {
         KeyListener kl = new KeyListener() {
             public void keyTyped(KeyEvent ke) {
@@ -139,6 +173,9 @@ public class GameFrame extends JFrame {
                         // System.out.println("RIGHT PRESSED");
                         right = true;
                         break;
+                    case KeyEvent.VK_S:
+                        sKey = true;
+                        break;
                 }
             }
 
@@ -158,6 +195,9 @@ public class GameFrame extends JFrame {
                     case KeyEvent.VK_RIGHT:
                         right = false;
                         break;
+                    case KeyEvent.VK_S:
+                        sKey = false;
+                        break;
                 }
             }
         };
@@ -167,11 +207,16 @@ public class GameFrame extends JFrame {
 
     public void setUpGUI() {
         contentPane = this.getContentPane();
+        label = new JLabel();
+        label.setBounds(0, 0, width, height);
+        label.setBackground(Color.white);
+        label.addMouseListener(this);
         this.setTitle("Wild Whisker Shootout");
         contentPane.setPreferredSize(new Dimension(width, height));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.pack(); // idk what this does no lie
         GC = new GameCanvas();
+        contentPane.add(label);
         contentPane.add(GC);
         this.setVisible(true);
         this.setLayout(null);

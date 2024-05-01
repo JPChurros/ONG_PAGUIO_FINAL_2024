@@ -5,15 +5,16 @@ import javax.swing.*;
 import java.awt.geom.*;
 
 public class Player {
-    private int xSpeed, ySpeed, xPos, yPos, width, height;
-
-    public Player(int x, int y, int w, int h, int xs, int ys) {
+    private int xSpeed, ySpeed, xPos, yPos, width, height, charType;
+    //charType 0 is cat, 1 is hedgehog, 2 is squirrel
+    public Player(int x, int y, int w, int h, int xs, int ys, int charTypein) {
         xSpeed = xs;
         ySpeed = ys;
         xPos = x;
         yPos = y;
         width = w;
         height = h;
+        charType = charTypein;
     }
 
     public void move() {
@@ -67,6 +68,13 @@ public class Player {
 
     public int getYSpeed() {
         return ySpeed;
+    }
+
+    public void shoot(){
+        int charMid = height/2;
+        if(charType == 0){
+            
+        }
     }
 
     public boolean isColliding(Platform other) {
