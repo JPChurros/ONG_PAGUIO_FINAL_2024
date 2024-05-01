@@ -49,6 +49,12 @@ public class GameFrame extends JFrame {
                     GC.getPlayer1().changeXSpeed(-10);
                 }
 
+                for(Platform platform : GC.getPlatformList()){
+                    if (down == true && platform.isSoft() == true) {
+                        GC.getPlayer1().changeYSpeed(10);
+                    }
+                }
+
                 GC.getPlayer1().move();
                 // System.out.println(GC.getPlayer1().getXPos());
                 // System.out.println(GC.getPlayer1().getYPos());
@@ -71,6 +77,7 @@ public class GameFrame extends JFrame {
                     if (GC.getPlayer1().isColliding(platform)) {
                         System.out.println("Colliding");
                         int direction = GC.getPlayer1().collidingDirection(platform);
+                        if(platform.isSoft() == false){
                         if (direction == 1) { // TOP WALL
                             System.out.println("direction = 1");
                             GC.getPlayer1().setYPos(platform.getYPos() - GC.getPlayer1().getHeight());
@@ -89,7 +96,23 @@ public class GameFrame extends JFrame {
                                     .setXPos(platform.getXPos() + platform.getWidth());
                         }
                     }
+                    if(platform.isSoft() == true){
+                        if (direction == 1) { // TOP WALL
+                            System.out.println("direction = 1");
+                            GC.getPlayer1().setYPos(platform.getYPos() - GC.getPlayer1().getHeight());
+                        }
+                        if (direction == 3) { // LEFT WALL
+                            System.out.println("Direction == 3");
+                            GC.getPlayer1().setXPos(platform.getXPos() - GC.getPlayer1().getWidth());
+                        }
+                        if (direction == 4) { // RIGHT WALL
+                            System.out.println("Direction = 4");
+                            GC.getPlayer1()
+                                    .setXPos(platform.getXPos() + platform.getWidth());
+                        }
+                    }
                 }
+            }
             }
         };
         animationTimer = new Timer(interval, al);

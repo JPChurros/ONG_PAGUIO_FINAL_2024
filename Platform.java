@@ -7,13 +7,14 @@ public class Platform {
     private boolean isSoft;
     private Color color;
 
-    public Platform(int x, int y, int width, int height, Color color) {
+    public Platform(int x, int y, int width, int height, Color color, boolean isSoft) {
 
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
         this.color = color;
+        this.isSoft = isSoft;
     }
 
     public void draw(Graphics2D g2d) {
@@ -44,6 +45,10 @@ public class Platform {
 
     public int getHeight() {
         return height;
+    }
+
+    public boolean isSoft(){
+        return isSoft;
     }
 
 }
