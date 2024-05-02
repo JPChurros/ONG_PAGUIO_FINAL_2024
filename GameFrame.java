@@ -17,6 +17,7 @@ public class GameFrame extends JFrame implements MouseListener{
     private boolean up, down, left, right, sKey;
     private Platform testPlatform1;
     private JLabel label;
+    private Bullet rifleBullet, shotgunBullet1, shotgunBullet2, shotgunBullet3, smgBullet1, smgBullet2, smgBullet3;
 
     public GameFrame(int w, int h) {
         width = w;
@@ -27,6 +28,9 @@ public class GameFrame extends JFrame implements MouseListener{
         down = false;
         left = false;
         right = false;
+        if(GC.getPlayer1().getCharType() == 0){
+
+        }
     }
 
     private void setUpAnimationTimer() {
@@ -141,12 +145,11 @@ public class GameFrame extends JFrame implements MouseListener{
 
     @Override
     public void mouseReleased(MouseEvent e){
-        xCord = e.getX() - GC.getPlayer1().getXPos();
-        yCord = GC.getPlayer1().getYPos() - e.getY();
-        float result = (float) yCord / xCord;
-        System.out.println(String.format("%.4f", result));
-        System.out.println(xCord);
-        System.out.println(yCord);
+        xCord = e.getX() - (GC.getPlayer1().getXPos() + GC.getPlayer1().getWidth()/2);  //Measures from center of player
+        yCord = (GC.getPlayer1().getYPos() + GC.getPlayer1().getHeight()/2) - e.getY();
+        float radius = (float) Math.sqrt(yCord*yCord + xCord*xCord);
+        float xVariable = (float) xCord/radius;
+        float yVariable = (float) yCord/radius;
     }
 
     private void setUpKeyListener() {

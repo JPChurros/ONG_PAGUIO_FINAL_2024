@@ -69,11 +69,23 @@ public class Player {
     public int getYSpeed() {
         return ySpeed;
     }
+    public int getCharType(){
+        return charType;
+    }
 
-    public void shoot(){
+    public int shoot(){
         int charMid = height/2;
         if(charType == 0){
-            
+            return 200;
+        }
+        else if(charType == 1){
+            return 150;
+        }
+        else if(charType == 2){
+            return 100;
+        }
+        else{
+            return 0;
         }
     }
 
