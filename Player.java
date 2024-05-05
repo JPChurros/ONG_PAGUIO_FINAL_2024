@@ -6,6 +6,7 @@ import java.awt.geom.*;
 
 public class Player {
     private int xSpeed, ySpeed, xPos, yPos, width, height, charType;
+    private boolean isFalling;
     //charType 0 is cat, 1 is hedgehog, 2 is squirrel
     public Player(int x, int y, int w, int h, int xs, int ys, int charTypein) {
         xSpeed = xs;
@@ -15,6 +16,7 @@ public class Player {
         width = w;
         height = h;
         charType = charTypein;
+        isFalling = true;
     }
 
     public void move() {
@@ -31,11 +33,11 @@ public class Player {
     }
 
     public void changeXSpeed(int x) {
-        xSpeed = x;
+        this.xSpeed = x;
     }
 
     public void changeYSpeed(int y) {
-        ySpeed = y;
+        this.ySpeed = y;
     }
 
     public int getXPos() {
@@ -52,6 +54,12 @@ public class Player {
 
     public void setYPos(int tempVal) {
         this.yPos = tempVal;
+    }
+    public void setFalling(boolean a){
+        isFalling = a;
+    }
+    public boolean isFalling(){
+        return this.isFalling;
     }
 
     public int getWidth() {

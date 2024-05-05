@@ -38,85 +38,94 @@ public class GameFrame extends JFrame implements MouseListener{
         ActionListener al = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-
-
-
-                if (up == true) { // NO WORKY
-                    GC.getPlayer1().changeYSpeed(-10);
+                if (up == true && GC.getPlayer1().isFalling() == false) { // NO WORKY
+                    //code the jump here.
+                    GC.getPlayer1().setYPos(GC.getPlayer1().getYPos() - 100);
+                    GC.getPlayer1().setFalling(true);
                 }
 
-                if (down == true) {
+                if (GC.getPlayer1().isFalling() == true) {
                     GC.getPlayer1().changeYSpeed(10);
                 }
 
                 if (right == true) {
                     GC.getPlayer1().changeXSpeed(10);
+                    GC.getPlayer1().setFalling(true);
                 }
 
                 if (left == true) { // NO WORKY
                     GC.getPlayer1().changeXSpeed(-10);
+                    GC.getPlayer1().setFalling(true);
                 }
                 if (sKey == true){//shooting mech
                     GC.getPlayer1().shoot();
                 }
                 GC.getPlayer1().move();
-                // System.out.println(GC.getPlayer1().getXPos());
-                // System.out.println(GC.getPlayer1().getYPos());
                 GC.repaint();
+
                 if (up == false || down == false) {
                     GC.getPlayer1().changeYSpeed(0);
                 }
                 if (right == false || left == false) {
                     GC.getPlayer1().changeXSpeed(0);
                 }
+
+
                 for (Platform platform : GC.getPlatformList()) {
-                    /**
-                     * System.out.println(platform.getXPos() + " " + platform.getYPos() + " " +
-                     * platform.getWidth() + " "
-                     * + platform.getHeight());
-                     * System.out.println(player1.getXPos() + " " + player1.getYPos() + " " +
-                     * player1.getWidth()
-                     * + " " + player1.getHeight());
-                     */
                     if (GC.getPlayer1().isColliding(platform)) {
                         System.out.println("Colliding");
                         int direction = GC.getPlayer1().collidingDirection(platform);
                         if(platform.isSoft() == false){
-                        if (direction == 1) { // TOP WALL
-                            System.out.println("direction = 1");
-                            GC.getPlayer1().setYPos(platform.getYPos() - GC.getPlayer1().getHeight());
+                            if (direction == 1) { // TOP WALL
+                                System.out.println("direction = 1");
+                                GC.getPlayer1().setYPos(platform.getYPos() - GC.getPlayer1().getHeight());
+                                GC.getPlayer1().setFalling(false);
+                            }
+                            if (direction == 2) {
+                                System.out.println("direction = 2");
+                                GC.getPlayer1().setYPos(platform.getYPos() + platform.getHeight());
+                                GC.getPlayer1().setFalling(true);
+
+                            }
+                            if (direction == 3) { // LEFT WALL
+                                System.out.println("Direction == 3");
+                                GC.getPlayer1().setXPos(platform.getXPos() - GC.getPlayer1().getWidth());
+                                GC.getPlayer1().setFalling(true);
+                            }
+                            if (direction == 4) { // RIGHT WALL
+                                System.out.println("Direction = 4");
+                                GC.getPlayer1().setXPos(platform.getXPos() + platform.getWidth());
+                                GC.getPlayer1().setFalling(true);
+                            }
+                            
+                            
+                            //else{
+                              //  GC.getPlayer1().setFalling(true);
+                            //}
                         }
-                        if (direction == 2) {
-                            System.out.println("direction = 2");
-                            GC.getPlayer1().setYPos(platform.getYPos() + platform.getHeight());
-                        }
-                        if (direction == 3) { // LEFT WALL
-                            System.out.println("Direction == 3");
-                            GC.getPlayer1().setXPos(platform.getXPos() - GC.getPlayer1().getWidth());
-                        }
-                        if (direction == 4) { // RIGHT WALL
-                            System.out.println("Direction = 4");
-                            GC.getPlayer1()
-                                    .setXPos(platform.getXPos() + platform.getWidth());
-                        }
-                    }
-                    if(platform.isSoft() == true){
-                        if (direction == 1) { // TOP WALL
-                            System.out.println("direction = 1");
-                            GC.getPlayer1().setYPos(platform.getYPos() - GC.getPlayer1().getHeight());
-                        }
-                        if (direction == 3) { // LEFT WALL
-                            System.out.println("Direction == 3");
-                            GC.getPlayer1().setXPos(platform.getXPos() - GC.getPlayer1().getWidth());
-                        }
-                        if (direction == 4) { // RIGHT WALL
-                            System.out.println("Direction = 4");
-                            GC.getPlayer1()
-                                    .setXPos(platform.getXPos() + platform.getWidth());
+                        if(platform.isSoft() == true){
+                            if (direction == 1) { // TOP WALL
+                                System.out.println("direction = 1");
+                                GC.getPlayer1().setYPos(platform.getYPos() - GC.getPlayer1().getHeight());
+                                GC.getPlayer1().setFalling(false);
+                            }
+                            if (direction == 3) { // LEFT WALL
+                                System.out.println("Direction == 3");
+                                GC.getPlayer1().setXPos(platform.getXPos() - GC.getPlayer1().getWidth());
+                                GC.getPlayer1().setFalling(true);
+                            }
+                            if (direction == 4) { // RIGHT WALL
+                                System.out.println("Direction = 4");
+                                GC.getPlayer1().setXPos(platform.getXPos() + platform.getWidth());
+                                GC.getPlayer1().setFalling(true);
+                            }
+                            
+                        //else{
+                           // GC.getPlayer1().setFalling(true);
+                       // }
                         }
                     }
                 }
-            }
             }
         };
         animationTimer = new Timer(interval, al);
