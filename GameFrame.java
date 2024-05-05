@@ -10,6 +10,7 @@ import java.awt.event.*;
 
 public class GameFrame extends JFrame implements MouseListener{
     private int width, height, xCord, yCord;
+    private float xVariable, yVariable;
     private Container contentPane;
     private GameCanvas GC;
     private Timer animationTimer;
@@ -97,6 +98,11 @@ public class GameFrame extends JFrame implements MouseListener{
                 }
                 if (right == false || left == false) {
                     GC.getPlayer1().changeXSpeed(0);
+                }
+
+                //bullet movement
+                if (GC.getBullet().getX() <= width && GC.getBullet().getX() >= 0 && GC.getBullet().getY() <= height && GC.getBullet().getY() >= 0){
+                    GC.getBullet().shootMove(xVariable, yVariable);
                 }
 
 
@@ -188,8 +194,8 @@ public class GameFrame extends JFrame implements MouseListener{
         xCord = e.getX() - xPlayerCenter;  //Measures from center of player
         yCord = yPlayerCenter - e.getY();
         float radius = (float) Math.sqrt(yCord*yCord + xCord*xCord);
-        float xVariable = (float) xCord/radius;
-        float yVariable = (float) (-1)*(yCord/radius);
+        xVariable = (float) xCord/radius;
+        yVariable = (float) (-1)*(yCord/radius);
         if(GC.getPlayer1().getCharType() == 0){
             GC.getBullet().setXPos((int)(xPlayerCenter + xVariable * 10),(int)(xPlayerCenter + xVariable * 10 + xVariable * 10));
             GC.getBullet().setYPos((int)(yPlayerCenter + yVariable * 10),(int)(yPlayerCenter + yVariable * 10 + yVariable * 10));

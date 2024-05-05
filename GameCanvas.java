@@ -38,7 +38,7 @@ public class GameCanvas extends JComponent {
 
         //bullet
         if(getPlayer1().getCharType() == 0){
-            rifleBullet = new Bullet(-1000, -1000, -1001, -1001, 50, 50, Color.YELLOW);
+            rifleBullet = new Bullet(-1000, -1000, -1001, -1001, 50, 50, Color.BLACK);
         }
     }
 

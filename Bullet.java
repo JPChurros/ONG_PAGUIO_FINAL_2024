@@ -5,7 +5,8 @@ import java.awt.geom.*;
 //when calling class bullet, always make initial values x1 and y1 = -1000 then x2 and y2 = -1001
 
 public class Bullet {
-    int x1, y1, x2, y2, xSpeed, ySpeed, charType, xVariable, yVariable, bulletLife, constantSpeed;
+    int x1, y1, x2, y2, xSpeed, ySpeed, charType, bulletLife, constantSpeed;
+    float xVariable, yVariable;
     Color color;
     public Bullet(int x1, int y1, int x2, int y2, int xSpeed, int ySpeed, Color color){
         this.x1 = x1;
@@ -24,7 +25,14 @@ public class Bullet {
         g2d.draw(temp);
     }
 
-    public void shootMove(int xVariable, int yVariable){
+    public int getX(){
+        return x1;
+    }
+    public int getY(){
+        return y1;
+    }
+
+    public void shootMove(float xVariable, float yVariable){
         this.xVariable = xVariable;
         this.yVariable = yVariable;
         this.setXPos(this.x1 += xVariable*10, this.x2 += xVariable*10);
