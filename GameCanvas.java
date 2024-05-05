@@ -9,6 +9,7 @@ import javax.swing.Timer;
 
 public class GameCanvas extends JComponent {
     private Player p1;
+    private Bullet rifleBullet;
     private Platform platformtest, platformSoftTest;
     private Platform platform1, platform2, platform3, platform4, platform5, platform6, platform7, platform8, platform9, platform10;
     private ArrayList<Platform> platformlist;
@@ -28,13 +29,17 @@ public class GameCanvas extends JComponent {
         platform3 = new Platform(100,350, 150, 20, Color.RED, true);
         platform4 = new Platform(325, 350, 150, 20, Color.RED, true);
         platform5 = new Platform(550,350, 150, 20, Color.RED, true);
-
         // input NAME = new CLASS here
         platformlist.add(platform1);
         platformlist.add(platform2);
         platformlist.add(platform3);
         platformlist.add(platform4);
         platformlist.add(platform5);
+
+        //bullet
+        if(getPlayer1().getCharType() == 0){
+            rifleBullet = new Bullet(-1000, -1000, -1001, -1001, 50, 50, Color.YELLOW);
+        }
     }
 
     @Override
@@ -53,6 +58,9 @@ public class GameCanvas extends JComponent {
         platform3.draw(g2d);
         platform4.draw(g2d);
         platform5.draw(g2d);
+        if(getPlayer1().getCharType() == 0){
+            rifleBullet.draw(g2d);
+        }
         AffineTransform reset = g2d.getTransform();
 
     }
@@ -63,5 +71,12 @@ public class GameCanvas extends JComponent {
 
     public ArrayList<Platform> getPlatformList() {
         return platformlist;
+    }
+
+    public Bullet getBullet(){
+        if(getPlayer1().getCharType() == 0){
+            return rifleBullet;
+        }
+        return rifleBullet;
     }
 }

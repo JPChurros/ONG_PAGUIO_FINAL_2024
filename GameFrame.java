@@ -31,9 +31,6 @@ public class GameFrame extends JFrame implements MouseListener{
         left = false;
         right = false;
         temp = 0;
-        if(GC.getPlayer1().getCharType() == 0){
-
-        }
     }
 
     private void setUpAnimationTimer() {
@@ -186,11 +183,18 @@ public class GameFrame extends JFrame implements MouseListener{
 
     @Override
     public void mouseReleased(MouseEvent e){
-        xCord = e.getX() - (GC.getPlayer1().getXPos() + GC.getPlayer1().getWidth()/2);  //Measures from center of player
-        yCord = (GC.getPlayer1().getYPos() + GC.getPlayer1().getHeight()/2) - e.getY();
+        int xPlayerCenter = (GC.getPlayer1().getXPos() + GC.getPlayer1().getWidth()/2);
+        int yPlayerCenter = (GC.getPlayer1().getYPos() + GC.getPlayer1().getHeight()/2);
+        xCord = e.getX() - xPlayerCenter;  //Measures from center of player
+        yCord = yPlayerCenter - e.getY();
         float radius = (float) Math.sqrt(yCord*yCord + xCord*xCord);
         float xVariable = (float) xCord/radius;
-        float yVariable = (float) yCord/radius;
+        float yVariable = (float) (-1)*(yCord/radius);
+        if(GC.getPlayer1().getCharType() == 0){
+            GC.getBullet().setXPos((int)(xPlayerCenter + xVariable * 10),(int)(xPlayerCenter + xVariable * 10 + xVariable * 10));
+            GC.getBullet().setYPos((int)(yPlayerCenter + yVariable * 10),(int)(yPlayerCenter + yVariable * 10 + yVariable * 10));
+        }
+        
     }
 
     private void setUpKeyListener() {
