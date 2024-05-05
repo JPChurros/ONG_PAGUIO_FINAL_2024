@@ -19,6 +19,8 @@ public class GameFrame extends JFrame implements MouseListener{
     private JLabel label;
     private Bullet rifleBullet, shotgunBullet1, shotgunBullet2, shotgunBullet3, smgBullet1, smgBullet2, smgBullet3;
 
+    private int temp;
+
     public GameFrame(int w, int h) {
         width = w;
         height = h;
@@ -28,6 +30,7 @@ public class GameFrame extends JFrame implements MouseListener{
         down = false;
         left = false;
         right = false;
+        temp = 0;
         if(GC.getPlayer1().getCharType() == 0){
 
         }
@@ -39,9 +42,29 @@ public class GameFrame extends JFrame implements MouseListener{
             @Override
             public void actionPerformed(ActionEvent ae) {
                 if (up == true && GC.getPlayer1().isFalling() == false) { // NO WORKY
-                    //code the jump here.
-                    GC.getPlayer1().setYPos(GC.getPlayer1().getYPos() - 100);
-                    GC.getPlayer1().setFalling(true);
+                    GC.getPlayer1().setJumpStatus(true);
+                    //GC.getPlayer1().setYPos(GC.getPlayer1().getYPos() - 100);
+                    //GC.getPlayer1().setFalling(true);
+                    
+                }
+
+                if (GC.getPlayer1().isJumping() == true){ //make his speed keep going until 50, then when it hits 50, bro starts falling.
+                    if (GC.getPlayer1().getYSpeed() >= -50){
+                        temp = temp - 5; //players movement speed doesnt change incrementally, it is just changed to negative 1 and stays that way
+                        GC.getPlayer1().changeYSpeed(-10);
+                        System.out.println(GC.getPlayer1().getYSpeed());
+                        if (temp < -75){
+                            System.out.println("False");
+                            GC.getPlayer1().setJumpStatus(false);
+                            GC.getPlayer1().setFalling(true);
+                            temp = 0;
+                        }
+                    }
+                    //else if (GC.getPlayer1().getYSpeed() < -50){
+                      //  System.out.println("False");
+                        //GC.getPlayer1().setJumpStatus(false);
+                        //GC.getPlayer1().setFalling(true);
+                    //}
                 }
 
                 if (GC.getPlayer1().isFalling() == true) {
@@ -50,12 +73,21 @@ public class GameFrame extends JFrame implements MouseListener{
 
                 if (right == true) {
                     GC.getPlayer1().changeXSpeed(10);
+                    if (GC.getPlayer1().isJumping() == false){
+                        GC.getPlayer1().setFalling(true);
+                    }
+                }
+                if (down == true) { //cancels any jump and makes bro start falling so that theres more vertical mobility
                     GC.getPlayer1().setFalling(true);
+                    GC.getPlayer1().setJumpStatus(false);
+                    temp = 0;
                 }
 
                 if (left == true) { // NO WORKY
                     GC.getPlayer1().changeXSpeed(-10);
-                    GC.getPlayer1().setFalling(true);
+                    if (GC.getPlayer1().isJumping() == false){
+                        GC.getPlayer1().setFalling(true);
+                    }
                 }
                 if (sKey == true){//shooting mech
                     GC.getPlayer1().shoot();
