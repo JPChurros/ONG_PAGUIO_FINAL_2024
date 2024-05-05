@@ -193,9 +193,14 @@ public class GameFrame extends JFrame implements MouseListener{
         int yPlayerCenter = (GC.getPlayer1().getYPos() + GC.getPlayer1().getHeight()/2);
         xCord = e.getX() - xPlayerCenter;  //Measures from center of player
         yCord = yPlayerCenter - e.getY();
-        float radius = (float) Math.sqrt(yCord*yCord + xCord*xCord);
-        xVariable = (float) xCord/radius;
-        yVariable = (float) (-1)*(yCord/radius);
+
+        double angleRad = Math.atan2(yCord, xCord);
+
+        double angleDeg = Math.toDegrees(angleRad);
+        angleDeg = (angleDeg + 360) % 360;
+
+        xVariable = (float)Math.cos(angleRad);
+        yVariable = (float)Math.sin(angleRad)*(-1);
         if(GC.getPlayer1().getCharType() == 0){
             GC.getBullet().setXPos((int)(xPlayerCenter + xVariable * 10),(int)(xPlayerCenter + xVariable * 10 + xVariable * 10));
             GC.getBullet().setYPos((int)(yPlayerCenter + yVariable * 10),(int)(yPlayerCenter + yVariable * 10 + yVariable * 10));
