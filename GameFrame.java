@@ -116,7 +116,6 @@ public class GameFrame extends JFrame implements MouseListener {
                     if(GC.getBullet().getBulletLife() >= baseBulletLife){
                         GC.getBullet().setXPos(-1000, -1000);
                         GC.getBullet().setYPos(-1000, -1000);
-                        GC.getBullet().resetBulletLife();
                     }
                 }
                 for(Platform platform : GC.getPlatformList()){
@@ -124,7 +123,6 @@ public class GameFrame extends JFrame implements MouseListener {
                     if (GC.getBullet().isCollidingBullet(platform)){
                         GC.getBullet().setXPos(-1000, -1000);
                         GC.getBullet().setYPos(-1000, -1000);
-                        GC.getBullet().resetBulletLife();
                     }
                     else if(platform.isSoft() == true){
 
@@ -227,6 +225,7 @@ public class GameFrame extends JFrame implements MouseListener {
         xVariable = (float) Math.cos(angleRad);
         yVariable = (float) Math.sin(angleRad) * (-1);
         if (GC.getPlayer1().getCharType() == 0) {
+            GC.getBullet().resetBulletLife();
             baseBulletLife = 15;
             GC.getBullet().setXPos((int) (xPlayerCenter + xVariable * 10),
                     (int) (xPlayerCenter + xVariable * 10 + xVariable * 10));
