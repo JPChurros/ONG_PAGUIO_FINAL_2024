@@ -9,7 +9,7 @@ import javax.swing.*;
 import java.awt.event.*;
 
 public class GameFrame extends JFrame implements MouseListener {
-    private int width, height, xCord, yCord;
+    private int width, height, xCord, yCord, baseBulletLife;
     private float xVariable, yVariable;
     private Container contentPane;
     private GameCanvas GC;
@@ -112,15 +112,22 @@ public class GameFrame extends JFrame implements MouseListener {
                 if (GC.getBullet().getX() <= width && GC.getBullet().getX() >= 0 && GC.getBullet().getY() <= height
                         && GC.getBullet().getY() >= 0) {
                     GC.getBullet().shootMove(xVariable, yVariable);
+                    GC.getBullet().increaseBulletLife();
+                    if(GC.getBullet().getBulletLife() >= baseBulletLife){
+                        GC.getBullet().setXPos(-1000, -1000);
+                        GC.getBullet().setYPos(-1000, -1000);
+                        GC.getBullet().resetBulletLife();
+                    }
                 }
                 for(Platform platform : GC.getPlatformList()){
                     if (platform.isSoft() == false){
                     if (GC.getBullet().isCollidingBullet(platform)){
                         GC.getBullet().setXPos(-1000, -1000);
                         GC.getBullet().setYPos(-1000, -1000);
+                        GC.getBullet().resetBulletLife();
                     }
                     else if(platform.isSoft() == true){
-                        
+
                     }
                     }
                 }
@@ -220,6 +227,7 @@ public class GameFrame extends JFrame implements MouseListener {
         xVariable = (float) Math.cos(angleRad);
         yVariable = (float) Math.sin(angleRad) * (-1);
         if (GC.getPlayer1().getCharType() == 0) {
+            baseBulletLife = 15;
             GC.getBullet().setXPos((int) (xPlayerCenter + xVariable * 10),
                     (int) (xPlayerCenter + xVariable * 10 + xVariable * 10));
             GC.getBullet().setYPos((int) (yPlayerCenter + yVariable * 10),
