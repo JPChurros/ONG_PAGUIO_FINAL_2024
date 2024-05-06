@@ -113,6 +113,17 @@ public class GameFrame extends JFrame implements MouseListener {
                         && GC.getBullet().getY() >= 0) {
                     GC.getBullet().shootMove(xVariable, yVariable);
                 }
+                for(Platform platform : GC.getPlatformList()){
+                    if (platform.isSoft() == false){
+                    if (GC.getBullet().isCollidingBullet(platform)){
+                        GC.getBullet().setXPos(-1000, -1000);
+                        GC.getBullet().setYPos(-1000, -1000);
+                    }
+                    else if(platform.isSoft() == true){
+                        
+                    }
+                    }
+                }
 
                 for (Platform platform : GC.getPlatformList()) {
                     if (GC.getPlayer1().isColliding(platform)) {

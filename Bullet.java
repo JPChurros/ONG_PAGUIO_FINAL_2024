@@ -54,17 +54,15 @@ public class Bullet {
         int boxY = Math.min(y1, y2);
         int boxWidth = Math.abs(x2 - x1);
         int boxHeight = Math.abs(y2 - y1);
-        Rectangle2D boundingBox = new Rectangle2D.Double(boxX, boxY, boxWidth, boxHeight);
 
         if (boxX + boxWidth < other.getXPos() ||
             boxX >= other.getXPos() + other.getWidth() ||
             boxY + boxHeight <= other.getYPos() ||
             boxY >= other.getYPos() + other.getHeight()){
             return false;
-        }
+            }
         else{
             return true;
+            }
         }
-        }
-
     }
