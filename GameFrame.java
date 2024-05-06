@@ -66,6 +66,7 @@ public class GameFrame extends JFrame implements MouseListener {
                 }
 
                 if (GC.getPlayer1().isFalling() == true) {
+                    System.out.println(incrementor2);
                     GC.getPlayer1().changeYSpeed(incrementor2);
                     if (incrementor2 < 17) {
                         incrementor2++;
@@ -85,6 +86,7 @@ public class GameFrame extends JFrame implements MouseListener {
                     GC.getPlayer1().setFalling(true);
                     GC.getPlayer1().setJumpStatus(false);
                     temp = 0;
+                    incrementor = 0;
                 }
 
                 if (left == true) { // NO WORKY
