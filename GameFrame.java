@@ -20,7 +20,7 @@ public class GameFrame extends JFrame implements MouseListener {
     private JLabel label;
     private Bullet rifleBullet, shotgunBullet1, shotgunBullet2, shotgunBullet3, smgBullet1, smgBullet2, smgBullet3;
 
-    private int temp, incrementor;
+    private int temp, incrementor, incrementor2;
 
     public GameFrame(int w, int h) {
         width = w;
@@ -33,6 +33,7 @@ public class GameFrame extends JFrame implements MouseListener {
         right = false;
         temp = 0;
         incrementor = 0;
+        incrementor2 = 0;
     }
 
     private void setUpAnimationTimer() {
@@ -65,7 +66,12 @@ public class GameFrame extends JFrame implements MouseListener {
                 }
 
                 if (GC.getPlayer1().isFalling() == true) {
-                    GC.getPlayer1().changeYSpeed(10);
+                    GC.getPlayer1().changeYSpeed(incrementor2);
+                    if (incrementor2 < 17) {
+                        incrementor2++;
+                    }
+                } else {
+                    incrementor2 = 0;
                 }
 
                 if (right == true) {
