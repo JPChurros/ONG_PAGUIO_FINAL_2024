@@ -8,7 +8,7 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
 
-public class GameFrame extends JFrame implements MouseListener{
+public class GameFrame extends JFrame implements MouseListener {
     private int width, height, xCord, yCord;
     private float xVariable, yVariable;
     private Container contentPane;
@@ -20,7 +20,7 @@ public class GameFrame extends JFrame implements MouseListener{
     private JLabel label;
     private Bullet rifleBullet, shotgunBullet1, shotgunBullet2, shotgunBullet3, smgBullet1, smgBullet2, smgBullet3;
 
-    private int temp;
+    private int temp, incrementor;
 
     public GameFrame(int w, int h) {
         width = w;
@@ -32,6 +32,7 @@ public class GameFrame extends JFrame implements MouseListener{
         left = false;
         right = false;
         temp = 0;
+        incrementor = 0;
     }
 
     private void setUpAnimationTimer() {
@@ -41,28 +42,26 @@ public class GameFrame extends JFrame implements MouseListener{
             public void actionPerformed(ActionEvent ae) {
                 if (up == true && GC.getPlayer1().isFalling() == false) { // NO WORKY
                     GC.getPlayer1().setJumpStatus(true);
-                    //GC.getPlayer1().setYPos(GC.getPlayer1().getYPos() - 100);
-                    //GC.getPlayer1().setFalling(true);
-                    
+                    // GC.getPlayer1().setYPos(GC.getPlayer1().getYPos() - 100);
+                    // GC.getPlayer1().setFalling(true);
+
                 }
 
-                if (GC.getPlayer1().isJumping() == true){ //make his speed keep going until 50, then when it hits 50, bro starts falling.
-                    if (GC.getPlayer1().getYSpeed() >= -50){
-                        temp = temp - 5; //players movement speed doesnt change incrementally, it is just changed to negative 1 and stays that way
-                        GC.getPlayer1().changeYSpeed(-10);
-                        System.out.println(GC.getPlayer1().getYSpeed());
-                        if (temp < -75){
-                            System.out.println("False");
-                            GC.getPlayer1().setJumpStatus(false);
-                            GC.getPlayer1().setFalling(true);
-                            temp = 0;
-                        }
+                if (GC.getPlayer1().isJumping() == true) {
+                    temp = temp - 5; // in this case temp is the distance travelled by the
+                                     // player. the value here should be the speed.
+                    GC.getPlayer1().changeYSpeed(-17 + incrementor); // plus cuz it should slow
+                                                                     // down.
+                    incrementor++;
+                    System.out.println(GC.getPlayer1().getYSpeed());
+                    if (incrementor + -17 == 0) {
+                        System.out.println("False");
+                        GC.getPlayer1().setJumpStatus(false);
+                        GC.getPlayer1().setFalling(true);
+                        temp = 0;
+                        incrementor = 0;
                     }
-                    //else if (GC.getPlayer1().getYSpeed() < -50){
-                      //  System.out.println("False");
-                        //GC.getPlayer1().setJumpStatus(false);
-                        //GC.getPlayer1().setFalling(true);
-                    //}
+
                 }
 
                 if (GC.getPlayer1().isFalling() == true) {
@@ -71,11 +70,12 @@ public class GameFrame extends JFrame implements MouseListener{
 
                 if (right == true) {
                     GC.getPlayer1().changeXSpeed(10);
-                    if (GC.getPlayer1().isJumping() == false){
+                    if (GC.getPlayer1().isJumping() == false) {
                         GC.getPlayer1().setFalling(true);
                     }
                 }
-                if (down == true) { //cancels any jump and makes bro start falling so that theres more vertical mobility
+                if (down == true) { // cancels any jump and makes bro start falling so that theres more vertical
+                                    // mobility
                     GC.getPlayer1().setFalling(true);
                     GC.getPlayer1().setJumpStatus(false);
                     temp = 0;
@@ -83,11 +83,11 @@ public class GameFrame extends JFrame implements MouseListener{
 
                 if (left == true) { // NO WORKY
                     GC.getPlayer1().changeXSpeed(-10);
-                    if (GC.getPlayer1().isJumping() == false){
+                    if (GC.getPlayer1().isJumping() == false) {
                         GC.getPlayer1().setFalling(true);
                     }
                 }
-                if (sKey == true){//shooting mech
+                if (sKey == true) {// shooting mech
                     GC.getPlayer1().shoot();
                 }
                 GC.getPlayer1().move();
@@ -100,17 +100,17 @@ public class GameFrame extends JFrame implements MouseListener{
                     GC.getPlayer1().changeXSpeed(0);
                 }
 
-                //bullet movement
-                if (GC.getBullet().getX() <= width && GC.getBullet().getX() >= 0 && GC.getBullet().getY() <= height && GC.getBullet().getY() >= 0){
+                // bullet movement
+                if (GC.getBullet().getX() <= width && GC.getBullet().getX() >= 0 && GC.getBullet().getY() <= height
+                        && GC.getBullet().getY() >= 0) {
                     GC.getBullet().shootMove(xVariable, yVariable);
                 }
-
 
                 for (Platform platform : GC.getPlatformList()) {
                     if (GC.getPlayer1().isColliding(platform)) {
                         System.out.println("Colliding");
                         int direction = GC.getPlayer1().collidingDirection(platform);
-                        if(platform.isSoft() == false){
+                        if (platform.isSoft() == false) {
                             if (direction == 1) { // TOP WALL
                                 System.out.println("direction = 1");
                                 GC.getPlayer1().setYPos(platform.getYPos() - GC.getPlayer1().getHeight());
@@ -132,13 +132,12 @@ public class GameFrame extends JFrame implements MouseListener{
                                 GC.getPlayer1().setXPos(platform.getXPos() + platform.getWidth());
                                 GC.getPlayer1().setFalling(true);
                             }
-                            
-                            
-                            //else{
-                              //  GC.getPlayer1().setFalling(true);
-                            //}
+
+                            // else{
+                            // GC.getPlayer1().setFalling(true);
+                            // }
                         }
-                        if(platform.isSoft() == true){
+                        if (platform.isSoft() == true) {
                             if (direction == 1) { // TOP WALL
                                 System.out.println("direction = 1");
                                 GC.getPlayer1().setYPos(platform.getYPos() - GC.getPlayer1().getHeight());
@@ -154,10 +153,10 @@ public class GameFrame extends JFrame implements MouseListener{
                                 GC.getPlayer1().setXPos(platform.getXPos() + platform.getWidth());
                                 GC.getPlayer1().setFalling(true);
                             }
-                            
-                        //else{
-                           // GC.getPlayer1().setFalling(true);
-                       // }
+
+                            // else{
+                            // GC.getPlayer1().setFalling(true);
+                            // }
                         }
                     }
                 }
@@ -168,30 +167,30 @@ public class GameFrame extends JFrame implements MouseListener{
     }
 
     @Override
-    public void mouseClicked(MouseEvent e){
+    public void mouseClicked(MouseEvent e) {
         System.out.println("Mouse has been clicked!");
     }
 
     @Override
-    public void mouseEntered(MouseEvent e){
-        
+    public void mouseEntered(MouseEvent e) {
+
     }
 
     @Override
-    public void mouseExited(MouseEvent e){
-        
+    public void mouseExited(MouseEvent e) {
+
     }
 
     @Override
-    public void mousePressed(MouseEvent e){
-        
+    public void mousePressed(MouseEvent e) {
+
     }
 
     @Override
-    public void mouseReleased(MouseEvent e){
-        int xPlayerCenter = (GC.getPlayer1().getXPos() + GC.getPlayer1().getWidth()/2);
-        int yPlayerCenter = (GC.getPlayer1().getYPos() + GC.getPlayer1().getHeight()/2);
-        xCord = e.getX() - xPlayerCenter;  //Measures from center of player
+    public void mouseReleased(MouseEvent e) {
+        int xPlayerCenter = (GC.getPlayer1().getXPos() + GC.getPlayer1().getWidth() / 2);
+        int yPlayerCenter = (GC.getPlayer1().getYPos() + GC.getPlayer1().getHeight() / 2);
+        xCord = e.getX() - xPlayerCenter; // Measures from center of player
         yCord = yPlayerCenter - e.getY();
 
         double angleRad = Math.atan2(yCord, xCord);
@@ -199,13 +198,15 @@ public class GameFrame extends JFrame implements MouseListener{
         double angleDeg = Math.toDegrees(angleRad);
         angleDeg = (angleDeg + 360) % 360;
 
-        xVariable = (float)Math.cos(angleRad);
-        yVariable = (float)Math.sin(angleRad)*(-1);
-        if(GC.getPlayer1().getCharType() == 0){
-            GC.getBullet().setXPos((int)(xPlayerCenter + xVariable * 10),(int)(xPlayerCenter + xVariable * 10 + xVariable * 10));
-            GC.getBullet().setYPos((int)(yPlayerCenter + yVariable * 10),(int)(yPlayerCenter + yVariable * 10 + yVariable * 10));
+        xVariable = (float) Math.cos(angleRad);
+        yVariable = (float) Math.sin(angleRad) * (-1);
+        if (GC.getPlayer1().getCharType() == 0) {
+            GC.getBullet().setXPos((int) (xPlayerCenter + xVariable * 10),
+                    (int) (xPlayerCenter + xVariable * 10 + xVariable * 10));
+            GC.getBullet().setYPos((int) (yPlayerCenter + yVariable * 10),
+                    (int) (yPlayerCenter + yVariable * 10 + yVariable * 10));
         }
-        
+
     }
 
     private void setUpKeyListener() {
