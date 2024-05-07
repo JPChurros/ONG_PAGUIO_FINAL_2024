@@ -8,19 +8,22 @@ import java.util.*;
 import javax.swing.Timer;
 
 public class GameCanvas extends JComponent {
-    private Player p1;
-    private Platform OOBplatform, platform1, platform2, platform3, platform4, platform5, platform6, platform7, platform8, platform9, platform10 ;
+    private Player p1, p2;
+    private Platform OOBplatform, platform1, platform2, platform3, platform4, platform5, platform6, platform7, platform8, platform9, platform10;
     private AmmoBox ammoBox;
     private ArrayList<Platform> platformlist;
     private ArrayList<Bullet> bulletList1, bulletList2;
-
+    private ArrayList<Player> playerList;
     public GameCanvas() {
-        p1 = new Player(100, 100, 20, 20, 0, 0, 0);
+        p1 = new Player(100, 100, 20, 20, 0, 0, 1);
+        p2 = new Player(680, 100, 20, 20, 0, 0, 0);
         //platformtest = new Platform(200, 200, 500, 20, Color.yellow, false);
         //platformSoftTest = new Platform(200, 450, 500, 20, Color.red, true);
         platformlist = new ArrayList<Platform>();
         bulletList1 = new ArrayList<Bullet>();
         bulletList2 = new ArrayList<Bullet>();
+        playerList = new ArrayList<Player>();
+        
         //platformlist.add(platformtest);
         //platformlist.add(platformSoftTest);
 
@@ -38,6 +41,9 @@ public class GameCanvas extends JComponent {
         platformlist.add(platform3);
         platformlist.add(platform4);
         platformlist.add(platform5);
+
+        playerList.add(p1);
+        playerList.add(p2);
 
         //bullet
 
@@ -60,6 +66,25 @@ public class GameCanvas extends JComponent {
             }
         }
 
+        if(getPlayer2().getCharType() == 0){
+            for(int i = 0; i < 5; i++){
+                Bullet bullet = new Bullet(-1000, -1000, -1001, -1001, 50, 50, Color.BLACK);
+                bulletList2.add(bullet);
+            }
+        }
+        else if(getPlayer2().getCharType() == 1){
+            for(int i = 0; i < 11; i++){
+                Bullet bullet = new Bullet(-1000, -1000, -1001, -1001, 50, 50, Color.BLACK);
+                bulletList2.add(bullet);
+            }
+        }
+        else if(getPlayer2().getCharType() == 2){
+            for(int i = 0; i < 9; i++){
+                Bullet bullet = new Bullet(-1000, -1000, -1001, -1001, 50, 50, Color.BLACK);
+                bulletList2.add(bullet);
+            }
+        }
+
         //AmmoBox
         ammoBox = new AmmoBox(390, 275, 20, 20);
     }
@@ -73,6 +98,9 @@ public class GameCanvas extends JComponent {
                 RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.setRenderingHints(rh);
         p1.draw(g2d);
+        p2.draw(g2d);
+
+        OOBplatform.draw(g2d);
         //platformtest.draw(g2d);
         //platformSoftTest.draw(g2d);
         platform1.draw(g2d);
@@ -92,6 +120,14 @@ public class GameCanvas extends JComponent {
 
     public Player getPlayer1() {
         return p1;
+    }
+    
+    public Player getPlayer2(){
+        return p2;
+    }
+
+    public ArrayList<Player> getPlayerList(){
+        return playerList;
     }
 
     public ArrayList<Platform> getPlatformList() {

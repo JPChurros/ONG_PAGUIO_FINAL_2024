@@ -10,7 +10,7 @@ import java.awt.event.*;
 
 public class GameFrame extends JFrame implements MouseListener, MouseMotionListener {
     private int width, height, xCord, yCord, baseBulletLife, mouseX, mouseY;
-    private float xVariable, yVariable;
+    private float xVariable, yVariable, xVariable1, xVariable2, yVariable1, yVariable2;
     private Container contentPane;
     private GameCanvas GC;
     private Timer animationTimer;
@@ -18,7 +18,7 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
     private boolean up, down, left, right, sKey, mouseHeld;
     private Platform testPlatform1;
     private JLabel label;
-    private int Ammo1, shootDelay1, shootDelayCounter1, totalBullet1, totalBulletCounter1;
+    private int AmmoClaimCounter, shootDelay1, shootDelayCounter1, totalBullet1, totalBulletCounter1;
 
     private int temp, incrementor, incrementor2;
 
@@ -35,7 +35,7 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
         temp = 0;
         incrementor = 0;
         incrementor2 = 0;
-        Ammo1 = 0;
+        AmmoClaimCounter = 180;
         mouseX = 0;
         mouseY = 0;
         totalBulletCounter1 = 0;
@@ -43,12 +43,12 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
             shootDelay1 = 15;
             totalBullet1 = 3;
         }
-        else if (GC.getPlayer1().getCharType() == 0){
-            shootDelay1 = 60;
+        else if (GC.getPlayer1().getCharType() == 1){
+            shootDelay1 = 30;
             totalBullet1 = 2;
         }
-        else if (GC.getPlayer1().getCharType() == 0){
-            shootDelay1 = 12;
+        else if (GC.getPlayer1().getCharType() == 2){
+            shootDelay1 = 5;
             totalBullet1 = 7;
         }
         shootDelayCounter1 = shootDelay1;
@@ -135,28 +135,104 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                     double angleDeg = Math.toDegrees(angleRad);
                     angleDeg = (angleDeg + 360) % 360;
 
+                    double angleDeg1 = (angleDeg + 5) % 360;
+                    double angleDeg2 = (angleDeg - 5) % 360;
+
+                    double angleRad1 = Math.toRadians(angleDeg1);
+                    double angleRad2 = Math.toRadians(angleDeg2);
+
                     xVariable = (float) Math.cos(angleRad);
                     yVariable = (float) Math.sin(angleRad) * (-1);
+
+                    xVariable1 = (float) Math.cos(angleRad1);
+                    yVariable1 = (float) Math.sin(angleRad1) * (-1);
+
+                    xVariable2 = (float) Math.cos(angleRad2);
+                    yVariable2 = (float) Math.sin(angleRad2) * (-1);
                     if (GC.getPlayer1().getCharType() == 0) {
                         baseBulletLife = 23;
-                        if(shootDelayCounter1 <= 0 && totalBulletCounter1 > 0){
+                        if (shootDelayCounter1 <= 0 && totalBulletCounter1 > 0) {
                             totalBulletCounter1 -= 1;
                             shootDelayCounter1 = shootDelay1;
-                        for(int i = 0; i < GC.getBulletList1().size(); i++){
-                            Bullet bullet = GC.getBulletList1().get(i);
-                            if (bullet.getX() <= width && bullet.getX() >= 0 && bullet.getY() <= height
-                            && bullet.getY() >= 0){
-                                continue;
-                            }
-                            else{
-                                bullet.resetBulletLife();
-                                bullet.setVariables(xVariable, yVariable);
-                                bullet.setXPos((int) (xPlayerCenter + xVariable * 10), (int) (xPlayerCenter + xVariable * 10 + xVariable * 10));
-                                bullet.setYPos((int) (yPlayerCenter + yVariable * 10), (int) (yPlayerCenter + yVariable * 10 + yVariable * 10));
-                                break;
+                            for (int i = 0; i < GC.getBulletList1().size(); i++) {
+                                Bullet bullet = GC.getBulletList1().get(i);
+                                if (bullet.getX() <= width && bullet.getX() >= 0 && bullet.getY() <= height
+                                        && bullet.getY() >= 0) {
+                                    continue;
+                                } 
+                                else {
+                                    bullet.resetBulletLife();
+                                    bullet.setVariables(xVariable, yVariable);
+                                    bullet.setXPos((int) (xPlayerCenter + xVariable * 10),
+                                            (int) (xPlayerCenter + xVariable * 10 + xVariable * 10));
+                                    bullet.setYPos((int) (yPlayerCenter + yVariable * 10),
+                                            (int) (yPlayerCenter + yVariable * 10 + yVariable * 10));
+                                    break;
+                                }
                             }
                         }
                     }
+                    else if (GC.getPlayer1().getCharType() == 1) {
+                        baseBulletLife = 17;
+                        if (shootDelayCounter1 <= 0 && totalBulletCounter1 > 0) {
+                            totalBulletCounter1 -= 1;
+                            shootDelayCounter1 = shootDelay1;
+                            for (int i = 0; i < GC.getBulletList1().size(); i++) {
+                                Bullet bullet = GC.getBulletList1().get(i);
+                                Bullet bullet1 = GC.getBulletList1().get(i+1);
+                                Bullet bullet2 = GC.getBulletList1().get(i+2);
+                                if (bullet.getX() <= width && bullet.getX() >= 0 && bullet.getY() <= height
+                                        && bullet.getY() >= 0) {
+                                    continue;
+                                } 
+                                else {
+                                    bullet.resetBulletLife();
+                                    bullet.setVariables(xVariable, yVariable);
+                                    bullet.setXPos((int) (xPlayerCenter + xVariable * 10),
+                                            (int) (xPlayerCenter + xVariable * 10 + xVariable * 10));
+                                    bullet.setYPos((int) (yPlayerCenter + yVariable * 10),
+                                            (int) (yPlayerCenter + yVariable * 10 + yVariable * 10));
+
+                                    bullet1.resetBulletLife();
+                                    bullet1.setVariables(xVariable1, yVariable1);
+                                    bullet1.setXPos((int) (xPlayerCenter + xVariable1 * 10),
+                                            (int) (xPlayerCenter + xVariable1 * 10 + xVariable1 * 10));
+                                    bullet1.setYPos((int) (yPlayerCenter + yVariable * 10),
+                                            (int) (yPlayerCenter + yVariable1 * 10 + yVariable1 * 10));
+
+                                    bullet2.resetBulletLife();
+                                    bullet2.setVariables(xVariable2, yVariable2);
+                                    bullet2.setXPos((int) (xPlayerCenter + xVariable2 * 10),
+                                            (int) (xPlayerCenter + xVariable2 * 10 + xVariable2 * 10));
+                                    bullet2.setYPos((int) (yPlayerCenter + yVariable * 10),
+                                            (int) (yPlayerCenter + yVariable2 * 10 + yVariable2 * 10));
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    else if (GC.getPlayer1().getCharType() == 2) {
+                        baseBulletLife = 12;
+                        if (shootDelayCounter1 <= 0 && totalBulletCounter1 > 0) {
+                            totalBulletCounter1 -= 1;
+                            shootDelayCounter1 = shootDelay1;
+                            for (int i = 0; i < GC.getBulletList1().size(); i++) {
+                                Bullet bullet = GC.getBulletList1().get(i);
+                                if (bullet.getX() <= width && bullet.getX() >= 0 && bullet.getY() <= height
+                                        && bullet.getY() >= 0) {
+                                    continue;
+                                } 
+                                else {
+                                    bullet.resetBulletLife();
+                                    bullet.setVariables(xVariable, yVariable);
+                                    bullet.setXPos((int) (xPlayerCenter + xVariable * 10),
+                                            (int) (xPlayerCenter + xVariable * 10 + xVariable * 10));
+                                    bullet.setYPos((int) (yPlayerCenter + yVariable * 10),
+                                            (int) (yPlayerCenter + yVariable * 10 + yVariable * 10));
+                                    break;
+                                }
+                            }
+                        }
                     }
                 }
 
@@ -182,6 +258,8 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                         }
                     }
                 }
+
+                //AmmoBox stuff
                 for(Platform platform : GC.getPlatformList()){
                     if(GC.getAmmoBox().isColliding(platform) == true){
                         GC.getAmmoBox().setYPos(platform.getYPos() - GC.getAmmoBox().getHeight());
@@ -194,6 +272,9 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                        totalBulletCounter1 = totalBullet1;
                     }
                 }
+
+                //COUNTERS
+                AmmoClaimCounter -= 1;
                 shootDelayCounter1 -= 1;
 
                 for (Platform platform : GC.getPlatformList()) {
