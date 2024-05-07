@@ -18,8 +18,7 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
     private boolean up, down, left, right, sKey, mouseHeld;
     private Platform testPlatform1;
     private JLabel label;
-    private Bullet rifleBullet, shotgunBullet1, shotgunBullet2, shotgunBullet3, smgBullet1, smgBullet2, smgBullet3;
-    private int Ammo1, shootDelay1, shootDelayCounter1;
+    private int Ammo1, shootDelay1, shootDelayCounter1, totalBullet1, totalBulletCounter1;
 
     private int temp, incrementor, incrementor2;
 
@@ -40,13 +39,16 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
         mouseX = 0;
         mouseY = 0;
         if (GC.getPlayer1().getCharType() == 0){
-            shootDelay1 = 30;
+            shootDelay1 = 15;
+            totalBullet1 = 3;
         }
         else if (GC.getPlayer1().getCharType() == 0){
             shootDelay1 = 60;
+            totalBullet1 = 2;
         }
         else if (GC.getPlayer1().getCharType() == 0){
             shootDelay1 = 12;
+            totalBullet1 = 7;
         }
         shootDelayCounter1 = shootDelay1;
     }
@@ -135,7 +137,9 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                     xVariable = (float) Math.cos(angleRad);
                     yVariable = (float) Math.sin(angleRad) * (-1);
                     if (GC.getPlayer1().getCharType() == 0) {
-                        baseBulletLife = 15;
+                        baseBulletLife = 23;
+                        if(shootDelayCounter1 <= 0){
+                            shootDelayCounter1 = shootDelay1;
                         for(int i = 0; i < GC.getBulletList1().size(); i++){
                             Bullet bullet = GC.getBulletList1().get(i);
                             if (bullet.getX() <= width && bullet.getX() >= 0 && bullet.getY() <= height
@@ -150,6 +154,7 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                                 break;
                             }
                         }
+                    }
                     }
                 }
 
@@ -195,7 +200,7 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                         }
                     }
                 }
-                shootDelay1 -= 1;
+                shootDelayCounter1 -= 1;
 
                 for (Platform platform : GC.getPlatformList()) {
                     if (GC.getPlayer1().isColliding(platform)) {
