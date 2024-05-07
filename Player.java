@@ -88,29 +88,22 @@ public class Player {
         return charType;
     }
 
-    public int shoot(){
-        int charMid = height/2;
-        if(charType == 0){
-            return 200;
-        }
-        else if(charType == 1){
-            return 150;
-        }
-        else if(charType == 2){
-            return 100;
-        }
-        else{
-            return 0;
-        }
-    }
-
     public boolean isColliding(Platform other) {
         if (xPos + this.width < other.getXPos() ||
                 xPos >= other.getXPos() + other.getWidth() ||
                 yPos + this.height <= other.getYPos() ||
                 yPos >= other.getYPos() + other.getHeight()) {
-            // System.out.println(this.getXPos());
-            // System.out.println(this.getYPos());
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public boolean isCollidingAmmo(AmmoBox other) {
+        if (xPos + this.width < other.getXPos() ||
+                xPos >= other.getXPos() + other.getWidth() ||
+                yPos + this.height <= other.getYPos() ||
+                yPos >= other.getYPos() + other.getHeight()) {
             return false;
         } else {
             return true;

@@ -19,6 +19,7 @@ public class GameFrame extends JFrame implements MouseListener {
     private Platform testPlatform1;
     private JLabel label;
     private Bullet rifleBullet, shotgunBullet1, shotgunBullet2, shotgunBullet3, smgBullet1, smgBullet2, smgBullet3;
+    private int Ammo1;
 
     private int temp, incrementor, incrementor2;
 
@@ -34,6 +35,7 @@ public class GameFrame extends JFrame implements MouseListener {
         temp = 0;
         incrementor = 0;
         incrementor2 = 0;
+        Ammo1 = 0;
     }
 
     private void setUpAnimationTimer() {
@@ -95,9 +97,6 @@ public class GameFrame extends JFrame implements MouseListener {
                         GC.getPlayer1().setFalling(true);
                     }
                 }
-                if (sKey == true) {// shooting mech
-                    GC.getPlayer1().shoot();
-                }
                 GC.getPlayer1().move();
                 GC.repaint();
 
@@ -117,6 +116,7 @@ public class GameFrame extends JFrame implements MouseListener {
                         GC.getBullet().setXPos(-1000, -1000);
                         GC.getBullet().setYPos(-1000, -1000);
                     }
+
                 }
                 for(Platform platform : GC.getPlatformList()){
                     if (platform.isSoft() == false){
@@ -125,9 +125,19 @@ public class GameFrame extends JFrame implements MouseListener {
                         GC.getBullet().setYPos(-1000, -1000);
                     }
                     else if(platform.isSoft() == true){
-
                     }
                     }
+                    if (GC.getAmmoBox().isColliding(platform) == true){
+                        GC.getAmmoBox().setYPos(platform.getYPos() - GC.getAmmoBox().getHeight());
+                    }
+                    else{
+                        GC.getAmmoBox().drop();
+                    }
+                }
+                if(GC.getPlayer1().isCollidingAmmo(GC.getAmmoBox())){
+                    Ammo1 = 1;
+                    GC.getAmmoBox().setYPos(-950);
+                    System.out.println("Player has 1 ammo");
                 }
 
                 for (Platform platform : GC.getPlatformList()) {
@@ -258,9 +268,6 @@ public class GameFrame extends JFrame implements MouseListener {
                     case KeyEvent.VK_RIGHT:
                         // System.out.println("RIGHT PRESSED");
                         right = true;
-                        break;
-                    case KeyEvent.VK_S:
-                        sKey = true;
                         break;
                 }
             }
