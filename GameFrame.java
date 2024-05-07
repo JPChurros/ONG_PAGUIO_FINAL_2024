@@ -19,7 +19,7 @@ public class GameFrame extends JFrame implements MouseListener {
     private Platform testPlatform1;
     private JLabel label;
     private Bullet rifleBullet, shotgunBullet1, shotgunBullet2, shotgunBullet3, smgBullet1, smgBullet2, smgBullet3;
-    private int Ammo1;
+    private int Ammo1, shootDelay1, shootDelayCounter1;
 
     private int temp, incrementor, incrementor2;
 
@@ -36,6 +36,16 @@ public class GameFrame extends JFrame implements MouseListener {
         incrementor = 0;
         incrementor2 = 0;
         Ammo1 = 0;
+        if (GC.getPlayer1().getCharType() == 0){
+            shootDelay1 = 30;
+        }
+        else if (GC.getPlayer1().getCharType() == 0){
+            shootDelay1 = 60;
+        }
+        else if (GC.getPlayer1().getCharType() == 0){
+            shootDelay1 = 12;
+        }
+        shootDelayCounter1 = shootDelay1;
     }
 
     private void setUpAnimationTimer() {
@@ -149,6 +159,7 @@ public class GameFrame extends JFrame implements MouseListener {
                         }
                     }
                 }
+                shootDelay1 -= 1;
 
                 for (Platform platform : GC.getPlatformList()) {
                     if (GC.getPlayer1().isColliding(platform)) {
