@@ -38,6 +38,7 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
         Ammo1 = 0;
         mouseX = 0;
         mouseY = 0;
+        totalBulletCounter1 = 0;
         if (GC.getPlayer1().getCharType() == 0){
             shootDelay1 = 15;
             totalBullet1 = 3;
@@ -138,7 +139,8 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                     yVariable = (float) Math.sin(angleRad) * (-1);
                     if (GC.getPlayer1().getCharType() == 0) {
                         baseBulletLife = 23;
-                        if(shootDelayCounter1 <= 0){
+                        if(shootDelayCounter1 <= 0 && totalBulletCounter1 > 0){
+                            totalBulletCounter1 -= 1;
                             shootDelayCounter1 = shootDelay1;
                         for(int i = 0; i < GC.getBulletList1().size(); i++){
                             Bullet bullet = GC.getBulletList1().get(i);
@@ -189,15 +191,7 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                     }
                     if(GC.getPlayer1().isCollidingAmmo(GC.getAmmoBox())){
                         GC.getAmmoBox().setYPos(-950);
-                        if(GC.getPlayer1().getCharType() == 0){
-                            Ammo1 = 3;
-                        }
-                        else if(GC.getPlayer1().getCharType() == 1){
-                            Ammo1 = 2;
-                        }
-                        else if(GC.getPlayer1().getCharType() == 2){
-                            Ammo1 = 5;
-                        }
+                       totalBulletCounter1 = totalBullet1;
                     }
                 }
                 shootDelayCounter1 -= 1;
