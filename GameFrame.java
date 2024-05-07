@@ -8,14 +8,14 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
 
-public class GameFrame extends JFrame implements MouseListener {
-    private int width, height, xCord, yCord, baseBulletLife;
+public class GameFrame extends JFrame implements MouseListener, MouseMotionListener {
+    private int width, height, xCord, yCord, baseBulletLife, mouseX, mouseY;
     private float xVariable, yVariable;
     private Container contentPane;
     private GameCanvas GC;
     private Timer animationTimer;
     private Player player1, player2;
-    private boolean up, down, left, right, sKey;
+    private boolean up, down, left, right, sKey, mouseHeld;
     private Platform testPlatform1;
     private JLabel label;
     private Bullet rifleBullet, shotgunBullet1, shotgunBullet2, shotgunBullet3, smgBullet1, smgBullet2, smgBullet3;
@@ -32,10 +32,13 @@ public class GameFrame extends JFrame implements MouseListener {
         down = false;
         left = false;
         right = false;
+        mouseHeld = false;
         temp = 0;
         incrementor = 0;
         incrementor2 = 0;
         Ammo1 = 0;
+        mouseX = 0;
+        mouseY = 0;
         if (GC.getPlayer1().getCharType() == 0){
             shootDelay1 = 30;
         }
@@ -115,6 +118,39 @@ public class GameFrame extends JFrame implements MouseListener {
                 }
                 if (right == false || left == false) {
                     GC.getPlayer1().changeXSpeed(0);
+                }
+
+                //bullet calculation
+                if(mouseHeld == true){
+                    int xPlayerCenter = (GC.getPlayer1().getXPos() + GC.getPlayer1().getWidth() / 2);
+                    int yPlayerCenter = (GC.getPlayer1().getYPos() + GC.getPlayer1().getHeight() / 2);
+                    xCord = mouseX - xPlayerCenter; // Measures from center of player
+                    yCord = yPlayerCenter - mouseY;
+
+                    double angleRad = Math.atan2(yCord, xCord);
+
+                    double angleDeg = Math.toDegrees(angleRad);
+                    angleDeg = (angleDeg + 360) % 360;
+
+                    xVariable = (float) Math.cos(angleRad);
+                    yVariable = (float) Math.sin(angleRad) * (-1);
+                    if (GC.getPlayer1().getCharType() == 0) {
+                        baseBulletLife = 15;
+                        for(int i = 0; i < GC.getBulletList1().size(); i++){
+                            Bullet bullet = GC.getBulletList1().get(i);
+                            if (bullet.getX() <= width && bullet.getX() >= 0 && bullet.getY() <= height
+                            && bullet.getY() >= 0){
+                                continue;
+                            }
+                            else{
+                                bullet.resetBulletLife();
+                                bullet.setVariables(xVariable, yVariable);
+                                bullet.setXPos((int) (xPlayerCenter + xVariable * 10), (int) (xPlayerCenter + xVariable * 10 + xVariable * 10));
+                                bullet.setYPos((int) (yPlayerCenter + yVariable * 10), (int) (yPlayerCenter + yVariable * 10 + yVariable * 10));
+                                break;
+                            }
+                        }
+                    }
                 }
 
                 // bullet movement
@@ -238,40 +274,25 @@ public class GameFrame extends JFrame implements MouseListener {
 
     @Override
     public void mousePressed(MouseEvent e) {
-        int xPlayerCenter = (GC.getPlayer1().getXPos() + GC.getPlayer1().getWidth() / 2);
-        int yPlayerCenter = (GC.getPlayer1().getYPos() + GC.getPlayer1().getHeight() / 2);
-        xCord = e.getX() - xPlayerCenter; // Measures from center of player
-        yCord = yPlayerCenter - e.getY();
-
-        double angleRad = Math.atan2(yCord, xCord);
-
-        double angleDeg = Math.toDegrees(angleRad);
-        angleDeg = (angleDeg + 360) % 360;
-
-        xVariable = (float) Math.cos(angleRad);
-        yVariable = (float) Math.sin(angleRad) * (-1);
-        if (GC.getPlayer1().getCharType() == 0) {
-            baseBulletLife = 15;
-            for(int i = 0; i < GC.getBulletList1().size(); i++){
-                Bullet bullet = GC.getBulletList1().get(i);
-                if (bullet.getX() <= width && bullet.getX() >= 0 && bullet.getY() <= height
-                && bullet.getY() >= 0){
-                    continue;
-                }
-                else{
-                    bullet.resetBulletLife();
-                    bullet.setVariables(xVariable, yVariable);
-                    bullet.setXPos((int) (xPlayerCenter + xVariable * 10), (int) (xPlayerCenter + xVariable * 10 + xVariable * 10));
-                    bullet.setYPos((int) (yPlayerCenter + yVariable * 10), (int) (yPlayerCenter + yVariable * 10 + yVariable * 10));
-                    break;
-                }
-            }
-        }
+        mouseX = e.getX();
+        mouseY = e.getY();
+        mouseHeld = true;
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        
+        mouseHeld = false;
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent e){
+        mouseX = e.getX();
+        mouseY = e.getY();
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e){
+
     }
 
     private void setUpKeyListener() {
@@ -333,6 +354,7 @@ public class GameFrame extends JFrame implements MouseListener {
         label.setBounds(0, 0, width, height);
         label.setBackground(Color.white);
         label.addMouseListener(this);
+        label.addMouseMotionListener(this);
         this.setTitle("Wild Whisker Shootout");
         contentPane.setPreferredSize(new Dimension(width, height));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
