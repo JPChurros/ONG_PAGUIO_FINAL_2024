@@ -108,36 +108,46 @@ public class GameFrame extends JFrame implements MouseListener {
                 }
 
                 // bullet movement
-                if (GC.getBullet().getX() <= width && GC.getBullet().getX() >= 0 && GC.getBullet().getY() <= height
-                        && GC.getBullet().getY() >= 0) {
-                    GC.getBullet().shootMove(xVariable, yVariable);
-                    GC.getBullet().increaseBulletLife();
-                    if(GC.getBullet().getBulletLife() >= baseBulletLife){
-                        GC.getBullet().setXPos(-1000, -1000);
-                        GC.getBullet().setYPos(-1000, -1000);
-                    }
+                for(Bullet bullet : GC.getBulletList1()){
+                    if(bullet.getX() <= width && bullet.getX() >= 0 && bullet.getY() <= height && bullet.getY() >= 0){
+                        bullet.shootMove();
+                        bullet.increaseBulletLife();
+                        if(bullet.getBulletLife() >= baseBulletLife){
+                            bullet.setXPos(-1000, -1001);
+                            bullet.setYPos(-1000, -1001);
+                        }
+                        for(Platform platform : GC.getPlatformList()){
+                            if(platform.isSoft() == false){
+                                if(bullet.isCollidingBullet(platform)){
+                                    bullet.setXPos(-1000, -1001);
+                                    bullet.setYPos(-1000, -1001);
+                                }
+                            }
+                            else if(platform.isSoft() == true){
 
+                            }
+                        }
+                    }
                 }
                 for(Platform platform : GC.getPlatformList()){
-                    if (platform.isSoft() == false){
-                    if (GC.getBullet().isCollidingBullet(platform)){
-                        GC.getBullet().setXPos(-1000, -1000);
-                        GC.getBullet().setYPos(-1000, -1000);
-                    }
-                    else if(platform.isSoft() == true){
-                    }
-                    }
-                    if (GC.getAmmoBox().isColliding(platform) == true){
+                    if(GC.getAmmoBox().isColliding(platform) == true){
                         GC.getAmmoBox().setYPos(platform.getYPos() - GC.getAmmoBox().getHeight());
                     }
                     else{
                         GC.getAmmoBox().drop();
                     }
-                }
-                if(GC.getPlayer1().isCollidingAmmo(GC.getAmmoBox())){
-                    Ammo1 = 1;
-                    GC.getAmmoBox().setYPos(-950);
-                    System.out.println("Player has 1 ammo");
+                    if(GC.getPlayer1().isCollidingAmmo(GC.getAmmoBox())){
+                        GC.getAmmoBox().setYPos(-950);
+                        if(GC.getPlayer1().getCharType() == 0){
+                            Ammo1 = 3;
+                        }
+                        else if(GC.getPlayer1().getCharType() == 1){
+                            Ammo1 = 2;
+                        }
+                        else if(GC.getPlayer1().getCharType() == 2){
+                            Ammo1 = 5;
+                        }
+                    }
                 }
 
                 for (Platform platform : GC.getPlatformList()) {
@@ -202,7 +212,7 @@ public class GameFrame extends JFrame implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        System.out.println("Mouse has been clicked!");
+
     }
 
     @Override
@@ -217,11 +227,6 @@ public class GameFrame extends JFrame implements MouseListener {
 
     @Override
     public void mousePressed(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
         int xPlayerCenter = (GC.getPlayer1().getXPos() + GC.getPlayer1().getWidth() / 2);
         int yPlayerCenter = (GC.getPlayer1().getYPos() + GC.getPlayer1().getHeight() / 2);
         xCord = e.getX() - xPlayerCenter; // Measures from center of player
@@ -235,14 +240,27 @@ public class GameFrame extends JFrame implements MouseListener {
         xVariable = (float) Math.cos(angleRad);
         yVariable = (float) Math.sin(angleRad) * (-1);
         if (GC.getPlayer1().getCharType() == 0) {
-            GC.getBullet().resetBulletLife();
             baseBulletLife = 15;
-            GC.getBullet().setXPos((int) (xPlayerCenter + xVariable * 10),
-                    (int) (xPlayerCenter + xVariable * 10 + xVariable * 10));
-            GC.getBullet().setYPos((int) (yPlayerCenter + yVariable * 10),
-                    (int) (yPlayerCenter + yVariable * 10 + yVariable * 10));
+            for(int i = 0; i < GC.getBulletList1().size(); i++){
+                Bullet bullet = GC.getBulletList1().get(i);
+                if (bullet.getX() <= width && bullet.getX() >= 0 && bullet.getY() <= height
+                && bullet.getY() >= 0){
+                    continue;
+                }
+                else{
+                    bullet.resetBulletLife();
+                    bullet.setVariables(xVariable, yVariable);
+                    bullet.setXPos((int) (xPlayerCenter + xVariable * 10), (int) (xPlayerCenter + xVariable * 10 + xVariable * 10));
+                    bullet.setYPos((int) (yPlayerCenter + yVariable * 10), (int) (yPlayerCenter + yVariable * 10 + yVariable * 10));
+                    break;
+                }
+            }
         }
+    }
 
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        
     }
 
     private void setUpKeyListener() {

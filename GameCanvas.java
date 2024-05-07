@@ -9,16 +9,18 @@ import javax.swing.Timer;
 
 public class GameCanvas extends JComponent {
     private Player p1;
-    private Bullet rifleBullet;
     private Platform OOBplatform, platform1, platform2, platform3, platform4, platform5, platform6, platform7, platform8, platform9, platform10 ;
     private AmmoBox ammoBox;
     private ArrayList<Platform> platformlist;
+    private ArrayList<Bullet> bulletList1, bulletList2;
 
     public GameCanvas() {
         p1 = new Player(100, 100, 20, 20, 0, 0, 0);
         //platformtest = new Platform(200, 200, 500, 20, Color.yellow, false);
         //platformSoftTest = new Platform(200, 450, 500, 20, Color.red, true);
         platformlist = new ArrayList<Platform>();
+        bulletList1 = new ArrayList<Bullet>();
+        bulletList2 = new ArrayList<Bullet>();
         //platformlist.add(platformtest);
         //platformlist.add(platformSoftTest);
 
@@ -38,8 +40,24 @@ public class GameCanvas extends JComponent {
         platformlist.add(platform5);
 
         //bullet
+
         if(getPlayer1().getCharType() == 0){
-            rifleBullet = new Bullet(-1000, -1000, -1001, -1001, 50, 50, Color.BLACK);
+            for(int i = 0; i < 5; i++){
+                Bullet bullet = new Bullet(-1000, -1000, -1001, -1001, 50, 50, Color.BLACK);
+                bulletList1.add(bullet);
+            }
+        }
+        else if(getPlayer1().getCharType() == 1){
+            for(int i = 0; i < 11; i++){
+                Bullet bullet = new Bullet(-1000, -1000, -1001, -1001, 50, 50, Color.BLACK);
+                bulletList1.add(bullet);
+            }
+        }
+        else if(getPlayer1().getCharType() == 2){
+            for(int i = 0; i < 9; i++){
+                Bullet bullet = new Bullet(-1000, -1000, -1001, -1001, 50, 50, Color.BLACK);
+                bulletList1.add(bullet);
+            }
         }
 
         //AmmoBox
@@ -63,8 +81,8 @@ public class GameCanvas extends JComponent {
         platform4.draw(g2d);
         platform5.draw(g2d);
 
-        if(getPlayer1().getCharType() == 0){
-            rifleBullet.draw(g2d);
+        for (Bullet bullet : bulletList1){
+            bullet.draw(g2d);
         }
 
         ammoBox.draw(g2d);
@@ -80,11 +98,8 @@ public class GameCanvas extends JComponent {
         return platformlist;
     }
 
-    public Bullet getBullet(){
-        if(getPlayer1().getCharType() == 0){
-            return rifleBullet;
-        }
-        return rifleBullet;
+    public ArrayList<Bullet> getBulletList1(){
+        return bulletList1;
     }
 
     public AmmoBox getAmmoBox(){

@@ -26,6 +26,11 @@ public class Bullet {
         g2d.draw(temp);
     }
 
+    public void setVariables(float xVar, float yVar){
+        this.xVariable = xVar;
+        this.yVariable = yVar;
+    }
+
     public int getX(){
         return x1;
     }
@@ -33,9 +38,7 @@ public class Bullet {
         return y1;
     }
 
-    public void shootMove(float xVariable, float yVariable){
-        this.xVariable = xVariable;
-        this.yVariable = yVariable;
+    public void shootMove(){
         this.setXPos(this.x1 += xVariable*18, this.x2 += xVariable*18);
         this.setYPos(this.y1 += yVariable*18, this.y2 += yVariable*18);
     }
