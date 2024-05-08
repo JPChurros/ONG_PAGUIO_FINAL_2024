@@ -16,9 +16,9 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
     private Container contentPane;
     private GameCanvas GC;
     private Timer animationTimer;
-    private Player player1, player2;
     private boolean up, down, left, right, sKey, mouseHeld;
     private Platform testPlatform1;
+    private Player player1, player2;
     private JLabel label;
     private int AmmoClaimCounter, shootDelay1, shootDelayCounter1, totalBullet1, totalBulletCounter1;
     private Socket socket;
@@ -31,6 +31,11 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
         height = h;
         GC = new GameCanvas();
         player1 = GC.getPlayer1();
+        player2 = GC.getPlayer2();
+        if (playerID == 2) {
+            player1 = GC.getPlayer2();
+            player2 = GC.getPlayer1();
+        }
         up = false;
         down = false;
         left = false;
@@ -43,13 +48,13 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
         mouseX = 0;
         mouseY = 0;
         totalBulletCounter1 = 0;
-        if (GC.getPlayer1().getCharType() == 0) {
+        if (player1.getCharType() == 0) {
             shootDelay1 = 15;
             totalBullet1 = 3;
-        } else if (GC.getPlayer1().getCharType() == 1) {
+        } else if (player1.getCharType() == 1) {
             shootDelay1 = 30;
             totalBullet1 = 2;
-        } else if (GC.getPlayer1().getCharType() == 2) {
+        } else if (player1.getCharType() == 2) {
             shootDelay1 = 5;
             totalBullet1 = 7;
         }
@@ -95,26 +100,26 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
 
                 }
 
-                if (GC.getPlayer1().isJumping() == true) {
+                if (player1.isJumping() == true) {
                     temp = temp - 5; // in this case temp is the distance travelled by the
                                      // player. the value here should be the speed.
-                    GC.getPlayer1().changeYSpeed(-17 + incrementor); // plus cuz it should slow
+                    player1.changeYSpeed(-17 + incrementor); // plus cuz it should slow
                                                                      // down.
                     incrementor++;
                     // System.out.println(GC.getPlayer1().getYSpeed());
                     if (incrementor + -17 == 0) {
                         System.out.println("False");
-                        GC.getPlayer1().setJumpStatus(false);
-                        GC.getPlayer1().setFalling(true);
+                        player1.setJumpStatus(false);
+                        player1.setFalling(true);
                         temp = 0;
                         incrementor = 0;
                     }
 
                 }
 
-                if (GC.getPlayer1().isFalling() == true) {
+                if (player1.isFalling() == true) {
                     // System.out.println(incrementor2);
-                    GC.getPlayer1().changeYSpeed(incrementor2);
+                    player1.changeYSpeed(incrementor2);
                     if (incrementor2 < 17) {
                         incrementor2++;
                     }
@@ -123,39 +128,39 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                 }
 
                 if (right == true) {
-                    GC.getPlayer1().changeXSpeed(10);
-                    if (GC.getPlayer1().isJumping() == false) {
-                        GC.getPlayer1().setFalling(true);
+                    player1.changeXSpeed(10);
+                    if (player1.isJumping() == false) {
+                        player1.setFalling(true);
                     }
                 }
                 if (down == true) { // cancels any jump and makes bro start falling so that theres more vertical
                                     // mobility
-                    GC.getPlayer1().setFalling(true);
-                    GC.getPlayer1().setJumpStatus(false);
+                    player1.setFalling(true);
+                    player1.setJumpStatus(false);
                     temp = 0;
                     incrementor = 0;
                 }
 
                 if (left == true) { // NO WORKY
-                    GC.getPlayer1().changeXSpeed(-10);
-                    if (GC.getPlayer1().isJumping() == false) {
-                        GC.getPlayer1().setFalling(true);
+                    player1.changeXSpeed(-10);
+                    if (player1.isJumping() == false) {
+                        player1.setFalling(true);
                     }
                 }
-                GC.getPlayer1().move();
+                player1.move();
                 GC.repaint();
 
                 if (up == false || down == false) {
-                    GC.getPlayer1().changeYSpeed(0);
+                    player1.changeYSpeed(0);
                 }
                 if (right == false || left == false) {
-                    GC.getPlayer1().changeXSpeed(0);
+                    player1.changeXSpeed(0);
                 }
 
                 // bullet calculation
                 if (mouseHeld == true) {
-                    int xPlayerCenter = (GC.getPlayer1().getXPos() + GC.getPlayer1().getWidth() / 2);
-                    int yPlayerCenter = (GC.getPlayer1().getYPos() + GC.getPlayer1().getHeight() / 2);
+                    int xPlayerCenter = (player1.getXPos() + player1.getWidth() / 2);
+                    int yPlayerCenter = (player1.getYPos() + player1.getHeight() / 2);
                     xCord = mouseX - xPlayerCenter; // Measures from center of player
                     yCord = yPlayerCenter - mouseY;
 
@@ -178,7 +183,7 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
 
                     xVariable2 = (float) Math.cos(angleRad2);
                     yVariable2 = (float) Math.sin(angleRad2) * (-1);
-                    if (GC.getPlayer1().getCharType() == 0) {
+                    if (player1.getCharType() == 0) {
                         baseBulletLife = 23;
                         if (shootDelayCounter1 <= 0 && totalBulletCounter1 > 0) {
                             totalBulletCounter1 -= 1;
@@ -199,7 +204,7 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                                 }
                             }
                         }
-                    } else if (GC.getPlayer1().getCharType() == 1) {
+                    } else if (player1.getCharType() == 1) {
                         baseBulletLife = 17;
                         if (shootDelayCounter1 <= 0 && totalBulletCounter1 > 0) {
                             totalBulletCounter1 -= 1;
@@ -236,7 +241,7 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                                 }
                             }
                         }
-                    } else if (GC.getPlayer1().getCharType() == 2) {
+                    } else if (player1.getCharType() == 2) {
                         baseBulletLife = 12;
                         if (shootDelayCounter1 <= 0 && totalBulletCounter1 > 0) {
                             totalBulletCounter1 -= 1;
@@ -289,7 +294,7 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                     } else {
                         GC.getAmmoBox().drop();
                     }
-                    if (GC.getPlayer1().isCollidingAmmo(GC.getAmmoBox())) {
+                    if (player1.isCollidingAmmo(GC.getAmmoBox())) {
                         GC.getAmmoBox().setYPos(-950);
                         totalBulletCounter1 = totalBullet1;
                     }
@@ -300,30 +305,30 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                 shootDelayCounter1 -= 1;
 
                 for (Platform platform : GC.getPlatformList()) {
-                    if (GC.getPlayer1().isColliding(platform)) {
+                    if (player1.isColliding(platform)) {
                         System.out.println("Colliding");
-                        int direction = GC.getPlayer1().collidingDirection(platform);
+                        int direction = player1.collidingDirection(platform);
                         if (platform.isSoft() == false) {
                             if (direction == 1) { // TOP WALL
                                 System.out.println("direction = 1");
-                                GC.getPlayer1().setYPos(platform.getYPos() - GC.getPlayer1().getHeight());
-                                GC.getPlayer1().setFalling(false);
+                                player1.setYPos(platform.getYPos() - player1.getHeight());
+                                player1.setFalling(false);
                             }
                             if (direction == 2) {
                                 System.out.println("direction = 2");
-                                GC.getPlayer1().setYPos(platform.getYPos() + platform.getHeight());
-                                GC.getPlayer1().setFalling(true);
+                                player1.setYPos(platform.getYPos() + platform.getHeight());
+                                player1.setFalling(true);
 
                             }
                             if (direction == 3) { // LEFT WALL
                                 System.out.println("Direction == 3");
-                                GC.getPlayer1().setXPos(platform.getXPos() - GC.getPlayer1().getWidth());
-                                GC.getPlayer1().setFalling(true);
+                                player1.setXPos(platform.getXPos() - player1.getWidth());
+                                player1.setFalling(true);
                             }
                             if (direction == 4) { // RIGHT WALL
                                 System.out.println("Direction = 4");
-                                GC.getPlayer1().setXPos(platform.getXPos() + platform.getWidth());
-                                GC.getPlayer1().setFalling(true);
+                                player1.setXPos(platform.getXPos() + platform.getWidth());
+                                player1.setFalling(true);
                             }
 
                             // else{
@@ -333,18 +338,18 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                         if (platform.isSoft() == true) {
                             if (direction == 1) { // TOP WALL
                                 System.out.println("direction = 1");
-                                GC.getPlayer1().setYPos(platform.getYPos() - GC.getPlayer1().getHeight());
-                                GC.getPlayer1().setFalling(false);
+                                player1.setYPos(platform.getYPos() - player1.getHeight());
+                                player1.setFalling(false);
                             }
                             if (direction == 3) { // LEFT WALL
                                 System.out.println("Direction == 3");
-                                GC.getPlayer1().setXPos(platform.getXPos() - GC.getPlayer1().getWidth());
-                                GC.getPlayer1().setFalling(true);
+                                player1.setXPos(platform.getXPos() - player1.getWidth());
+                                player1.setFalling(true);
                             }
                             if (direction == 4) { // RIGHT WALL
                                 System.out.println("Direction = 4");
-                                GC.getPlayer1().setXPos(platform.getXPos() + platform.getWidth());
-                                GC.getPlayer1().setFalling(true);
+                                player1.setXPos(platform.getXPos() + platform.getWidth());
+                                player1.setFalling(true);
                             }
 
                             // else{
@@ -462,9 +467,9 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.pack(); // idk what this does no lie
         GC = new GameCanvas();
-        this.createPlayers(); // ???
         contentPane.add(label);
         contentPane.add(GC);
+        createPlayers();
         this.setVisible(true);
         this.setLayout(null);
         setUpAnimationTimer();
