@@ -7,6 +7,8 @@
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
+import java.io.*;
+import java.net.*;
 
 public class GameFrame extends JFrame implements MouseListener, MouseMotionListener {
     private int width, height, xCord, yCord, baseBulletLife, mouseX, mouseY;
@@ -19,6 +21,8 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
     private Platform testPlatform1;
     private JLabel label;
     private int AmmoClaimCounter, shootDelay1, shootDelayCounter1, totalBullet1, totalBulletCounter1;
+    private Socket socket;
+    private int playerID;
 
     private int temp, incrementor, incrementor2;
 
@@ -39,19 +43,33 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
         mouseX = 0;
         mouseY = 0;
         totalBulletCounter1 = 0;
-        if (GC.getPlayer1().getCharType() == 0){
+        if (GC.getPlayer1().getCharType() == 0) {
             shootDelay1 = 15;
             totalBullet1 = 3;
-        }
-        else if (GC.getPlayer1().getCharType() == 1){
+        } else if (GC.getPlayer1().getCharType() == 1) {
             shootDelay1 = 30;
             totalBullet1 = 2;
-        }
-        else if (GC.getPlayer1().getCharType() == 2){
+        } else if (GC.getPlayer1().getCharType() == 2) {
             shootDelay1 = 5;
             totalBullet1 = 7;
         }
         shootDelayCounter1 = shootDelay1;
+    }
+
+    public void connectToServer() {
+        try {
+            socket = new Socket("localhost", 12345); // LOCALHOST
+            DataInputStream in = new DataInputStream(socket.getInputStream());
+            DataOutputStream out = new DataOutputStream(socket.getOutputStream());
+            playerID = in.readInt();
+            System.out.println("You are player#" + playerID);
+            if (playerID == 1) {
+                System.out.println("Waiting for player #2 to connect");
+
+            }
+        } catch (IOException ie) {
+            System.out.println("IOException from ConnectToServer in GameFrame");
+        }
     }
 
     private void setUpAnimationTimer() {
@@ -72,7 +90,7 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                     GC.getPlayer1().changeYSpeed(-17 + incrementor); // plus cuz it should slow
                                                                      // down.
                     incrementor++;
-                    System.out.println(GC.getPlayer1().getYSpeed());
+                    // System.out.println(GC.getPlayer1().getYSpeed());
                     if (incrementor + -17 == 0) {
                         System.out.println("False");
                         GC.getPlayer1().setJumpStatus(false);
@@ -84,7 +102,7 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                 }
 
                 if (GC.getPlayer1().isFalling() == true) {
-                    System.out.println(incrementor2);
+                    // System.out.println(incrementor2);
                     GC.getPlayer1().changeYSpeed(incrementor2);
                     if (incrementor2 < 17) {
                         incrementor2++;
@@ -123,8 +141,8 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                     GC.getPlayer1().changeXSpeed(0);
                 }
 
-                //bullet calculation
-                if(mouseHeld == true){
+                // bullet calculation
+                if (mouseHeld == true) {
                     int xPlayerCenter = (GC.getPlayer1().getXPos() + GC.getPlayer1().getWidth() / 2);
                     int yPlayerCenter = (GC.getPlayer1().getYPos() + GC.getPlayer1().getHeight() / 2);
                     xCord = mouseX - xPlayerCenter; // Measures from center of player
@@ -159,8 +177,7 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                                 if (bullet.getX() <= width && bullet.getX() >= 0 && bullet.getY() <= height
                                         && bullet.getY() >= 0) {
                                     continue;
-                                } 
-                                else {
+                                } else {
                                     bullet.resetBulletLife();
                                     bullet.setVariables(xVariable, yVariable);
                                     bullet.setXPos((int) (xPlayerCenter + xVariable * 10),
@@ -171,21 +188,19 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                                 }
                             }
                         }
-                    }
-                    else if (GC.getPlayer1().getCharType() == 1) {
+                    } else if (GC.getPlayer1().getCharType() == 1) {
                         baseBulletLife = 17;
                         if (shootDelayCounter1 <= 0 && totalBulletCounter1 > 0) {
                             totalBulletCounter1 -= 1;
                             shootDelayCounter1 = shootDelay1;
                             for (int i = 0; i < GC.getBulletList1().size(); i++) {
                                 Bullet bullet = GC.getBulletList1().get(i);
-                                Bullet bullet1 = GC.getBulletList1().get(i+1);
-                                Bullet bullet2 = GC.getBulletList1().get(i+2);
+                                Bullet bullet1 = GC.getBulletList1().get(i + 1);
+                                Bullet bullet2 = GC.getBulletList1().get(i + 2);
                                 if (bullet.getX() <= width && bullet.getX() >= 0 && bullet.getY() <= height
                                         && bullet.getY() >= 0) {
                                     continue;
-                                } 
-                                else {
+                                } else {
                                     bullet.resetBulletLife();
                                     bullet.setVariables(xVariable, yVariable);
                                     bullet.setXPos((int) (xPlayerCenter + xVariable * 10),
@@ -210,8 +225,7 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                                 }
                             }
                         }
-                    }
-                    else if (GC.getPlayer1().getCharType() == 2) {
+                    } else if (GC.getPlayer1().getCharType() == 2) {
                         baseBulletLife = 12;
                         if (shootDelayCounter1 <= 0 && totalBulletCounter1 > 0) {
                             totalBulletCounter1 -= 1;
@@ -221,8 +235,7 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                                 if (bullet.getX() <= width && bullet.getX() >= 0 && bullet.getY() <= height
                                         && bullet.getY() >= 0) {
                                     continue;
-                                } 
-                                else {
+                                } else {
                                     bullet.resetBulletLife();
                                     bullet.setVariables(xVariable, yVariable);
                                     bullet.setXPos((int) (xPlayerCenter + xVariable * 10),
@@ -237,43 +250,41 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                 }
 
                 // bullet movement
-                for(Bullet bullet : GC.getBulletList1()){
-                    if(bullet.getX() <= width && bullet.getX() >= 0 && bullet.getY() <= height && bullet.getY() >= 0){
+                for (Bullet bullet : GC.getBulletList1()) {
+                    if (bullet.getX() <= width && bullet.getX() >= 0 && bullet.getY() <= height && bullet.getY() >= 0) {
                         bullet.shootMove();
                         bullet.increaseBulletLife();
-                        if(bullet.getBulletLife() >= baseBulletLife){
+                        if (bullet.getBulletLife() >= baseBulletLife) {
                             bullet.setXPos(-1000, -1001);
                             bullet.setYPos(-1000, -1001);
                         }
-                        for(Platform platform : GC.getPlatformList()){
-                            if(platform.isSoft() == false){
-                                if(bullet.isCollidingBullet(platform)){
+                        for (Platform platform : GC.getPlatformList()) {
+                            if (platform.isSoft() == false) {
+                                if (bullet.isCollidingBullet(platform)) {
                                     bullet.setXPos(-1000, -1001);
                                     bullet.setYPos(-1000, -1001);
                                 }
-                            }
-                            else if(platform.isSoft() == true){
+                            } else if (platform.isSoft() == true) {
 
                             }
                         }
                     }
                 }
 
-                //AmmoBox stuff
-                for(Platform platform : GC.getPlatformList()){
-                    if(GC.getAmmoBox().isColliding(platform) == true){
+                // AmmoBox stuff
+                for (Platform platform : GC.getPlatformList()) {
+                    if (GC.getAmmoBox().isColliding(platform) == true) {
                         GC.getAmmoBox().setYPos(platform.getYPos() - GC.getAmmoBox().getHeight());
-                    }
-                    else{
+                    } else {
                         GC.getAmmoBox().drop();
                     }
-                    if(GC.getPlayer1().isCollidingAmmo(GC.getAmmoBox())){
+                    if (GC.getPlayer1().isCollidingAmmo(GC.getAmmoBox())) {
                         GC.getAmmoBox().setYPos(-950);
-                       totalBulletCounter1 = totalBullet1;
+                        totalBulletCounter1 = totalBullet1;
                     }
                 }
 
-                //COUNTERS
+                // COUNTERS
                 AmmoClaimCounter -= 1;
                 shootDelayCounter1 -= 1;
 
@@ -365,13 +376,13 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
     }
 
     @Override
-    public void mouseDragged(MouseEvent e){
+    public void mouseDragged(MouseEvent e) {
         mouseX = e.getX();
         mouseY = e.getY();
     }
 
     @Override
-    public void mouseMoved(MouseEvent e){
+    public void mouseMoved(MouseEvent e) {
 
     }
 
@@ -447,4 +458,5 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
         setUpAnimationTimer();
         setUpKeyListener();
     }
+
 }
