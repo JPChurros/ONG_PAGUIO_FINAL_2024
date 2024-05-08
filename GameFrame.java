@@ -56,6 +56,16 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
         shootDelayCounter1 = shootDelay1;
     }
 
+    public void createPlayers() {
+        if (playerID == 1) {
+            player1 = GC.getPlayer1();
+            player2 = GC.getPlayer2();
+        } else if (playerID == 2) {
+            player1 = GC.getPlayer2();
+            player2 = GC.getPlayer1();
+        }
+    }
+
     public void connectToServer() {
         try {
             socket = new Socket("localhost", 12345); // LOCALHOST
@@ -446,8 +456,9 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
         label.setBackground(Color.white);
         label.addMouseListener(this);
         label.addMouseMotionListener(this);
-        this.setTitle("Wild Whisker Shootout");
+        this.setTitle("Wild Whisker Shootout - Player #" + playerID);
         contentPane.setPreferredSize(new Dimension(width, height));
+        this.createPlayers();
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.pack(); // idk what this does no lie
         GC = new GameCanvas();

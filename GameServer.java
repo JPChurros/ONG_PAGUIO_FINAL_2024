@@ -1,6 +1,8 @@
 
 //This class contains the code that manages the game server's functionality. It also
 //contains the main method that instantiates and starts the server.
+
+//I GET LOST AROUND THE 15 MIN MARK
 import java.io.*;
 import java.net.*;
 
