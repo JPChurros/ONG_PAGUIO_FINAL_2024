@@ -57,6 +57,7 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
     }
 
     public void createPlayers() {
+        System.out.println("CreatedPlayers!!!!!");
         if (playerID == 1) {
             player1 = GC.getPlayer1();
             player2 = GC.getPlayer2();
@@ -87,8 +88,8 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
         ActionListener al = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                if (up == true && GC.getPlayer1().isFalling() == false) { // NO WORKY
-                    GC.getPlayer1().setJumpStatus(true);
+                if (up == true && player1.isFalling() == false) { // NO WORKY
+                    player1.setJumpStatus(true);
                     // GC.getPlayer1().setYPos(GC.getPlayer1().getYPos() - 100);
                     // GC.getPlayer1().setFalling(true);
 
@@ -458,10 +459,10 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
         label.addMouseMotionListener(this);
         this.setTitle("Wild Whisker Shootout - Player #" + playerID);
         contentPane.setPreferredSize(new Dimension(width, height));
-        this.createPlayers();
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.pack(); // idk what this does no lie
         GC = new GameCanvas();
+        this.createPlayers(); // ???
         contentPane.add(label);
         contentPane.add(GC);
         this.setVisible(true);
