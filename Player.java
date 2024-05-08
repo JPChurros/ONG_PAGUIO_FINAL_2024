@@ -5,8 +5,9 @@ import javax.swing.*;
 import java.awt.geom.*;
 
 public class Player {
-    private int xSpeed, ySpeed, xPos, yPos, width, height, charType;
-    private boolean isFalling, jumpStatus;
+    private Image playerSpriteLeft, playerSpriteRight, usedImageRN;
+    private int xSpeed, ySpeed, xPos, yPos, width, height, charType, picX, picY;
+    private boolean isFalling, jumpStatus, rightIsTrue;
     //charType 0 is cat, 1 is hedgehog, 2 is squirrel
     public Player(int x, int y, int w, int h, int xs, int ys, int charTypein) {
         xSpeed = xs;
@@ -18,6 +19,27 @@ public class Player {
         charType = charTypein;
         isFalling = true;
         jumpStatus = false;
+        if(charType == 0){
+            playerSpriteLeft = new ImageIcon("catpistol_LEFT.png").getImage();
+            playerSpriteRight = new ImageIcon("catpistol_RIGHT.png").getImage();
+            usedImageRN = playerSpriteLeft;
+            width = 42;
+            height = 59;
+        }
+        else if(charType == 1){
+            playerSpriteLeft = new ImageIcon("hedgehog_LEFT.png").getImage();
+            playerSpriteRight = new ImageIcon("hedgehog_RIGHT.png").getImage();
+            usedImageRN = playerSpriteLeft;
+            width = 52;
+            height = 55;
+        }
+        else if(charType == 2){
+            playerSpriteLeft = new ImageIcon("squirrel_LEFT.png").getImage();
+            playerSpriteRight = new ImageIcon("squirrel_RIGHT.png").getImage();
+            usedImageRN = playerSpriteLeft;
+            width = 51;
+            height = 53;
+        }
     }
 
     public void move() {
@@ -29,8 +51,18 @@ public class Player {
 
     public void draw(Graphics2D g) {
         Rectangle2D.Double temp = new Rectangle2D.Double(xPos, yPos, width, height);
-        g.setColor(Color.BLUE); // blue cuz arneow yfm
+        g.setColor(new Color(0, 0, 0, 0));
         g.fill(temp);
+        rightIsTrue = false;
+        g.drawImage(usedImageRN, xPos, yPos, width, height, null);
+    }
+
+    public void lookRight(){
+        usedImageRN = playerSpriteRight;
+    }
+
+    public void lookLeft(){
+        usedImageRN = playerSpriteLeft;
     }
 
     public void changeXSpeed(int x) {

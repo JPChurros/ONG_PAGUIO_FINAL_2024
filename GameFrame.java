@@ -128,6 +128,7 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                 }
 
                 if (right == true) {
+                    player1.lookRight();
                     player1.changeXSpeed(10);
                     if (player1.isJumping() == false) {
                         player1.setFalling(true);
@@ -142,6 +143,7 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                 }
 
                 if (left == true) { // NO WORKY
+                    player1.lookLeft();
                     player1.changeXSpeed(-10);
                     if (player1.isJumping() == false) {
                         player1.setFalling(true);
