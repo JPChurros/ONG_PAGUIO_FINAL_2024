@@ -30,11 +30,16 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
     private WriteToServer wtsRunnable;
 
     public GameFrame(int w, int h) {
+        connectToServer();
         width = w;
         height = h;
         GC = new GameCanvas();
         player1 = GC.getPlayer1();
         player2 = GC.getPlayer2();
+        if(playerID == 2){
+            player1 = GC.getPlayer2();
+            player2 = GC.getPlayer1();
+        }
         shootDelay1 = player1.getShootDelay();
         totalBullet1 = player1.getTotalAmmo();
         up = false;
@@ -88,17 +93,6 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
         ActionListener al = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-
-                // player stuff test
-                if(playerID == 1){
-                    shootDelay1 = GC.getPlayer1().getShootDelay();
-                    totalBullet1 = GC.getPlayer1().getTotalAmmo();
-                }
-                else if(playerID == 2){
-                    shootDelay1 = GC.getPlayer2().getShootDelay();
-                    totalBullet1 = GC.getPlayer2().getTotalAmmo();
-                }
-
 
                 //movement
                 if (up == true && player1.isFalling() == false) { // NO WORKY
