@@ -6,7 +6,7 @@ import java.awt.geom.*;
 
 public class Player {
     private Image playerSpriteLeft, playerSpriteRight, usedImageRN;
-    private int xSpeed, ySpeed, xPos, yPos, width, height, charType;
+    private int xSpeed, ySpeed, xPos, yPos, width, height, charType, shootDelay, totalAmmo;
     private boolean isFalling, jumpStatus, rightIsTrue;
     //charType 0 is cat, 1 is hedgehog, 2 is squirrel
     public Player(int x, int y, int w, int h, int xs, int ys, int charTypein) {
@@ -25,6 +25,8 @@ public class Player {
             usedImageRN = playerSpriteLeft;
             width = 42;
             height = 59;
+            shootDelay = 15;
+            totalAmmo = 3;
         }
         else if(charType == 1){
             playerSpriteLeft = new ImageIcon("hedgehog_LEFT.png").getImage();
@@ -32,6 +34,8 @@ public class Player {
             usedImageRN = playerSpriteLeft;
             width = 52;
             height = 55;
+            shootDelay = 60;
+            totalAmmo = 2;
         }
         else if(charType == 2){
             playerSpriteLeft = new ImageIcon("squirrel_LEFT.png").getImage();
@@ -39,6 +43,8 @@ public class Player {
             usedImageRN = playerSpriteLeft;
             width = 51;
             height = 53;
+            shootDelay = 5;
+            totalAmmo = 7;
         }
     }
 
@@ -123,6 +129,14 @@ public class Player {
     }
     public boolean getLookRight(){
         return rightIsTrue;
+    }
+
+    public int getShootDelay(){
+        return shootDelay;
+    }
+    
+    public int getTotalAmmo(){
+        return totalAmmo;
     }
 
     public boolean isColliding(Platform other) {

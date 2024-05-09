@@ -15,8 +15,8 @@ public class GameCanvas extends JComponent {
     private ArrayList<Bullet> bulletList1, bulletList2;
     private ArrayList<Player> playerList;
     public GameCanvas() {
-        p1 = new Player(100, 100, 20, 20, 0, 0, 2);
-        p2 = new Player(680, 100, 20, 20, 0, 0, 0);
+        p1 = new Player(100, 100, 20, 20, 0, 0, 0);
+        p2 = new Player(680, 100, 20, 20, 0, 0, 1);
         //platformtest = new Platform(200, 200, 500, 20, Color.yellow, false);
         //platformSoftTest = new Platform(200, 450, 500, 20, Color.red, true);
         platformlist = new ArrayList<Platform>();
