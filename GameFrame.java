@@ -26,6 +26,9 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
 
     private int temp, incrementor, incrementor2;
 
+    private ReadFromServer rfsRunnable;
+    private WriteToServer wtsRunnable;
+
     public GameFrame(int w, int h) {
         width = w;
         height = h;
@@ -83,6 +86,9 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                 System.out.println("Waiting for player #2 to connect");
 
             }
+            rfsRunnable = new ReadFromServer(in);
+            wtsRunnable = new WriteToServer(out);
+            rfsRunnable.waitForStartMsg(); // waits for both players to log in b4 starting.
         } catch (IOException ie) {
             System.out.println("IOException from ConnectToServer in GameFrame");
         }
@@ -104,7 +110,7 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                     temp = temp - 5; // in this case temp is the distance travelled by the
                                      // player. the value here should be the speed.
                     player1.changeYSpeed(-17 + incrementor); // plus cuz it should slow
-                                                                     // down.
+                                                             // down.
                     incrementor++;
                     // System.out.println(GC.getPlayer1().getYSpeed());
                     if (incrementor + -17 == 0) {
@@ -455,6 +461,71 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
         };
         this.addKeyListener(kl);
         this.setFocusable(true);
+    }
+
+    private class ReadFromServer implements Runnable {
+        private DataInputStream dataIn;
+
+        public ReadFromServer(DataInputStream in) {
+            dataIn = in;
+            System.out.println("RFS Runnable created");
+
+        }
+
+        public void run() {
+            try { // reads the values of the ENEMY so you know where to put them on screen
+                while (true) {
+                    if (player2 != null) {
+                        player2.setXPos(dataIn.readInt());
+                        player2.setYPos(dataIn.readInt());
+                    }
+                }
+            } catch (IOException ex) {
+                System.out.println("IOException from ReadFromServer run() in GameFrame");
+            }
+        }
+
+        public void waitForStartMsg() {
+            try {
+                String startMsg = dataIn.readUTF();
+                System.out.println("Message From Server: " + startMsg);
+                Thread readThread = new Thread(rfsRunnable);
+                Thread writeThread = new Thread(wtsRunnable);
+                readThread.start();
+                writeThread.start();
+            } catch (IOException ie) {
+                System.out.println("IOException in waitforstartmsg() in readfromserver gameframe");
+            }
+        }
+    }
+
+    private class WriteToServer implements Runnable {
+        private DataOutputStream dataOut;
+
+        public WriteToServer(DataOutputStream out) {
+            dataOut = out;
+            System.out.println("WTS Runnable created");
+
+        }
+
+        public void run() {
+            try {
+                while (true) {
+                    if (player1 != null) {
+                        dataOut.writeInt(player1.getXPos());
+                        dataOut.writeInt(player1.getYPos());
+                        dataOut.flush();
+                    }
+                    try {
+                        Thread.sleep(25);
+                    } catch (InterruptedException IE) {
+                        System.out.println("Interrupted Exception from WTS run()");
+                    }
+                }
+            } catch (IOException ex) {
+                System.out.println("IOException from WTS run() in GameFrame");
+            }
+        }
     }
 
     public void setUpGUI() {
