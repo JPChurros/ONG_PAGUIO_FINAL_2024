@@ -5,7 +5,8 @@ import java.awt.geom.*;
 public class AmmoBox {
     private int xPos, yPos, width, height;
     private boolean isFalling, jumpStatus;
-    //charType 0 is cat, 1 is hedgehog, 2 is squirrel
+
+    // charType 0 is cat, 1 is hedgehog, 2 is squirrel
     public AmmoBox(int x, int y, int w, int h) {
         xPos = x;
         yPos = y;
@@ -15,15 +16,19 @@ public class AmmoBox {
 
     public void draw(Graphics2D g) {
         Rectangle2D.Double temp = new Rectangle2D.Double(xPos, yPos, width, height);
-        g.setColor(Color.ORANGE); 
+        g.setColor(Color.ORANGE);
         g.fill(temp);
     }
 
-    public void drop(){
+    public void drop() {
         yPos += 1;
     }
 
-    public void setYPos(int newPos){
+    public void setXPos(int newPos) {
+        xPos = newPos;
+    }
+
+    public void setYPos(int newPos) {
         yPos = newPos;
     }
 

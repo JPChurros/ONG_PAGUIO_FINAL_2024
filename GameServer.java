@@ -16,7 +16,7 @@ public class GameServer {
     private ReadFromClient p1ReadRunnable, p2ReadRunnable;
     private WriteToClient p1WriteRunnable, p2WriteRunnable;
 
-    private int p1x, p1y, p2x, p2y;
+    private int p1x, p1y, p2x, p2y, ammoX, ammoY;
 
     public GameServer() {
         System.out.println("==== GAME SERVER ====");
@@ -26,6 +26,8 @@ public class GameServer {
         p2x = 680;
         p1y = 100;
         p2y = 100;
+        ammoX = 390;
+        ammoY = 275;
 
         try {
             ss = new ServerSocket(12345); // SOCKET HERE
@@ -101,6 +103,8 @@ public class GameServer {
                         p2x = dataIn.readInt();
                         p2y = dataIn.readInt();
                     }
+                    ammoX = dataIn.readInt();
+                    ammoY = dataIn.readInt();
                 }
             } catch (IOException ex) {
                 System.out.println("IOException from RFC run() in GameServer");
@@ -130,6 +134,8 @@ public class GameServer {
                         dataOut.writeInt(p1y);
                         dataOut.flush();
                     }
+                    dataOut.writeInt(ammoX);
+                    dataOut.writeInt(ammoY);
                     try {
                         Thread.sleep(25);
                     } catch (InterruptedException IE) {

@@ -475,9 +475,11 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
         public void run() {
             try { // reads the values of the ENEMY so you know where to put them on screen
                 while (true) {
-                    if (player2 != null) {
+                    if (player2 != null) { // if player2 exists, it sets enemy's position to there.
                         player2.setXPos(dataIn.readInt());
                         player2.setYPos(dataIn.readInt());
+                        GC.getAmmoBox().setXPos(dataIn.readInt());
+                        GC.getAmmoBox().setYPos(dataIn.readInt());
                     }
                 }
             } catch (IOException ex) {
@@ -514,6 +516,8 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                     if (player1 != null) {
                         dataOut.writeInt(player1.getXPos());
                         dataOut.writeInt(player1.getYPos());
+                        dataOut.writeInt(GC.getAmmoBox().getXPos());
+                        dataOut.writeInt(GC.getAmmoBox().getYPos());
                         dataOut.flush();
                     }
                     try {
