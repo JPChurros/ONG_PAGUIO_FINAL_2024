@@ -35,6 +35,10 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
         GC = new GameCanvas();
         player1 = GC.getPlayer1();
         player2 = GC.getPlayer2();
+        if(playerID == 2){
+            player1 = GC.getPlayer2();
+            player2 = GC.getPlayer1();
+        }
         shootDelay1 = player1.getShootDelay();
         totalBullet1 = player1.getTotalAmmo();
         up = false;
@@ -89,23 +93,19 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
             @Override
             public void actionPerformed(ActionEvent ae) {
 
-                // player stuff test
-                if(playerID == 1){
-                    shootDelay1 = GC.getPlayer1().getShootDelay();
-                    totalBullet1 = GC.getPlayer1().getTotalAmmo();
+                //p2 stuff
+                if(player2.getLookRight() == 1){
+                    player2.lookRight();
+                } 
+                else if (player2.getLookRight() == 0){
+                    player2.lookLeft();
                 }
-                else if(playerID == 2){
-                    shootDelay1 = GC.getPlayer2().getShootDelay();
-                    totalBullet1 = GC.getPlayer2().getTotalAmmo();
-                }
-
 
                 //movement
                 if (up == true && player1.isFalling() == false) { // NO WORKY
                     player1.setJumpStatus(true);
                     // GC.getPlayer1().setYPos(GC.getPlayer1().getYPos() - 100);
                     // GC.getPlayer1().setFalling(true);
-
                 }
 
                 if (player1.isJumping() == true) {
@@ -480,6 +480,7 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                     if (player2 != null) { // if player2 exists, it sets enemy's position to there.
                         player2.setXPos(dataIn.readInt());
                         player2.setYPos(dataIn.readInt());
+                        player2.setLookRight(dataIn.readInt());
                         GC.getAmmoBox().setXPos(dataIn.readInt());
                         GC.getAmmoBox().setYPos(dataIn.readInt());
                     }
@@ -518,6 +519,7 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                     if (player1 != null) {
                         dataOut.writeInt(player1.getXPos());
                         dataOut.writeInt(player1.getYPos());
+                        dataOut.writeInt(player1.getLookRight());
                         dataOut.writeInt(GC.getAmmoBox().getXPos());
                         dataOut.writeInt(GC.getAmmoBox().getYPos());
                         dataOut.flush();

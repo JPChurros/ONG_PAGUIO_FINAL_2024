@@ -16,7 +16,7 @@ public class GameServer {
     private ReadFromClient p1ReadRunnable, p2ReadRunnable;
     private WriteToClient p1WriteRunnable, p2WriteRunnable;
 
-    private int p1x, p1y, p2x, p2y, ammoX, ammoY;
+    private int p1x, p1y, p2x, p2y, ammoX, ammoY, p1LR, p2LR;
 
     public GameServer() {
         System.out.println("==== GAME SERVER ====");
@@ -26,6 +26,8 @@ public class GameServer {
         p2x = 680;
         p1y = 100;
         p2y = 100;
+        p1LR = 1;
+        p2LR = 0;
         ammoX = 390;
         ammoY = 275;
 
@@ -99,9 +101,11 @@ public class GameServer {
                     if (playerID == 1) {
                         p1x = dataIn.readInt();
                         p1y = dataIn.readInt();
+                        p1LR = dataIn.readInt();
                     } else {
                         p2x = dataIn.readInt();
                         p2y = dataIn.readInt();
+                        p2LR = dataIn.readInt();
                     }
                     ammoX = dataIn.readInt();
                     ammoY = dataIn.readInt();
@@ -128,10 +132,12 @@ public class GameServer {
                     if (playerID == 1) { // if your player1, you need the p2 pos, this gives that to you.
                         dataOut.writeInt(p2x);
                         dataOut.writeInt(p2y);
+                        dataOut.writeInt(p2LR);
                         dataOut.flush();
                     } else {
                         dataOut.writeInt(p1x);
                         dataOut.writeInt(p1y);
+                        dataOut.writeInt(p1LR);
                         dataOut.flush();
                     }
                     dataOut.writeInt(ammoX);

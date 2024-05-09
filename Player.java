@@ -6,8 +6,8 @@ import java.awt.geom.*;
 
 public class Player {
     private Image playerSpriteLeft, playerSpriteRight, usedImageRN;
-    private int xSpeed, ySpeed, xPos, yPos, width, height, charType, shootDelay, totalAmmo;
-    private boolean isFalling, jumpStatus, rightIsTrue;
+    private int xSpeed, ySpeed, xPos, yPos, width, height, charType, shootDelay, totalAmmo, rightIsTrue;
+    private boolean isFalling, jumpStatus;
     //charType 0 is cat, 1 is hedgehog, 2 is squirrel
     public Player(int x, int y, int w, int h, int xs, int ys, int charTypein) {
         xSpeed = xs;
@@ -19,6 +19,7 @@ public class Player {
         charType = charTypein;
         isFalling = true;
         jumpStatus = false;
+        rightIsTrue = 0;
         if(charType == 0){
             playerSpriteLeft = new ImageIcon("catpistol_LEFT.png").getImage();
             playerSpriteRight = new ImageIcon("catpistol_RIGHT.png").getImage();
@@ -59,18 +60,17 @@ public class Player {
         Rectangle2D.Double temp = new Rectangle2D.Double(xPos, yPos, width, height);
         g.setColor(new Color(0, 0, 0, 0));
         g.fill(temp);
-        rightIsTrue = false;
         g.drawImage(usedImageRN, xPos, yPos, width, height, null);
     }
 
     public void lookRight(){
         usedImageRN = playerSpriteRight;
-        rightIsTrue = true;
+        rightIsTrue = 1;
     }
 
     public void lookLeft(){
         usedImageRN = playerSpriteLeft;
-        rightIsTrue = false;
+        rightIsTrue = 0;
     }
 
     public void changeXSpeed(int x) {
@@ -127,8 +127,12 @@ public class Player {
     public int getCharType(){
         return charType;
     }
-    public boolean getLookRight(){
+    public int getLookRight(){
         return rightIsTrue;
+    }
+
+    public void setLookRight(int temp){
+        rightIsTrue = temp;
     }
 
     public int getShootDelay(){
