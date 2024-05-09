@@ -543,6 +543,7 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
         contentPane.add(label);
         contentPane.add(GC);
         createPlayers();
+        GC.createBullets(playerID);
         this.setVisible(true);
         this.setLayout(null);
         setUpAnimationTimer();

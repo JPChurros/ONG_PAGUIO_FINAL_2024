@@ -8,7 +8,7 @@ import java.util.*;
 import javax.swing.Timer;
 
 public class GameCanvas extends JComponent {
-    private Player p1, p2;
+    private Player p1, p2, player1, player2;
     private Platform OOBplatform, platform1, platform2, platform3, platform4, platform5, platform6, platform7, platform8, platform9, platform10;
     private AmmoBox ammoBox;
     private ArrayList<Platform> platformlist;
@@ -45,48 +45,57 @@ public class GameCanvas extends JComponent {
         playerList.add(p1);
         playerList.add(p2);
 
-        //bullet
-
-        if(getPlayer1().getCharType() == 0){
-            for(int i = 0; i < 5; i++){
-                Bullet bullet = new Bullet(-1000, -1000, -1001, -1001, 50, 50, Color.BLACK);
-                bulletList1.add(bullet);
-            }
-        }
-        else if(getPlayer1().getCharType() == 1){
-            for(int i = 0; i < 11; i++){
-                Bullet bullet = new Bullet(-1000, -1000, -1001, -1001, 50, 50, Color.BLACK);
-                bulletList1.add(bullet);
-            }
-        }
-        else if(getPlayer1().getCharType() == 2){
-            for(int i = 0; i < 9; i++){
-                Bullet bullet = new Bullet(-1000, -1000, -1001, -1001, 50, 50, Color.BLACK);
-                bulletList1.add(bullet);
-            }
-        }
-
-        if(getPlayer2().getCharType() == 0){
-            for(int i = 0; i < 5; i++){
-                Bullet bullet = new Bullet(-1000, -1000, -1001, -1001, 50, 50, Color.BLACK);
-                bulletList2.add(bullet);
-            }
-        }
-        else if(getPlayer2().getCharType() == 1){
-            for(int i = 0; i < 11; i++){
-                Bullet bullet = new Bullet(-1000, -1000, -1001, -1001, 50, 50, Color.BLACK);
-                bulletList2.add(bullet);
-            }
-        }
-        else if(getPlayer2().getCharType() == 2){
-            for(int i = 0; i < 9; i++){
-                Bullet bullet = new Bullet(-1000, -1000, -1001, -1001, 50, 50, Color.BLACK);
-                bulletList2.add(bullet);
-            }
-        }
-
         //AmmoBox
         ammoBox = new AmmoBox(390, 275, 20, 20);
+    }
+
+    public void createBullets(int playerID){
+        //bullet creation
+        if(playerID == 1){
+            player1 = p1;
+            player2 = p2;
+        }
+        else if(playerID == 2){
+            player1 = p2;
+            player2 = p1;
+        }
+        if(player1.getCharType() == 0){
+            for(int i = 0; i < 5; i++){
+                Bullet bullet = new Bullet(-1000, -1000, -1001, -1001, 50, 50, Color.BLACK, 0);
+                bulletList1.add(bullet);
+            }
+        }
+        else if(player1.getCharType() == 1){
+            for(int i = 0; i < 11; i++){
+                Bullet bullet = new Bullet(-1000, -1000, -1001, -1001, 50, 50, Color.BLACK, 1);
+                bulletList1.add(bullet);
+            }
+        }
+        else if(player1.getCharType() == 2){
+            for(int i = 0; i < 9; i++){
+                Bullet bullet = new Bullet(-1000, -1000, -1001, -1001, 50, 50, Color.BLACK, 2);
+                bulletList1.add(bullet);
+            }
+        }
+
+        if(player2.getCharType() == 0){
+            for(int i = 0; i < 5; i++){
+                Bullet bullet = new Bullet(-1000, -1000, -1001, -1001, 50, 50, Color.BLACK, 0);
+                bulletList2.add(bullet);
+            }
+        }
+        else if(player2.getCharType() == 1){
+            for(int i = 0; i < 11; i++){
+                Bullet bullet = new Bullet(-1000, -1000, -1001, -1001, 50, 50, Color.BLACK, 1);
+                bulletList2.add(bullet);
+            }
+        }
+        else if(player2.getCharType() == 2){
+            for(int i = 0; i < 9; i++){
+                Bullet bullet = new Bullet(-1000, -1000, -1001, -1001, 50, 50, Color.BLACK, 2);
+                bulletList2.add(bullet);
+            }
+        }
     }
 
     @Override

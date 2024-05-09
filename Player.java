@@ -6,7 +6,7 @@ import java.awt.geom.*;
 
 public class Player {
     private Image playerSpriteLeft, playerSpriteRight, usedImageRN;
-    private int xSpeed, ySpeed, xPos, yPos, width, height, charType, picX, picY;
+    private int xSpeed, ySpeed, xPos, yPos, width, height, charType;
     private boolean isFalling, jumpStatus, rightIsTrue;
     //charType 0 is cat, 1 is hedgehog, 2 is squirrel
     public Player(int x, int y, int w, int h, int xs, int ys, int charTypein) {
@@ -59,10 +59,12 @@ public class Player {
 
     public void lookRight(){
         usedImageRN = playerSpriteRight;
+        rightIsTrue = true;
     }
 
     public void lookLeft(){
         usedImageRN = playerSpriteLeft;
+        rightIsTrue = false;
     }
 
     public void changeXSpeed(int x) {
@@ -118,6 +120,9 @@ public class Player {
     }
     public int getCharType(){
         return charType;
+    }
+    public boolean getLookRight(){
+        return rightIsTrue;
     }
 
     public boolean isColliding(Platform other) {
