@@ -8,7 +8,7 @@ import javax.swing.ImageIcon;
 
 public class Bullet {
     private Image projectileSprite;
-    int x1, y1, x2, y2, xSpeed, ySpeed, charType, bulletLife, constantSpeed, boxX, boxY, width, height;
+    int x1, y1, x2, y2, xSpeed, ySpeed, charType, bulletLife, constantSpeed, boxX, boxY, width, height, boxHeight, boxWidth;
     float xVariable, yVariable;
     Color color;
     public Bullet(int x1, int y1, int x2, int y2, int xSpeed, int ySpeed, Color color, int charType){
@@ -24,6 +24,8 @@ public class Bullet {
         bulletLife = 0;
         boxX = -1000;
         boxY = -1000;
+        boxHeight = 10;
+        boxWidth = 10;
         if (this.charType == 0){
             projectileSprite = new ImageIcon("hairball_CATPROJ.png").getImage();
             width = 5;
@@ -86,12 +88,28 @@ public class Bullet {
         bulletLife = 0;
     }
 
+    public int getXPos(){
+        return boxX;
+    }
+
+    public int getYPos(){
+        return boxY;
+    }
+
+    public int getWidth(){
+        return boxWidth;
+    }
+
+    public int getHeight(){
+        return boxHeight;
+    }
+
     public boolean isCollidingBullet(Platform other){
 
         boxX = Math.min(x1, x2);
         boxY = Math.min(y1, y2);
-        int boxWidth = Math.abs(x2 - x1);
-        int boxHeight = Math.abs(y2 - y1);
+        boxWidth = Math.abs(x2 - x1);
+        boxHeight = Math.abs(y2 - y1);
 
         if (boxX + boxWidth < other.getXPos() ||
             boxX >= other.getXPos() + other.getWidth() ||
