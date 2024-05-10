@@ -58,8 +58,6 @@ public class Player {
 
     public void draw(Graphics2D g) {
         Rectangle2D.Double temp = new Rectangle2D.Double(xPos, yPos, width, height);
-        g.setColor(new Color(0, 0, 0, 0));
-        g.fill(temp);
         g.drawImage(usedImageRN, xPos, yPos, width, height, null);
     }
 
