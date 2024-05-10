@@ -193,17 +193,6 @@ public class Player {
         }
     }
 
-    public boolean isCollidingBullet(Bullet other) {
-        if (xPos + this.width < other.getXPos() ||
-                xPos >= other.getXPos() + other.getWidth() ||
-                yPos + this.height <= other.getYPos() ||
-                yPos >= other.getYPos() + other.getHeight()) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
     public int collidingDirection(Platform other) {
         if (yPos + height >= other.getYPos() && yPos + height < other.getYPos() + other.getHeight()
                 && yPos < other.getYPos()) {

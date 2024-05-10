@@ -36,6 +36,7 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
     private boolean up, down, left, right, sKey;
     private Platform testPlatform1;
     private Player player1, player2;
+    private Hearts player1Heart, player2Heart;
     private JLabel label;
     private int AmmoClaimCounter, shootDelay1, shootDelayCounter1, totalBullet1, totalBulletCounter1, shootDelay2,
             shootDelayCounter2, totalBullet2, totalBulletCounter2, p2shooting;
@@ -111,14 +112,20 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                 // p2 stuff
                 bulletArray1 = GC.getBulletList1();
                 bulletArray2 = GC.getBulletList2();
+                player1Heart = GC.getPlayer1Hearts();
+                player2Heart = GC.getPlayer2Hearts();
                 if (playerID == 2) {
                     player1 = GC.getPlayer2();
                     player2 = GC.getPlayer1();
+                    player1Heart = GC.getPlayer2Hearts();
+                    player2Heart = GC.getPlayer1Hearts();
                 }
                 shootDelay1 = player1.getShootDelay();
                 totalBullet1 = player1.getTotalAmmo();
                 shootDelay2 = player2.getShootDelay();
                 totalBullet2 = player2.getTotalAmmo();
+                
+                
 
                 if (player2.getLookRight() == 1) {
                     player2.lookRight();
@@ -424,6 +431,18 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                             bullet.setXPos(-1000, -1001);
                             bullet.setYPos(-1000, -1001);
                         }
+                        if (bullet.isCollidingPlayer(player2) == true){
+                            System.out.println("damn you got hit");
+                            bullet.setXPos(-1000, -1001);
+                            bullet.setYPos(-1000, -1001);
+                            player2.minusHP();
+                            if(player2.currentHP() == 2){
+                                player2Heart.setHP2();
+                            }
+                            else if(player2.currentHP() == 1){
+                                player2Heart.setHP1();
+                            }
+                        }
                         for (Platform platform : GC.getPlatformList()) {
                             if (platform.isSoft() == false) {
                                 if (bullet.isCollidingBullet(platform)) {
@@ -444,6 +463,18 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                         if (bullet.getBulletLife() >= baseBulletLife2) {
                             bullet.setXPos(-1000, -1001);
                             bullet.setYPos(-1000, -1001);
+                        }
+                        if (bullet.isCollidingPlayer(player1) == true){
+                            System.out.println("you hit him");
+                            bullet.setXPos(-1000, -1001);
+                            bullet.setYPos(-1000, -1001);
+                            player1.minusHP();
+                            if(player1.currentHP() == 2){
+                                player1Heart.setHP2();
+                            }
+                            else if(player1.currentHP() == 1){
+                                player1Heart.setHP1();
+                            }
                         }
                         for (Platform platform : GC.getPlatformList()) {
                             if (platform.isSoft() == false) {

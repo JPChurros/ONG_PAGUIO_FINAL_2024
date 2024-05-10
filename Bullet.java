@@ -117,4 +117,22 @@ public class Bullet {
             return true;
             }
         }
+
+        public boolean isCollidingPlayer(Player other){
+
+            boxX = Math.min(x1, x2);
+            boxY = Math.min(y1, y2);
+            boxWidth = Math.abs(x2 - x1);
+            boxHeight = Math.abs(y2 - y1);
+    
+            if (boxX + boxWidth < other.getXPos() ||
+                boxX >= other.getXPos() + other.getWidth() ||
+                boxY + boxHeight <= other.getYPos() ||
+                boxY >= other.getYPos() + other.getHeight()){
+                return false;
+                }
+            else{
+                return true;
+                }
+            }
     }

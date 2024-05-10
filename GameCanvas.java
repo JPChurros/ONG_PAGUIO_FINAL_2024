@@ -49,6 +49,7 @@ public class GameCanvas extends JComponent {
 
         //player graphics
         player1Hearts = new Hearts(25, 495);
+        player2Hearts = new Hearts(736, 495);
 
         // base platforms
         OOBplatform = new Platform(-900, -900, 1000, 20, Color.WHITE, false);
@@ -148,6 +149,7 @@ public class GameCanvas extends JComponent {
         //UI GRAPHICS
 
         player1Hearts.draw(g2d);
+        player2Hearts.draw(g2d);
         AffineTransform reset = g2d.getTransform();
 
     }
@@ -174,6 +176,14 @@ public class GameCanvas extends JComponent {
 
     public ArrayList<Bullet> getBulletList2() {
         return bulletList2;
+    }
+
+    public Hearts getPlayer1Hearts(){
+        return player1Hearts;
+    }
+
+    public Hearts getPlayer2Hearts(){
+        return player2Hearts;
     }
 
     public AmmoBox getAmmoBox() {
