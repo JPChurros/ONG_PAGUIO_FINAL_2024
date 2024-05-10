@@ -15,7 +15,7 @@ public class GameCanvas extends JComponent {
     private ArrayList<Bullet> bulletList1, bulletList2;
     private ArrayList<Player> playerList;
     public GameCanvas() {
-        p1 = new Player(100, 100, 20, 20, 0, 0, 0);
+        p1 = new Player(100, 100, 20, 20, 0, 0, 2);
         p2 = new Player(680, 100, 20, 20, 0, 0, 1);
         //platformtest = new Platform(200, 200, 500, 20, Color.yellow, false);
         //platformSoftTest = new Platform(200, 450, 500, 20, Color.red, true);
@@ -121,6 +121,9 @@ public class GameCanvas extends JComponent {
         for (Bullet bullet : bulletList1){
             bullet.draw(g2d);
         }
+        for (Bullet bullet : bulletList2){
+            bullet.draw(g2d);
+        }
 
         ammoBox.draw(g2d);
         AffineTransform reset = g2d.getTransform();
@@ -145,6 +148,10 @@ public class GameCanvas extends JComponent {
 
     public ArrayList<Bullet> getBulletList1(){
         return bulletList1;
+    }
+
+    public ArrayList<Bullet> getBulletList2(){
+        return bulletList2;
     }
 
     public AmmoBox getAmmoBox(){

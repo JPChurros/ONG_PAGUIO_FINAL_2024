@@ -16,7 +16,7 @@ public class GameServer {
     private ReadFromClient p1ReadRunnable, p2ReadRunnable;
     private WriteToClient p1WriteRunnable, p2WriteRunnable;
 
-    private int p1x, p1y, p2x, p2y, ammoX, ammoY, p1LR, p2LR;
+    private int p1x, p1y, p2x, p2y, ammoX, ammoY, p1LR, p2LR, p1mouseHeld, p2mouseHeld, p1mouseX, p2mouseX, p1mouseY, p2mouseY;
 
     public GameServer() {
         System.out.println("==== GAME SERVER ====");
@@ -30,6 +30,13 @@ public class GameServer {
         p2LR = 0;
         ammoX = 390;
         ammoY = 275;
+
+        p1mouseHeld = 0;
+        p2mouseHeld = 0;
+        p1mouseX = 0;
+        p2mouseX = 0;
+        p1mouseY = 0;
+        p2mouseY = 0;
 
         try {
             ss = new ServerSocket(12345); // SOCKET HERE
@@ -102,13 +109,17 @@ public class GameServer {
                         p1x = dataIn.readInt();
                         p1y = dataIn.readInt();
                         p1LR = dataIn.readInt();
+                        p1mouseHeld = dataIn.readInt();
+                        p1mouseX = dataIn.readInt();
+                        p1mouseY = dataIn.readInt();
                     } else {
                         p2x = dataIn.readInt();
                         p2y = dataIn.readInt();
                         p2LR = dataIn.readInt();
+                        p2mouseHeld = dataIn.readInt();
+                        p2mouseX = dataIn.readInt();
+                        p2mouseY = dataIn.readInt();
                     }
-                    ammoX = dataIn.readInt();
-                    ammoY = dataIn.readInt();
                 }
             } catch (IOException ex) {
                 System.out.println("IOException from RFC run() in GameServer");
@@ -133,15 +144,19 @@ public class GameServer {
                         dataOut.writeInt(p2x);
                         dataOut.writeInt(p2y);
                         dataOut.writeInt(p2LR);
+                        dataOut.writeInt(p2mouseHeld);
+                        dataOut.writeInt(p2mouseX);
+                        dataOut.writeInt(p2mouseY);
                         dataOut.flush();
                     } else {
                         dataOut.writeInt(p1x);
                         dataOut.writeInt(p1y);
                         dataOut.writeInt(p1LR);
+                        dataOut.writeInt(p1mouseHeld);
+                        dataOut.writeInt(p1mouseX);
+                        dataOut.writeInt(p1mouseY);
                         dataOut.flush();
                     }
-                    dataOut.writeInt(ammoX);
-                    dataOut.writeInt(ammoY);
                     try {
                         Thread.sleep(25);
                     } catch (InterruptedException IE) {

@@ -7,22 +7,26 @@
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 import java.io.*;
 import java.net.*;
 
 public class GameFrame extends JFrame implements MouseListener, MouseMotionListener {
-    private int width, height, xCord, yCord, baseBulletLife, mouseX, mouseY;
+    private int width, height, xCord, yCord, baseBulletLife, baseBulletLife2, mouseX, mouseY, mouseHeld, p2mouseHeld, p2mouseX, p2mouseY;
+    private int xCord2, yCord2;
     private float xVariable, yVariable, xVariable1, xVariable2, yVariable1, yVariable2;
+    private float p2xVariable, p2yVariable, p2xVariable1, p2xVariable2, p2yVariable1, p2yVariable2;
     private Container contentPane;
     private GameCanvas GC;
     private Timer animationTimer;
-    private boolean up, down, left, right, sKey, mouseHeld;
+    private boolean up, down, left, right, sKey;
     private Platform testPlatform1;
     private Player player1, player2;
     private JLabel label;
-    private int AmmoClaimCounter, shootDelay1, shootDelayCounter1, totalBullet1, totalBulletCounter1;
+    private int AmmoClaimCounter, shootDelay1, shootDelayCounter1, totalBullet1, totalBulletCounter1, shootDelay2, shootDelayCounter2, totalBullet2, totalBulletCounter2, p2shooting;
     private Socket socket;
     private int playerID;
+    private ArrayList<Bullet> bulletArray1, bulletArray2;
 
     private int temp, incrementor, incrementor2;
 
@@ -35,17 +39,12 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
         GC = new GameCanvas();
         player1 = GC.getPlayer1();
         player2 = GC.getPlayer2();
-        if(playerID == 2){
-            player1 = GC.getPlayer2();
-            player2 = GC.getPlayer1();
-        }
-        shootDelay1 = player1.getShootDelay();
-        totalBullet1 = player1.getTotalAmmo();
         up = false;
         down = false;
         left = false;
         right = false;
-        mouseHeld = false;
+        mouseHeld = 0;
+        p2mouseHeld = 0;
         temp = 0;
         incrementor = 0;
         incrementor2 = 0;
@@ -94,6 +93,17 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
             public void actionPerformed(ActionEvent ae) {
 
                 //p2 stuff
+                bulletArray1 = GC.getBulletList1();
+                bulletArray2 = GC.getBulletList2();
+                if(playerID == 2){
+                    player1 = GC.getPlayer2();
+                    player2 = GC.getPlayer1();
+                    }
+                shootDelay1 = player1.getShootDelay();
+                totalBullet1 = player1.getTotalAmmo();
+                shootDelay2 = player2.getShootDelay();
+                totalBullet2 = player2.getTotalAmmo();
+
                 if(player2.getLookRight() == 1){
                     player2.lookRight();
                 } 
@@ -168,7 +178,8 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                 }
 
                 // bullet calculation
-                if (mouseHeld == true) {
+
+                if (mouseHeld == 1) {
                     int xPlayerCenter = (player1.getXPos() + player1.getWidth() / 2);
                     int yPlayerCenter = (player1.getYPos() + player1.getHeight() / 2);
                     xCord = mouseX - xPlayerCenter; // Measures from center of player
@@ -196,10 +207,11 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                     if (player1.getCharType() == 0) {
                         baseBulletLife = 23;
                         if (shootDelayCounter1 <= 0 && totalBulletCounter1 > 0) {
+                            System.out.println("am shooting");
                             totalBulletCounter1 -= 1;
                             shootDelayCounter1 = shootDelay1;
-                            for (int i = 0; i < GC.getBulletList1().size(); i++) {
-                                Bullet bullet = GC.getBulletList1().get(i);
+                            for (int i = 0; i < bulletArray1.size(); i++) {
+                                Bullet bullet = bulletArray1.get(i);
                                 if (bullet.getX() <= width && bullet.getX() >= 0 && bullet.getY() <= height
                                         && bullet.getY() >= 0) {
                                     continue;
@@ -219,10 +231,10 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                         if (shootDelayCounter1 <= 0 && totalBulletCounter1 > 0) {
                             totalBulletCounter1 -= 1;
                             shootDelayCounter1 = shootDelay1;
-                            for (int i = 0; i < GC.getBulletList1().size(); i++) {
-                                Bullet bullet = GC.getBulletList1().get(i);
-                                Bullet bullet1 = GC.getBulletList1().get(i + 1);
-                                Bullet bullet2 = GC.getBulletList1().get(i + 2);
+                            for (int i = 0; i < bulletArray1.size(); i++) {
+                                Bullet bullet = bulletArray1.get(i);
+                                Bullet bullet1 = bulletArray1.get(i + 1);
+                                Bullet bullet2 = bulletArray1.get(i + 2);
                                 if (bullet.getX() <= width && bullet.getX() >= 0 && bullet.getY() <= height
                                         && bullet.getY() >= 0) {
                                     continue;
@@ -256,8 +268,8 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                         if (shootDelayCounter1 <= 0 && totalBulletCounter1 > 0) {
                             totalBulletCounter1 -= 1;
                             shootDelayCounter1 = shootDelay1;
-                            for (int i = 0; i < GC.getBulletList1().size(); i++) {
-                                Bullet bullet = GC.getBulletList1().get(i);
+                            for (int i = 0; i < bulletArray1.size(); i++) {
+                                Bullet bullet = bulletArray1.get(i);
                                 if (bullet.getX() <= width && bullet.getX() >= 0 && bullet.getY() <= height
                                         && bullet.getY() >= 0) {
                                     continue;
@@ -275,12 +287,146 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                     }
                 }
 
+                if (p2mouseHeld == 1){
+                    System.out.println("p2holding button");
+                    int xPlayerCenter2 = (player2.getXPos() + player2.getWidth() / 2);
+                    int yPlayerCenter2 = (player2.getYPos() + player2.getHeight() / 2);
+                    xCord2 = p2mouseX - xPlayerCenter2; // Measures from center of player
+                    yCord2 = yPlayerCenter2 - p2mouseY;
+
+                    double p2angleRad = Math.atan2(yCord2, xCord2);
+
+                    double p2angleDeg = Math.toDegrees(p2angleRad);
+                    p2angleDeg = (p2angleDeg + 360) % 360;
+
+                    double p2angleDeg1 = (p2angleDeg + 5) % 360;
+                    double p2angleDeg2 = (p2angleDeg - 5) % 360;
+
+                    double p2angleRad1 = Math.toRadians(p2angleDeg1);
+                    double p2angleRad2 = Math.toRadians(p2angleDeg2);
+
+                    p2xVariable = (float) Math.cos(p2angleRad);
+                    p2yVariable = (float) Math.sin(p2angleRad) * (-1);
+
+                    p2xVariable1 = (float) Math.cos(p2angleRad1);
+                    p2yVariable1 = (float) Math.sin(p2angleRad1) * (-1);
+
+                    p2xVariable2 = (float) Math.cos(p2angleRad2);
+                    p2yVariable2 = (float) Math.sin(p2angleRad2) * (-1);
+
+                    if (player2.getCharType() == 0) {
+                        baseBulletLife2 = 23;
+                        System.out.println("other guy is shooting fr");
+                        if (shootDelayCounter2 <= 0 && totalBulletCounter2 > 0) {
+                            totalBulletCounter2 -= 1;
+                            shootDelayCounter2 = shootDelay2;
+                            for (int i = 0; i < bulletArray2.size(); i++) {
+                                Bullet bullet = bulletArray2.get(i);
+                                if (bullet.getX() <= width && bullet.getX() >= 0 && bullet.getY() <= height
+                                        && bullet.getY() >= 0) {
+                                    continue;
+                                } else {
+                                    bullet.resetBulletLife();
+                                    bullet.setVariables(p2xVariable, p2yVariable);
+                                    bullet.setXPos((int) (xPlayerCenter2 + p2xVariable * 10),
+                                            (int) (xPlayerCenter2 + p2xVariable * 10 + p2xVariable * 10));
+                                    bullet.setYPos((int) (yPlayerCenter2 + p2yVariable * 10),
+                                            (int) (yPlayerCenter2 + p2yVariable * 10 + p2yVariable * 10));
+                                    break;
+                                }
+                            }
+                        }
+                    } else if (player2.getCharType() == 1) {
+                        baseBulletLife2 = 17;
+                        if (shootDelayCounter2 <= 0 && totalBulletCounter2 > 0) {
+                            System.out.println("other guy is shooting fr");
+                            totalBulletCounter2 -= 1;
+                            shootDelayCounter2 = shootDelay2;
+                            for (int i = 0; i < bulletArray2.size(); i++) {
+                                Bullet bullet = bulletArray2.get(i);
+                                Bullet bullet1 = bulletArray2.get(i + 1);
+                                Bullet bullet2 = bulletArray2.get(i + 2);
+                                if (bullet.getX() <= width && bullet.getX() >= 0 && bullet.getY() <= height
+                                        && bullet.getY() >= 0) {
+                                    continue;
+                                } else {
+                                    bullet.resetBulletLife();
+                                    bullet.setVariables(p2xVariable, p2yVariable);
+                                    bullet.setXPos((int) (xPlayerCenter2 + p2xVariable * 10),
+                                            (int) (xPlayerCenter2 + p2xVariable * 10 + p2xVariable * 10));
+                                    bullet.setYPos((int) (yPlayerCenter2 + yVariable * 10),
+                                            (int) (yPlayerCenter2 + p2xVariable * 10 + p2yVariable * 10));
+
+                                    bullet1.resetBulletLife();
+                                    bullet1.setVariables(p2xVariable1, p2yVariable1);
+                                    bullet1.setXPos((int) (xPlayerCenter2 + xVariable1 * 10),
+                                            (int) (xPlayerCenter2 + p2xVariable1 * 10 + p2xVariable1 * 10));
+                                    bullet1.setYPos((int) (yPlayerCenter2 + yVariable * 10),
+                                            (int) (yPlayerCenter2 + p2yVariable1 * 10 + p2yVariable1 * 10));
+
+                                    bullet2.resetBulletLife();
+                                    bullet2.setVariables(p2xVariable2, p2yVariable2);
+                                    bullet2.setXPos((int) (xPlayerCenter2 + p2xVariable2 * 10),
+                                            (int) (xPlayerCenter2 + p2xVariable2 * 10 + p2xVariable2 * 10));
+                                    bullet2.setYPos((int) (yPlayerCenter2 + yVariable * 10),
+                                            (int) (yPlayerCenter2 + p2yVariable2 * 10 + p2yVariable2 * 10));
+                                    break;
+                                }
+                            }
+                        }
+                    } else if (player2.getCharType() == 2) {
+                        baseBulletLife2 = 12;
+                        System.out.println("other guy is shooting fr og");
+                        if (shootDelayCounter2 <= 0 && totalBulletCounter2 > 0) {
+                            System.out.println("other guy is shooting fr");
+                            totalBulletCounter2 -= 1;
+                            shootDelayCounter2 = shootDelay2;
+                            for (int i = 0; i < bulletArray2.size(); i++) {
+                                Bullet bullet = bulletArray2.get(i);
+                                if (bullet.getX() <= width && bullet.getX() >= 0 && bullet.getY() <= height
+                                        && bullet.getY() >= 0) {
+                                    continue;
+                                } else {
+                                    bullet.resetBulletLife();
+                                    bullet.setVariables(p2xVariable, p2yVariable);
+                                    bullet.setXPos((int) (xPlayerCenter2 + p2xVariable * 10),
+                                            (int) (xPlayerCenter2 + p2xVariable * 10 + p2xVariable * 10));
+                                    bullet.setYPos((int) (yPlayerCenter2 + yVariable * 10),
+                                            (int) (yPlayerCenter2 + p2yVariable * 10 + p2yVariable * 10));
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+
                 // bullet movement
-                for (Bullet bullet : GC.getBulletList1()) {
+                for (Bullet bullet : bulletArray1) {
                     if (bullet.getX() <= width && bullet.getX() >= 0 && bullet.getY() <= height && bullet.getY() >= 0) {
                         bullet.shootMove();
                         bullet.increaseBulletLife();
                         if (bullet.getBulletLife() >= baseBulletLife) {
+                            bullet.setXPos(-1000, -1001);
+                            bullet.setYPos(-1000, -1001);
+                        }
+                        for (Platform platform : GC.getPlatformList()) {
+                            if (platform.isSoft() == false) {
+                                if (bullet.isCollidingBullet(platform)) {
+                                    bullet.setXPos(-1000, -1001);
+                                    bullet.setYPos(-1000, -1001);
+                                    System.out.println("collided with floor yung bullet");
+                                }
+                            } else if (platform.isSoft() == true) {
+
+                            }
+                        }
+                    }
+                }
+                for (Bullet bullet : bulletArray2) {
+                    if (bullet.getX() <= width && bullet.getX() >= 0 && bullet.getY() <= height && bullet.getY() >= 0) {
+                        bullet.shootMove();
+                        bullet.increaseBulletLife();
+                        if (bullet.getBulletLife() >= baseBulletLife2) {
                             bullet.setXPos(-1000, -1001);
                             bullet.setYPos(-1000, -1001);
                         }
@@ -307,12 +453,21 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                     if (player1.isCollidingAmmo(GC.getAmmoBox())) {
                         GC.getAmmoBox().setYPos(-950);
                         totalBulletCounter1 = totalBullet1;
+                        System.out.println("player1 got ammo");
+                        System.out.println(totalBulletCounter1);
+                    }
+                    if (player2.isCollidingAmmo(GC.getAmmoBox())) {
+                        GC.getAmmoBox().setYPos(-950);
+                        totalBulletCounter2 = totalBullet2;
+                        System.out.println("player2 got ammo");
+                        System.out.println(totalBulletCounter2);
                     }
                 }
 
                 // COUNTERS
                 AmmoClaimCounter -= 1;
                 shootDelayCounter1 -= 1;
+                shootDelayCounter2 -= 1;
 
                 for (Platform platform : GC.getPlatformList()) {
                     if (player1.isColliding(platform)) {
@@ -393,12 +548,12 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
     public void mousePressed(MouseEvent e) {
         mouseX = e.getX();
         mouseY = e.getY();
-        mouseHeld = true;
+        mouseHeld = 1;
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        mouseHeld = false;
+        mouseHeld = 0;
     }
 
     @Override
@@ -409,7 +564,6 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
 
     @Override
     public void mouseMoved(MouseEvent e) {
-
     }
 
     private void setUpKeyListener() {
@@ -481,8 +635,9 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                         player2.setXPos(dataIn.readInt());
                         player2.setYPos(dataIn.readInt());
                         player2.setLookRight(dataIn.readInt());
-                        GC.getAmmoBox().setXPos(dataIn.readInt());
-                        GC.getAmmoBox().setYPos(dataIn.readInt());
+                        p2mouseHeld = dataIn.readInt();
+                        p2mouseX = dataIn.readInt();
+                        p2mouseY = dataIn.readInt();
                     }
                 }
             } catch (IOException ex) {
@@ -520,8 +675,9 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                         dataOut.writeInt(player1.getXPos());
                         dataOut.writeInt(player1.getYPos());
                         dataOut.writeInt(player1.getLookRight());
-                        dataOut.writeInt(GC.getAmmoBox().getXPos());
-                        dataOut.writeInt(GC.getAmmoBox().getYPos());
+                        dataOut.writeInt(mouseHeld);
+                        dataOut.writeInt(mouseX);
+                        dataOut.writeInt(mouseY);
                         dataOut.flush();
                     }
                     try {
