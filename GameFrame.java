@@ -51,7 +51,7 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
     public GameFrame(int w, int h) {
         width = w;
         height = h;
-        // GC = new GameCanvas();do we need this ?
+        GC = new GameCanvas(0, 0);
         player1 = GC.getPlayer1();
         player2 = GC.getPlayer2();
         up = false;

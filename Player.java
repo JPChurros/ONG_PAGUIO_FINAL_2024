@@ -20,11 +20,10 @@
 //This class contains the code that manages the player's appearance and functionality.
 import java.awt.*;
 import javax.swing.*;
-import java.awt.geom.*;
 
 public class Player {
     private Image playerSpriteLeft, playerSpriteRight, usedImageRN;
-    private int xSpeed, ySpeed, xPos, yPos, width, height, charType, shootDelay, totalAmmo, rightIsTrue;
+    private int xSpeed, ySpeed, xPos, yPos, width, height, charType, shootDelay, totalAmmo, rightIsTrue, currentHP;
     private boolean isFalling, jumpStatus;
 
     // charType 0 is cat, 1 is hedgehog, 2 is squirrel
@@ -39,6 +38,7 @@ public class Player {
         isFalling = true;
         jumpStatus = false;
         rightIsTrue = 0;
+        currentHP = 3;
         if (charType == 0) {
             playerSpriteLeft = new ImageIcon("catpistol_LEFT.png").getImage();
             playerSpriteRight = new ImageIcon("catpistol_RIGHT.png").getImage();
@@ -74,7 +74,6 @@ public class Player {
     }
 
     public void draw(Graphics2D g) {
-        Rectangle2D.Double temp = new Rectangle2D.Double(xPos, yPos, width, height);
         g.drawImage(usedImageRN, xPos, yPos, width, height, null);
     }
 
@@ -162,6 +161,14 @@ public class Player {
 
     public int getTotalAmmo() {
         return totalAmmo;
+    }
+
+    public int currentHP(){
+        return currentHP;
+    }
+
+    public void minusHP(){
+        currentHP -=1;
     }
 
     public boolean isColliding(Platform other) {

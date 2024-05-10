@@ -31,6 +31,7 @@ public class GameCanvas extends JComponent {
     private ArrayList<Platform> platformlist;
     private ArrayList<Bullet> bulletList1, bulletList2;
     private ArrayList<Player> playerList;
+    private Hearts player1Hearts, player2Hearts;
 
     public GameCanvas(int CharType1, int CharType2) {
         p1 = new Player(100, 100, 20, 20, 0, 0, CharType1);
@@ -44,6 +45,10 @@ public class GameCanvas extends JComponent {
 
         // platformlist.add(platformtest);
         // platformlist.add(platformSoftTest);
+
+
+        //player graphics
+        player1Hearts = new Hearts(25, 495);
 
         // base platforms
         OOBplatform = new Platform(-900, -900, 1000, 20, Color.WHITE, false);
@@ -139,6 +144,10 @@ public class GameCanvas extends JComponent {
         }
 
         ammoBox.draw(g2d);
+
+        //UI GRAPHICS
+
+        player1Hearts.draw(g2d);
         AffineTransform reset = g2d.getTransform();
 
     }

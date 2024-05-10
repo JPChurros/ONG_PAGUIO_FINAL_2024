@@ -1,5 +1,4 @@
 import java.awt.*;
-import java.awt.geom.*;
 
 import javax.swing.ImageIcon;
 
@@ -44,7 +43,6 @@ public class Bullet {
     }
 
     public void draw(Graphics2D g2d){
-        Line2D.Double temp = new Line2D.Double(x1, y1, x2, y2);
         g2d.drawImage(projectileSprite, boxX, boxY, width*2, height*2, null);
     }
 
