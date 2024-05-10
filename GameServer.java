@@ -1,8 +1,22 @@
 
-//This class contains the code that manages the game server's functionality. It also
-//contains the main method that instantiates and starts the server.
+/**
+	@author Charles Matthew L. Ong (234579)
+    @author Gabriel Syd O. Paguio (234725)
+	@version May 11, 2024
+	
+	I have not discussed the Java language code in my program 
+	with anyone other than my instructor or the teaching assistants 
+	assigned to this course.
 
-//I GET LOST AROUND THE 15 MIN MARK
+	I have not used Java language code obtained from another student, 
+	or any other unauthorized source, either modified or unmodified.
+
+	If any Java language code or documentation used in my program 
+	was obtained from another source, such as a textbook or website, 
+	that has been clearly noted with a proper citation in the comments 
+	of my program.
+**/
+
 import java.io.*;
 import java.net.*;
 
@@ -16,7 +30,8 @@ public class GameServer {
     private ReadFromClient p1ReadRunnable, p2ReadRunnable;
     private WriteToClient p1WriteRunnable, p2WriteRunnable;
 
-    private int p1x, p1y, p2x, p2y, ammoX, ammoY, p1LR, p2LR, p1mouseHeld, p2mouseHeld, p1mouseX, p2mouseX, p1mouseY, p2mouseY;
+    private int p1x, p1y, p2x, p2y, ammoX, ammoY, p1LR, p2LR, p1mouseHeld, p2mouseHeld, p1mouseX, p2mouseX, p1mouseY,
+            p2mouseY;
 
     public GameServer() {
         System.out.println("==== GAME SERVER ====");

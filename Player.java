@@ -1,4 +1,22 @@
 
+/**
+	@author Charles Matthew L. Ong (234579)
+    @author Gabriel Syd O. Paguio (234725)
+	@version May 11, 2024
+	
+	I have not discussed the Java language code in my program 
+	with anyone other than my instructor or the teaching assistants 
+	assigned to this course.
+
+	I have not used Java language code obtained from another student, 
+	or any other unauthorized source, either modified or unmodified.
+
+	If any Java language code or documentation used in my program 
+	was obtained from another source, such as a textbook or website, 
+	that has been clearly noted with a proper citation in the comments 
+	of my program.
+**/
+
 //This class contains the code that manages the player's appearance and functionality.
 import java.awt.*;
 import javax.swing.*;
@@ -8,7 +26,8 @@ public class Player {
     private Image playerSpriteLeft, playerSpriteRight, usedImageRN;
     private int xSpeed, ySpeed, xPos, yPos, width, height, charType, shootDelay, totalAmmo, rightIsTrue;
     private boolean isFalling, jumpStatus;
-    //charType 0 is cat, 1 is hedgehog, 2 is squirrel
+
+    // charType 0 is cat, 1 is hedgehog, 2 is squirrel
     public Player(int x, int y, int w, int h, int xs, int ys, int charTypein) {
         xSpeed = xs;
         ySpeed = ys;
@@ -20,7 +39,7 @@ public class Player {
         isFalling = true;
         jumpStatus = false;
         rightIsTrue = 0;
-        if(charType == 0){
+        if (charType == 0) {
             playerSpriteLeft = new ImageIcon("catpistol_LEFT.png").getImage();
             playerSpriteRight = new ImageIcon("catpistol_RIGHT.png").getImage();
             usedImageRN = playerSpriteLeft;
@@ -28,8 +47,7 @@ public class Player {
             height = 59;
             shootDelay = 15;
             totalAmmo = 3;
-        }
-        else if(charType == 1){
+        } else if (charType == 1) {
             playerSpriteLeft = new ImageIcon("hedgehog_LEFT.png").getImage();
             playerSpriteRight = new ImageIcon("hedgehog_RIGHT.png").getImage();
             usedImageRN = playerSpriteLeft;
@@ -37,8 +55,7 @@ public class Player {
             height = 55;
             shootDelay = 60;
             totalAmmo = 2;
-        }
-        else if(charType == 2){
+        } else if (charType == 2) {
             playerSpriteLeft = new ImageIcon("squirrel_LEFT.png").getImage();
             playerSpriteRight = new ImageIcon("squirrel_RIGHT.png").getImage();
             usedImageRN = playerSpriteLeft;
@@ -61,12 +78,12 @@ public class Player {
         g.drawImage(usedImageRN, xPos, yPos, width, height, null);
     }
 
-    public void lookRight(){
+    public void lookRight() {
         usedImageRN = playerSpriteRight;
         rightIsTrue = 1;
     }
 
-    public void lookLeft(){
+    public void lookLeft() {
         usedImageRN = playerSpriteLeft;
         rightIsTrue = 0;
     }
@@ -94,16 +111,20 @@ public class Player {
     public void setYPos(int tempVal) {
         this.yPos = tempVal;
     }
-    public void setFalling(boolean a){
+
+    public void setFalling(boolean a) {
         isFalling = a;
     }
-    public boolean isFalling(){
+
+    public boolean isFalling() {
         return this.isFalling;
     }
-    public void setJumpStatus(boolean b){
+
+    public void setJumpStatus(boolean b) {
         jumpStatus = b;
     }
-    public boolean isJumping(){
+
+    public boolean isJumping() {
         return jumpStatus;
     }
 
@@ -122,22 +143,24 @@ public class Player {
     public int getYSpeed() {
         return ySpeed;
     }
-    public int getCharType(){
+
+    public int getCharType() {
         return charType;
     }
-    public int getLookRight(){
+
+    public int getLookRight() {
         return rightIsTrue;
     }
 
-    public void setLookRight(int temp){
+    public void setLookRight(int temp) {
         rightIsTrue = temp;
     }
 
-    public int getShootDelay(){
+    public int getShootDelay() {
         return shootDelay;
     }
-    
-    public int getTotalAmmo(){
+
+    public int getTotalAmmo() {
         return totalAmmo;
     }
 

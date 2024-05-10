@@ -1,9 +1,22 @@
-//This class contains the code that sets up the Main JFrame for the player. 
 
-//since its just rough lang naman i am basing off the video sir provided! more specifically 
-//(Supplement) Video List: Sending Coordinates Between 2 Players Over a Network in Java
-// Part 1 - 9:06
-// REFER TO 10 MINUTES ONWARDS FOR HOW TO DO GAME CANVAS I BELIEVE.
+/**
+	@author Charles Matthew L. Ong (234579)
+    @author Gabriel Syd O. Paguio (234725)
+	@version May 11, 2024
+	
+	I have not discussed the Java language code in my program 
+	with anyone other than my instructor or the teaching assistants 
+	assigned to this course.
+
+	I have not used Java language code obtained from another student, 
+	or any other unauthorized source, either modified or unmodified.
+
+	If any Java language code or documentation used in my program 
+	was obtained from another source, such as a textbook or website, 
+	that has been clearly noted with a proper citation in the comments 
+	of my program.
+**/
+
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
@@ -12,7 +25,8 @@ import java.io.*;
 import java.net.*;
 
 public class GameFrame extends JFrame implements MouseListener, MouseMotionListener {
-    private int width, height, xCord, yCord, baseBulletLife, baseBulletLife2, mouseX, mouseY, mouseHeld, p2mouseHeld, p2mouseX, p2mouseY;
+    private int width, height, xCord, yCord, baseBulletLife, baseBulletLife2, mouseX, mouseY, mouseHeld, p2mouseHeld,
+            p2mouseX, p2mouseY;
     private int xCord2, yCord2;
     private float xVariable, yVariable, xVariable1, xVariable2, yVariable1, yVariable2;
     private float p2xVariable, p2yVariable, p2xVariable1, p2xVariable2, p2yVariable1, p2yVariable2;
@@ -23,12 +37,13 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
     private Platform testPlatform1;
     private Player player1, player2;
     private JLabel label;
-    private int AmmoClaimCounter, shootDelay1, shootDelayCounter1, totalBullet1, totalBulletCounter1, shootDelay2, shootDelayCounter2, totalBullet2, totalBulletCounter2, p2shooting;
+    private int AmmoClaimCounter, shootDelay1, shootDelayCounter1, totalBullet1, totalBulletCounter1, shootDelay2,
+            shootDelayCounter2, totalBullet2, totalBulletCounter2, p2shooting;
     private Socket socket;
     private int playerID;
     private ArrayList<Bullet> bulletArray1, bulletArray2;
 
-    private int temp, incrementor, incrementor2;
+    private int temp, incrementor, incrementor2, cType1, cType2;
 
     private ReadFromServer rfsRunnable;
     private WriteToServer wtsRunnable;
@@ -36,7 +51,7 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
     public GameFrame(int w, int h) {
         width = w;
         height = h;
-        GC = new GameCanvas();
+        // GC = new GameCanvas();do we need this ?
         player1 = GC.getPlayer1();
         player2 = GC.getPlayer2();
         up = false;
@@ -67,7 +82,8 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
         }
     }
 
-    public void connectToServer() {
+    public void connectToServer() { // I THINK THIS IS WHERE YOU HAVE TO PUT THE CODE THAT SCANS IT BUT LIKE IDEK
+                                    // HOW ITS GONNA PASS IT TO SERVER
         try {
             socket = new Socket("localhost", 12345); // LOCALHOST
             DataInputStream in = new DataInputStream(socket.getInputStream());
@@ -92,26 +108,25 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
             @Override
             public void actionPerformed(ActionEvent ae) {
 
-                //p2 stuff
+                // p2 stuff
                 bulletArray1 = GC.getBulletList1();
                 bulletArray2 = GC.getBulletList2();
-                if(playerID == 2){
+                if (playerID == 2) {
                     player1 = GC.getPlayer2();
                     player2 = GC.getPlayer1();
-                    }
+                }
                 shootDelay1 = player1.getShootDelay();
                 totalBullet1 = player1.getTotalAmmo();
                 shootDelay2 = player2.getShootDelay();
                 totalBullet2 = player2.getTotalAmmo();
 
-                if(player2.getLookRight() == 1){
+                if (player2.getLookRight() == 1) {
                     player2.lookRight();
-                } 
-                else if (player2.getLookRight() == 0){
+                } else if (player2.getLookRight() == 0) {
                     player2.lookLeft();
                 }
 
-                //movement
+                // movement
                 if (up == true && player1.isFalling() == false) { // NO WORKY
                     player1.setJumpStatus(true);
                     // GC.getPlayer1().setYPos(GC.getPlayer1().getYPos() - 100);
@@ -287,7 +302,7 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                     }
                 }
 
-                if (p2mouseHeld == 1){
+                if (p2mouseHeld == 1) {
                     System.out.println("p2holding button");
                     int xPlayerCenter2 = (player2.getXPos() + player2.getWidth() / 2);
                     int yPlayerCenter2 = (player2.getYPos() + player2.getHeight() / 2);
@@ -703,7 +718,7 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
         contentPane.setPreferredSize(new Dimension(width, height));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.pack(); // idk what this does no lie
-        GC = new GameCanvas();
+        GC = new GameCanvas(cType1, cType2);
         contentPane.add(label);
         contentPane.add(GC);
         createPlayers();
