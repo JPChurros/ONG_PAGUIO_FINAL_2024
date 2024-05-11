@@ -25,6 +25,7 @@ import java.awt.geom.*;
 public class AmmoBox {
     private int xPos, yPos, width, height;
     private boolean isFalling, jumpStatus;
+    private Image imageNow;
 
     // Constructor initializes the size of the AmmoBox
     public AmmoBox(int x, int y, int w, int h) {
@@ -32,13 +33,12 @@ public class AmmoBox {
         yPos = y;
         width = w;
         height = h;
+        imageNow = new ImageIcon("AmmoBox.png").getImage();
     }
 
     // This method is responsible for drawing the ammobox.
     public void draw(Graphics2D g) {
-        Rectangle2D.Double temp = new Rectangle2D.Double(xPos, yPos, width, height);
-        g.setColor(Color.ORANGE);
-        g.fill(temp);
+        g.drawImage(imageNow, xPos, yPos, width, height, null);
     }
 
     // This method is responsible for making the ammobox gradually fall until it

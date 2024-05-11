@@ -136,6 +136,24 @@ public class Bullet {
         return boxHeight;
     }
 
+    //Mutator method that changes character projectile type;
+    public void setChar(int temp){
+        charType = temp;
+        if (this.charType == 0) {
+            projectileSprite = new ImageIcon("hairball_CATPROJ.png").getImage();
+            width = 5;
+            height = 5;
+        } else if (this.charType == 1) {
+            projectileSprite = new ImageIcon("spike_HEDGEHOGPROJ.png").getImage();
+            width = 6;
+            height = 5;
+        } else if (this.charType == 2) {
+            projectileSprite = new ImageIcon("acorn_SQUIRRELPROJ.png").getImage();
+            width = 7;
+            height = 5;
+        }
+    }
+
     // This method is responsible for checking if the bullet is colliding with a
     // platform.
     public boolean isCollidingBullet(Platform other) {

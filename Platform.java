@@ -71,4 +71,9 @@ public class Platform {
         return isSoft;
     }
 
+    // mutator to update platform x
+    public void setX(int temp){
+        x = temp;
+    }
+
 }

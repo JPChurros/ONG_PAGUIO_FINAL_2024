@@ -206,7 +206,6 @@ public class Player {
         if (charType == 0) {
             playerSpriteLeft = new ImageIcon("catpistol_LEFT.png").getImage();
             playerSpriteRight = new ImageIcon("catpistol_RIGHT.png").getImage();
-            usedImageRN = playerSpriteLeft;
             width = 42;
             height = 59;
             shootDelay = 15;
@@ -214,7 +213,6 @@ public class Player {
         } else if (charType == 1) {
             playerSpriteLeft = new ImageIcon("hedgehog_LEFT.png").getImage();
             playerSpriteRight = new ImageIcon("hedgehog_RIGHT.png").getImage();
-            usedImageRN = playerSpriteLeft;
             width = 52;
             height = 55;
             shootDelay = 60;
@@ -222,12 +220,16 @@ public class Player {
         } else if (charType == 2) {
             playerSpriteLeft = new ImageIcon("squirrel_LEFT.png").getImage();
             playerSpriteRight = new ImageIcon("squirrel_RIGHT.png").getImage();
-            usedImageRN = playerSpriteLeft;
             width = 51;
             height = 53;
             shootDelay = 5;
             totalAmmo = 7;
         }
+    }
+
+    //sets Character sprites
+    public void setCharacterFinal(){
+        usedImageRN = playerSpriteLeft;
     }
 
     // Accessor Method that returns false if the player is not colliding with a

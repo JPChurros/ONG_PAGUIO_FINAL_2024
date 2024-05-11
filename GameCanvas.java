@@ -27,9 +27,9 @@ import javax.swing.Timer;
 public class GameCanvas extends JComponent {
     private Player p1, p2, player1, player2;
     private Platform OOBplatform, platform1, platform2, platform3, platform4, platform5, platform6, platform7,
-            platform8, platform9, platform10;
+            platform8, platform9, platform10, playerCover1, playerCover2, playerCover3, playerCover4, playerCover5;
     private AmmoBox ammoBox;
-    private ArrayList<Platform> platformlist;
+    private ArrayList<Platform> platformlist, coverList;
     private ArrayList<Bullet> bulletList1, bulletList2;
     private ArrayList<Player> playerList;
     private Hearts player1Hearts, player2Hearts;
@@ -44,6 +44,7 @@ public class GameCanvas extends JComponent {
         // platformtest = new Platform(200, 200, 500, 20, Color.yellow, false);
         // platformSoftTest = new Platform(200, 450, 500, 20, Color.red, true);
         platformlist = new ArrayList<Platform>();
+        coverList = new ArrayList<Platform>();
         bulletList1 = new ArrayList<Bullet>();
         bulletList2 = new ArrayList<Bullet>();
         playerList = new ArrayList<Player>();
@@ -66,11 +67,16 @@ public class GameCanvas extends JComponent {
         platform4 = new Platform(375, 400, 250, 20, Color.RED, true);
         platform5 = new Platform(700, 350, 250, 20, Color.RED, true);
         // input NAME = new CLASS here
-        platform6 = new Platform(50, 200, 150, 20, Color.RED, true);
-        platform7 = new Platform(250, 200, 150, 20, Color.RED, true);
+        platform6 = new Platform(75, 200, 150, 20, Color.RED, true);
+        platform7 = new Platform(300, 200, 150, 20, Color.RED, true);
         // platform8 = new Platform(475, 200, 150, 20, Color.RED, true);
-        platform9 = new Platform(600, 200, 150, 20, Color.RED, true);
-        platform10 = new Platform(800, 200, 150, 20, Color.RED, true);
+        platform9 = new Platform(550, 200, 150, 20, Color.RED, true);
+        platform10 = new Platform(775, 200, 150, 20, Color.RED, true);
+        playerCover1 = new Platform(50, 50, 10, 180, new Color(0, 0, 0, 0), false);
+        playerCover2 = new Platform(150, 50, 10, 180, new Color(0, 0, 0, 0), false);
+        playerCover3 = new Platform(0, 50, 1000, 50, new Color(0, 0, 0, 0), false);
+        playerCover4 = new Platform(850, 50, 10, 180, new Color(0, 0, 0, 0), false);
+        playerCover5 = new Platform(950, 50, 10, 180, new Color(0, 0, 0, 0), false);
 
         platformlist.add(platform1);
         platformlist.add(platform2);
@@ -82,12 +88,23 @@ public class GameCanvas extends JComponent {
         // platformlist.add(platform8);
         platformlist.add(platform9);
         platformlist.add(platform10);
+        platformlist.add(playerCover1);
+        platformlist.add(playerCover2);
+        platformlist.add(playerCover3);
+        platformlist.add(playerCover4);
+        platformlist.add(playerCover5);
+
+        coverList.add(playerCover1);
+        coverList.add(playerCover2);
+        coverList.add(playerCover3);
+        coverList.add(playerCover4);
+        coverList.add(playerCover5);
 
         playerList.add(p1);
         playerList.add(p2);
 
         // AmmoBox
-        ammoBox = new AmmoBox(500, 275, 20, 20);
+        ammoBox = new AmmoBox(485, 275, 30, 40);
     }
 
     // This method is incharge of drawing the hearts that signify the health of the
@@ -185,7 +202,6 @@ public class GameCanvas extends JComponent {
         player2Hearts.draw(g2d);
         playerFaces.draw(g2d);
         endScreen.draw(g2d);
-        AffineTransform reset = g2d.getTransform();
 
     }
 
@@ -237,5 +253,18 @@ public class GameCanvas extends JComponent {
     // Accessor method that returns endScreen.
     public EndScreen getEndScreen(){
         return endScreen;
+    }
+
+    //Accessor method for coverList
+    public ArrayList<Platform> getCoverList(){
+        return coverList;
+    }
+
+    public void setCoverOrig(){
+        playerCover1.setX(50);
+        playerCover2.setX(150);
+        playerCover3.setX(0);
+        playerCover4.setX(850);
+        playerCover5.setX(950);
     }
 }

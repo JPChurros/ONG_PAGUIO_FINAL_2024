@@ -39,7 +39,7 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
     private Hearts player1Heart, player2Heart;
     private JLabel label;
     private int AmmoClaimCounter, shootDelay1, shootDelayCounter1, totalBullet1, totalBulletCounter1, shootDelay2,
-            shootDelayCounter2, totalBullet2, totalBulletCounter2, p2shooting;
+            shootDelayCounter2, totalBullet2, totalBulletCounter2, p2shooting, spawnTimer;
     private Socket socket;
     private int playerID;
     private ArrayList<Bullet> bulletArray1, bulletArray2;
@@ -69,6 +69,7 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
         mouseX = 0;
         mouseY = 0;
         totalBulletCounter1 = 0;
+        spawnTimer = 300;
 
         shootDelayCounter1 = shootDelay1;
     }
@@ -128,6 +129,13 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                 player1.setCharType(cType);
                 player2.setCharType(cTypeOther);
                 GC.setFaces(playerID);
+
+                for(Bullet bullet : bulletArray1){
+                    bullet.setChar(cType);
+                }
+                for(Bullet bullet : bulletArray2){
+                    bullet.setChar(cTypeOther);
+                }
 
                 if (player2.getLookRight() == 1) {
                     player2.lookRight();
@@ -202,7 +210,7 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                 }
 
                 // TP BACK TO STAGE TYPE BEAT
-                if (player1.getYPos() > height || player1.getXPos() > width || player1.getXPos() < 0) {
+                if (player1.getYPos() > height || player1.getXPos() + player1.getWidth() > width || player1.getXPos() < 0) {
                     if (playerID == 1) {
                         player1.setYPos(50);
                         player1.setXPos(100);
@@ -457,6 +465,15 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                                 GC.getEndScreen().win(player1.getCharType());
                                 GC.getEndScreen().gameEnd();
                             }
+                            GC.getPlayer1().setXPos(100);
+                            GC.getPlayer1().setYPos(100);
+                            GC.getPlayer2().setXPos(900);
+                            GC.getPlayer2().setYPos(100);
+                            GC.setCoverOrig();
+                            totalBulletCounter1 = 0;
+                            totalBulletCounter2 = 0;
+                            spawnTimer = 180;
+
                         }
                         for (Platform platform : GC.getPlatformList()) {
                             if (platform.isSoft() == false) {
@@ -490,6 +507,14 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                                 GC.getEndScreen().lose(player1.getCharType());
                                 GC.getEndScreen().gameEnd();
                             }
+                            GC.getPlayer1().setXPos(100);
+                            GC.getPlayer1().setYPos(100);
+                            GC.getPlayer2().setXPos(900);
+                            GC.getPlayer2().setYPos(100);
+                            GC.setCoverOrig();
+                            totalBulletCounter1 = 0;
+                            totalBulletCounter2 = 0;
+                            spawnTimer = 180;
                         }
                         for (Platform platform : GC.getPlatformList()) {
                             if (platform.isSoft() == false) {
@@ -528,6 +553,13 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                 AmmoClaimCounter -= 1;
                 shootDelayCounter1 -= 1;
                 shootDelayCounter2 -= 1;
+                spawnTimer -= 1;
+
+                if(spawnTimer == 0){
+                    for(Platform platform : GC.getCoverList()){
+                        platform.setX(2000);
+                    }
+                }
 
                 for (Platform platform : GC.getPlatformList()) {
                     if (player1.isColliding(platform)) {
