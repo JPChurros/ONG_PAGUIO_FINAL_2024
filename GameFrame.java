@@ -52,7 +52,7 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
     public GameFrame(int w, int h) {
         width = w;
         height = h;
-        GC = new GameCanvas(0, 0);
+        GC = new GameCanvas(1, 1);
         player1 = GC.getPlayer1();
         player2 = GC.getPlayer2();
         up = false;
@@ -782,6 +782,8 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
         contentPane.setPreferredSize(new Dimension(width, height));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.pack(); // idk what this does no lie
+        cType1 = 2;
+        cType2 = 2;
         GC = new GameCanvas(cType1, cType2);
         contentPane.add(label);
         contentPane.add(GC);

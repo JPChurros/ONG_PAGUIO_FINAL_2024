@@ -4,8 +4,8 @@ import java.awt.geom.*;
 
 
 public class EndScreen {
-    private int x, y, picLocX, picLocY, width, height;
-    private Image pictureNow;
+    private int x, y, picLocX, picLocY, width, height, WLX, WLY, WLWidth, WLHeight;
+    private Image pictureNow, winOrLose;
     private Rectangle2D blackScreen;
     public EndScreen(){
         x = 0;
@@ -14,7 +14,11 @@ public class EndScreen {
         picLocY = -900;
         width = 1000;
         height = 600;
-        blackScreen = new Rectangle2D.Double(-500, -500, 10, 10); 
+        WLX = 900;
+        WLY = -900;
+        WLWidth = 1;
+        WLHeight = 1;
+        blackScreen = new Rectangle2D.Double(-500, -500, 10, 10);
     }
 
     public void win(int charType){
@@ -27,6 +31,12 @@ public class EndScreen {
         if(charType == 2){
             pictureNow = new ImageIcon("squirrelWIN.gif").getImage();
         }
+        winOrLose = new ImageIcon("YOUWIN.png").getImage();
+        WLX = 345;
+        WLY = 50;
+        WLWidth = 310;
+        WLHeight = 42;
+
     }
 
     public void lose(int charType){
@@ -39,18 +49,24 @@ public class EndScreen {
         if(charType == 2){
             pictureNow = new ImageIcon("squirrelLOSE.gif").getImage();
         }
+        winOrLose = new ImageIcon("YOULOSE.png").getImage();
+        WLX = 321;
+        WLY = 50;
+        WLWidth = 358;
+        WLHeight = 42;
     }
 
     public void draw(Graphics2D g){
         g.setColor(new Color(0, 0, 0));
         g.fill(blackScreen);
-        g.drawImage(pictureNow, picLocX, picLocY, 300, 300, null);
+        g.drawImage(pictureNow, picLocX, picLocY, 200, 200, null);
+        g.drawImage(winOrLose, WLX, WLY, WLWidth, WLHeight, null);
     }
 
     public void gameEnd(){
         blackScreen = new Rectangle2D.Double(x, y, width, height);
-        picLocX = 350;
-        picLocY = 150;
+        picLocX = 400;
+        picLocY = 200;
     }
 
 }
