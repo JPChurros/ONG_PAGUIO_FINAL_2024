@@ -23,6 +23,7 @@ import javax.swing.*;
 import java.util.*;
 import javax.swing.Timer;
 
+//This class extends JComponent and is incharge of drawing the players aswell as the platforms. It is also incharge of handling the bullets created by the players.
 public class GameCanvas extends JComponent {
     private Player p1, p2, player1, player2;
     private Platform OOBplatform, platform1, platform2, platform3, platform4, platform5, platform6, platform7,
@@ -34,6 +35,8 @@ public class GameCanvas extends JComponent {
     private Hearts player1Hearts, player2Hearts;
     private FaceUI playerFaces;
 
+    // Constructor initializes the players, the platforms, the graphics, and the
+    // bullets.
     public GameCanvas(int CharType1, int CharType2) {
         p1 = new Player(100, 100, 20, 20, 0, 0, CharType1);
         p2 = new Player(680, 100, 20, 20, 0, 0, CharType2);
@@ -47,12 +50,10 @@ public class GameCanvas extends JComponent {
         // platformlist.add(platformtest);
         // platformlist.add(platformSoftTest);
 
-
-        //player graphics
+        // player graphics
         player1Hearts = new Hearts(-300, -300);
         player2Hearts = new Hearts(-300, -300);
         playerFaces = new FaceUI(-300, -300, -300, -300);
-
 
         // base platforms
         OOBplatform = new Platform(-900, -900, 1000, 20, Color.WHITE, false);
@@ -76,16 +77,23 @@ public class GameCanvas extends JComponent {
         ammoBox = new AmmoBox(390, 275, 20, 20);
     }
 
+    // This method is incharge of drawing the hearts that signify the health of the
+    // player.
     public void createHearts(int width, int height) {
         player1Hearts = new Hearts(25, height - 105);
         player2Hearts = new Hearts(width - 64, height - 105);
-        playerFaces = new FaceUI(player1Hearts.getX(), player1Hearts.getY(), player2Hearts.getX(), player2Hearts.getY());
+        playerFaces = new FaceUI(player1Hearts.getX(), player1Hearts.getY(), player2Hearts.getX(),
+                player2Hearts.getY());
     }
 
-    public void setFaces(int playerID){
+    // This method is in charge of changing the face of the player next to the heart
+    // once the game starts depending on the char type.
+    public void setFaces(int playerID) {
         playerFaces.setChars(playerID, p1.getCharType(), p2.getCharType());
     }
 
+    // This method is incharge of creating the bullets and initializing them
+    // depending on the type of player.
     public void createBullets(int playerID) {
         // bullet creation
         if (playerID == 1) {
@@ -130,6 +138,7 @@ public class GameCanvas extends JComponent {
         }
     }
 
+    // This method is incharge of drawing all the objects.
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -151,13 +160,13 @@ public class GameCanvas extends JComponent {
         for (Bullet bullet : bulletList2) {
             bullet.draw(g2d);
         }
-        for (Platform platform : platformlist){
+        for (Platform platform : platformlist) {
             platform.draw(g2d);
         }
 
         ammoBox.draw(g2d);
 
-        //UI GRAPHICS
+        // UI GRAPHICS
 
         player1Hearts.draw(g2d);
         player2Hearts.draw(g2d);
@@ -166,38 +175,47 @@ public class GameCanvas extends JComponent {
 
     }
 
+    // Accessor method that returns player1
     public Player getPlayer1() {
         return p1;
     }
 
+    // Accessor method that returns player2
     public Player getPlayer2() {
         return p2;
     }
 
+    // Accessor method that returns an arraylist of both players.
     public ArrayList<Player> getPlayerList() {
         return playerList;
     }
 
+    // Accessor method that returns an arraylist of all platforms
     public ArrayList<Platform> getPlatformList() {
         return platformlist;
     }
 
+    // Accessor method that returns all the bullets of player1
     public ArrayList<Bullet> getBulletList1() {
         return bulletList1;
     }
 
+    // Accessor method that returns all the bullets of player2
     public ArrayList<Bullet> getBulletList2() {
         return bulletList2;
     }
 
-    public Hearts getPlayer1Hearts(){
+    // Accessor method that returns the number of hearts of player1
+    public Hearts getPlayer1Hearts() {
         return player1Hearts;
     }
 
-    public Hearts getPlayer2Hearts(){
+    // Accessor method that returns the number of hearts of player2
+    public Hearts getPlayer2Hearts() {
         return player2Hearts;
     }
 
+    // ACcessor method that returns the ammoBox.
     public AmmoBox getAmmoBox() {
         return ammoBox;
     }

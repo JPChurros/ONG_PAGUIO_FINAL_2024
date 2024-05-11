@@ -86,7 +86,7 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
     public void connectToServer() { // I THINK THIS IS WHERE YOU HAVE TO PUT THE CODE THAT SCANS IT BUT LIKE IDEK
                                     // HOW ITS GONNA PASS IT TO SERVER
         try {
-            socket = new Socket("localhost", 12345); // LOCALHOST
+            socket = new Socket("localhost", 23456); // LOCALHOST
             DataInputStream in = new DataInputStream(socket.getInputStream());
             DataOutputStream out = new DataOutputStream(socket.getOutputStream());
             playerID = in.readInt();
@@ -124,8 +124,6 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                 totalBullet1 = player1.getTotalAmmo();
                 shootDelay2 = player2.getShootDelay();
                 totalBullet2 = player2.getTotalAmmo();
-                
-                
 
                 if (player2.getLookRight() == 1) {
                     player2.lookRight();
@@ -431,17 +429,15 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                             bullet.setXPos(-1000, -1001);
                             bullet.setYPos(-1000, -1001);
                         }
-                        if (bullet.isCollidingPlayer(player2) == true){
+                        if (bullet.isCollidingPlayer(player2) == true) {
                             bullet.setXPos(-1000, -1001);
                             bullet.setYPos(-1000, -1001);
                             player2.minusHP();
-                            if(player2.currentHP() == 2){
+                            if (player2.currentHP() == 2) {
                                 player2Heart.setHP2();
-                            }
-                            else if(player2.currentHP() == 1){
+                            } else if (player2.currentHP() == 1) {
                                 player2Heart.setHP1();
-                            }
-                            else if(player2.currentHP() == 0){
+                            } else if (player2.currentHP() == 0) {
 
                             }
                         }
@@ -463,15 +459,14 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                             bullet.setXPos(-1000, -1001);
                             bullet.setYPos(-1000, -1001);
                         }
-                        if (bullet.isCollidingPlayer(player1) == true){
+                        if (bullet.isCollidingPlayer(player1) == true) {
                             System.out.println("you hit him");
                             bullet.setXPos(-1000, -1001);
                             bullet.setYPos(-1000, -1001);
                             player1.minusHP();
-                            if(player1.currentHP() == 2){
+                            if (player1.currentHP() == 2) {
                                 player1Heart.setHP2();
-                            }
-                            else if(player1.currentHP() == 1){
+                            } else if (player1.currentHP() == 1) {
                                 player1Heart.setHP1();
                             }
                         }

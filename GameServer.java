@@ -20,6 +20,8 @@
 import java.io.*;
 import java.net.*;
 
+//This Class is in charge of handling the server (and reading/writing from the players.). It contains the Main method that starts and initiates the server.
+
 public class GameServer {
     private ServerSocket ss;
     private int numPlayers;
@@ -33,6 +35,8 @@ public class GameServer {
     private int p1x, p1y, p2x, p2y, ammoX, ammoY, p1LR, p2LR, p1mouseHeld, p2mouseHeld, p1mouseX, p2mouseX, p1mouseY,
             p2mouseY;
 
+    // Constructor initializes the starting values of changing values (such as the
+    // players x and y position, and where they hold their mouse)
     public GameServer() {
         System.out.println("==== GAME SERVER ====");
         numPlayers = 0;
@@ -54,7 +58,7 @@ public class GameServer {
         p2mouseY = 0;
 
         try {
-            ss = new ServerSocket(12345); // SOCKET HERE
+            ss = new ServerSocket(23456); // SOCKET HERE
         } catch (BindException bindException) {
             System.out.println("Socket already in use, please pick a new one.");
         } catch (IOException ie) {
@@ -63,6 +67,8 @@ public class GameServer {
         }
     }
 
+    // Here the server is waiting for connections. Once both players have connected,
+    // it stops accepting connections.
     public void acceptConnections() {
         try {
             System.out.println("Waiting for Connections");
@@ -107,17 +113,22 @@ public class GameServer {
         }
     }
 
+    // This class is in charge of reading values from the client. It receives input
+    // from the GameFrames WriteToServer class.
     private class ReadFromClient implements Runnable {
         private int playerID;
         private DataInputStream dataIn;
 
+        // Constructor Initializes values.
         public ReadFromClient(int PID, DataInputStream in) {
             playerID = PID;
             dataIn = in;
             System.out.println("RFC" + playerID + "Runnable Created");
         }
 
-        public void run() { // THIS IS WHERE IT RECEIVES THE XPOS AND Y POS.
+        // This is where it perpetually reads the players x and y positions aswell as
+        // other important values.
+        public void run() {
             try {
                 while (true) {
                     if (playerID == 1) {
@@ -142,20 +153,25 @@ public class GameServer {
         }
     }
 
+    // This class is in charge of writing out the enemy's values to the client. It
+    // does this by sending player2's values to player1 and vice versa.
     private class WriteToClient implements Runnable {
         private int playerID;
         private DataOutputStream dataOut;
 
+        // Constructor initializes Values
         public WriteToClient(int PID, DataOutputStream out) {
             playerID = PID;
             dataOut = out;
             System.out.println("WTC" + playerID + "Runnable Created");
         }
 
+        // This is where it writes to the client the enemy's positions and other
+        // pertinent information.
         public void run() {
             try {
                 while (true) {
-                    if (playerID == 1) { // if your player1, you need the p2 pos, this gives that to you.
+                    if (playerID == 1) {
                         dataOut.writeInt(p2x);
                         dataOut.writeInt(p2y);
                         dataOut.writeInt(p2LR);
@@ -183,6 +199,8 @@ public class GameServer {
             }
         }
 
+        // This method essentially lets us wait for both players to join the game before
+        // starting up the gameframe.
         public void sendStartMsg() {
             try {
                 dataOut.writeUTF("We now have two players. Go!");
@@ -192,6 +210,7 @@ public class GameServer {
         }
     }
 
+    // Main method instantiates the gameserver and lets it accept connections.
     public static void main(String[] args) {
         GameServer gs = new GameServer();
         gs.acceptConnections();

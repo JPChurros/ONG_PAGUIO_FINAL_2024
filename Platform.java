@@ -1,3 +1,4 @@
+
 /**
 	@author Charles Matthew L. Ong (234579)
     @author Gabriel Syd O. Paguio (234725)
@@ -16,16 +17,18 @@
 	of my program.
 **/
 
-
 import java.awt.*;
 import java.awt.geom.*;
 
+//This class is responsible for handling the platform. It is coded in such a way that there are two variations of platforms, a hard platform and a soft platform. 
+//Hard platforms are platforms that you collide with in all 4 directions, but soft platforms allow you to jump ontop of them from the bottom.
 public class Platform {
 
     private int x, y, width, height;
     private boolean isSoft;
     private Color color;
 
+    // Initializes the platform
     public Platform(int x, int y, int width, int height, Color color, boolean isSoft) {
 
         this.x = x;
@@ -36,29 +39,35 @@ public class Platform {
         this.isSoft = isSoft;
     }
 
+    // Draws the Platform
     public void draw(Graphics2D g2d) {
         Rectangle2D.Double temp = new Rectangle2D.Double(x, y, width, height);
         g2d.setColor(color);
         g2d.fill(temp);
     }
 
+    // Accessor method returns the top left corner of the platform's x value of the
     public int getXPos() {
         return x;
     }
 
+    // Accessor method returns the top left corner of the platform's y value of the
     public int getYPos() {
         return y;
     }
 
+    // Accessor method returns the width of the platform.
     public int getWidth() {
         return width;
     }
 
+    // Accessor mmethod returns the height of the platform.
     public int getHeight() {
         return height;
     }
 
-    public boolean isSoft(){
+    // Returns whether or not the platform is soft.
+    public boolean isSoft() {
         return isSoft;
     }
 

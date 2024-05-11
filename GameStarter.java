@@ -16,10 +16,12 @@
  *          of my program.
  **/
 
-// This class contains the main method that will start the game from the
-// player's
-// side.
+// This class contains the main method that instantiates the gameframe and
+// connects it to server. It is the class that is called upon to allow both
+// players to start playing.
 public class GameStarter {
+    // Main method instantiates gameframe, connects it to server and sets up the
+    // gui.
     public static void main(String[] args) {
         GameFrame gf = new GameFrame(800, 600); // arbitrary
         gf.connectToServer();

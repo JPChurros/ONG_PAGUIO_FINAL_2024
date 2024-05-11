@@ -17,15 +17,16 @@
 	of my program.
 **/
 
-//This class contains the code that manages the player's appearance and functionality.
 import java.awt.*;
 import javax.swing.*;
 
+//This class contains the code that draws the player. It also contains the methods that allow the player to check collission and move.
 public class Player {
     private Image playerSpriteLeft, playerSpriteRight, usedImageRN;
     private int xSpeed, ySpeed, xPos, yPos, width, height, charType, shootDelay, totalAmmo, rightIsTrue, currentHP;
     private boolean isFalling, jumpStatus;
 
+    // Constructor initializes the player values.
     // charType 0 is cat, 1 is hedgehog, 2 is squirrel
     public Player(int x, int y, int w, int h, int xs, int ys, int charTypein) {
         xSpeed = xs;
@@ -66,6 +67,8 @@ public class Player {
         }
     }
 
+    // This function constantly gets called during the timer to move the player
+    // depending on their speed.
     public void move() {
         this.setXPos(this.xPos += xSpeed);
         this.setYPos(this.yPos += ySpeed);
@@ -73,104 +76,131 @@ public class Player {
         // System.out.println(this.getYPos());
     }
 
+    // This method draws the player.
     public void draw(Graphics2D g) {
         g.drawImage(usedImageRN, xPos, yPos, width, height, null);
     }
 
+    // Mutator method that changes the playerSprite so that they look right.
     public void lookRight() {
         usedImageRN = playerSpriteRight;
         rightIsTrue = 1;
     }
 
+    // Mutator method that changes the playerSprite so that they look left
     public void lookLeft() {
         usedImageRN = playerSpriteLeft;
         rightIsTrue = 0;
     }
 
+    // Mutator method that changes the player's horizontal speed.
     public void changeXSpeed(int x) {
         this.xSpeed = x;
     }
 
+    // Mutator method that changes the player's vertical speed.
     public void changeYSpeed(int y) {
         this.ySpeed = y;
     }
 
+    // Accessor method for the player's x position
     public int getXPos() {
         return this.xPos;
     }
 
+    // Accessor method for the player's y position
     public int getYPos() {
         return this.yPos;
     }
 
+    // Mutator method to change the Player's X position
     public void setXPos(int tempVal) {
         this.xPos = tempVal;
     }
 
+    // Mutator method to change the Player's Y Position
     public void setYPos(int tempVal) {
         this.yPos = tempVal;
     }
 
+    // Mutator method to set the player to fall
     public void setFalling(boolean a) {
         isFalling = a;
     }
 
+    // Accessor method to check if the player is falling
     public boolean isFalling() {
         return this.isFalling;
     }
 
+    // Mutator Method to change whether or not the player is jumping
     public void setJumpStatus(boolean b) {
         jumpStatus = b;
     }
 
+    // Accessor method to check if the player is jumping
     public boolean isJumping() {
         return jumpStatus;
     }
 
+    // Accessor Method that returns the player's width.
     public int getWidth() {
         return width;
     }
 
+    // Accessor Method that returns the player's height.
     public int getHeight() {
         return height;
     }
 
+    // Accessor Method that returns the player's horizontal Speed.
     public int getXSpeed() {
         return xSpeed;
     }
 
+    // Accessor Method that returns the player's Vertical Speed.
     public int getYSpeed() {
         return ySpeed;
     }
 
+    // Accessor Method that returns the player's Character Type
     public int getCharType() {
         return charType;
     }
 
+    // Accessor Method that returns the direction the character is facing.
     public int getLookRight() {
         return rightIsTrue;
     }
 
+    // Mutator Method that sets the player to look left or right.
     public void setLookRight(int temp) {
         rightIsTrue = temp;
     }
 
+    // Accessor Method that returns the player's shoot delay.
     public int getShootDelay() {
         return shootDelay;
     }
 
+    // Accessor Method that returns the player's total ammo.
     public int getTotalAmmo() {
         return totalAmmo;
     }
 
-    public int currentHP(){
+    // Accessor Method that returns the player's current Health.
+    public int currentHP() {
         return currentHP;
     }
 
-    public void minusHP(){
-        currentHP -=1;
+    // Mutator Method that subtracts a healthpoint. Typically called once the player
+    // gets hit.
+    public void minusHP() {
+        currentHP -= 1;
     }
 
+    // Accessor Method that returns false if the player is not colliding with a
+    // platform, returns true if it is.
     public boolean isColliding(Platform other) {
         if (xPos + this.width < other.getXPos() ||
                 xPos >= other.getXPos() + other.getWidth() ||
@@ -182,6 +212,7 @@ public class Player {
         }
     }
 
+    // Accessor method that checks if the player is colliding with the ammobox.
     public boolean isCollidingAmmo(AmmoBox other) {
         if (xPos + this.width < other.getXPos() ||
                 xPos >= other.getXPos() + other.getWidth() ||
@@ -193,6 +224,8 @@ public class Player {
         }
     }
 
+    // Method that checks which side of the platform got hit so that we can adjust
+    // the player's position accordingly.
     public int collidingDirection(Platform other) {
         if (yPos + height >= other.getYPos() && yPos + height < other.getYPos() + other.getHeight()
                 && yPos < other.getYPos()) {
