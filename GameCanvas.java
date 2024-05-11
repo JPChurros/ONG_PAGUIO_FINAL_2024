@@ -32,6 +32,7 @@ public class GameCanvas extends JComponent {
     private ArrayList<Bullet> bulletList1, bulletList2;
     private ArrayList<Player> playerList;
     private Hearts player1Hearts, player2Hearts;
+    private FaceUI playerFaces;
 
     public GameCanvas(int CharType1, int CharType2) {
         p1 = new Player(100, 100, 20, 20, 0, 0, CharType1);
@@ -48,8 +49,10 @@ public class GameCanvas extends JComponent {
 
 
         //player graphics
-        player1Hearts = new Hearts(25, 495);
-        player2Hearts = new Hearts(736, 495);
+        player1Hearts = new Hearts(-300, -300);
+        player2Hearts = new Hearts(-300, -300);
+        playerFaces = new FaceUI(-300, -300, -300, -300);
+
 
         // base platforms
         OOBplatform = new Platform(-900, -900, 1000, 20, Color.WHITE, false);
@@ -71,6 +74,16 @@ public class GameCanvas extends JComponent {
 
         // AmmoBox
         ammoBox = new AmmoBox(390, 275, 20, 20);
+    }
+
+    public void createHearts(int width, int height) {
+        player1Hearts = new Hearts(25, height - 105);
+        player2Hearts = new Hearts(width - 64, height - 105);
+        playerFaces = new FaceUI(player1Hearts.getX(), player1Hearts.getY(), player2Hearts.getX(), player2Hearts.getY());
+    }
+
+    public void setFaces(int playerID){
+        playerFaces.setChars(playerID, p1.getCharType(), p2.getCharType());
     }
 
     public void createBullets(int playerID) {
@@ -131,17 +144,15 @@ public class GameCanvas extends JComponent {
         OOBplatform.draw(g2d);
         // platformtest.draw(g2d);
         // platformSoftTest.draw(g2d);
-        platform1.draw(g2d);
-        platform2.draw(g2d);
-        platform3.draw(g2d);
-        platform4.draw(g2d);
-        platform5.draw(g2d);
 
         for (Bullet bullet : bulletList1) {
             bullet.draw(g2d);
         }
         for (Bullet bullet : bulletList2) {
             bullet.draw(g2d);
+        }
+        for (Platform platform : platformlist){
+            platform.draw(g2d);
         }
 
         ammoBox.draw(g2d);
@@ -150,6 +161,7 @@ public class GameCanvas extends JComponent {
 
         player1Hearts.draw(g2d);
         player2Hearts.draw(g2d);
+        playerFaces.draw(g2d);
         AffineTransform reset = g2d.getTransform();
 
     }

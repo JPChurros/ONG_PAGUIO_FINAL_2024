@@ -432,7 +432,6 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                             bullet.setYPos(-1000, -1001);
                         }
                         if (bullet.isCollidingPlayer(player2) == true){
-                            System.out.println("damn you got hit");
                             bullet.setXPos(-1000, -1001);
                             bullet.setYPos(-1000, -1001);
                             player2.minusHP();
@@ -442,16 +441,16 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                             else if(player2.currentHP() == 1){
                                 player2Heart.setHP1();
                             }
+                            else if(player2.currentHP() == 0){
+
+                            }
                         }
                         for (Platform platform : GC.getPlatformList()) {
                             if (platform.isSoft() == false) {
                                 if (bullet.isCollidingBullet(platform)) {
                                     bullet.setXPos(-1000, -1001);
                                     bullet.setYPos(-1000, -1001);
-                                    System.out.println("collided with floor yung bullet");
                                 }
-                            } else if (platform.isSoft() == true) {
-
                             }
                         }
                     }
@@ -482,8 +481,6 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                                     bullet.setXPos(-1000, -1001);
                                     bullet.setYPos(-1000, -1001);
                                 }
-                            } else if (platform.isSoft() == true) {
-
                             }
                         }
                     }
@@ -754,6 +751,8 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
         contentPane.add(GC);
         createPlayers();
         GC.createBullets(playerID);
+        GC.createHearts(width, height);
+        GC.setFaces(playerID);
         this.setVisible(true);
         this.setLayout(null);
         setUpAnimationTimer();
