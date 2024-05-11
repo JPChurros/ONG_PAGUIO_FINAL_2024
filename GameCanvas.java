@@ -34,6 +34,7 @@ public class GameCanvas extends JComponent {
     private ArrayList<Player> playerList;
     private Hearts player1Hearts, player2Hearts;
     private FaceUI playerFaces;
+    private EndScreen endScreen;
 
     // Constructor initializes the players, the platforms, the graphics, and the
     // bullets.
@@ -54,6 +55,7 @@ public class GameCanvas extends JComponent {
         player1Hearts = new Hearts(-300, -300);
         player2Hearts = new Hearts(-300, -300);
         playerFaces = new FaceUI(-300, -300, -300, -300);
+        endScreen = new EndScreen();
 
         // base platforms
         OOBplatform = new Platform(-900, -900, 1000, 20, Color.WHITE, false);
@@ -182,6 +184,7 @@ public class GameCanvas extends JComponent {
         player1Hearts.draw(g2d);
         player2Hearts.draw(g2d);
         playerFaces.draw(g2d);
+        endScreen.draw(g2d);
         AffineTransform reset = g2d.getTransform();
 
     }
@@ -229,5 +232,10 @@ public class GameCanvas extends JComponent {
     // ACcessor method that returns the ammoBox.
     public AmmoBox getAmmoBox() {
         return ammoBox;
+    }
+
+    // Accessor method that returns endScreen.
+    public EndScreen getEndScreen(){
+        return endScreen;
     }
 }

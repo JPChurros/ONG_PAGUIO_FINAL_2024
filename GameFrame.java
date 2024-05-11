@@ -33,7 +33,7 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
     private Container contentPane;
     private GameCanvas GC;
     private Timer animationTimer;
-    private boolean up, down, left, right, sKey;
+    private boolean up, down, left, right, upW, downS, leftA, rightD;
     private Platform testPlatform1;
     private Player player1, player2;
     private Hearts player1Heart, player2Heart;
@@ -198,7 +198,7 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                 }
 
                 // TP BACK TO STAGE TYPE BEAT
-                if (player1.getYPos() > height || player1.getXPos() > width) {
+                if (player1.getYPos() > height || player1.getXPos() > width || player1.getXPos() < 0) {
                     if (playerID == 1) {
                         player1.setYPos(50);
                         player1.setXPos(100);
@@ -449,7 +449,8 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                             } else if (player2.currentHP() == 1) {
                                 player2Heart.setHP1();
                             } else if (player2.currentHP() == 0) {
-
+                                GC.getEndScreen().win(player1.getCharType());
+                                GC.getEndScreen().gameEnd();
                             }
                         }
                         for (Platform platform : GC.getPlatformList()) {
@@ -479,6 +480,9 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                                 player1Heart.setHP2();
                             } else if (player1.currentHP() == 1) {
                                 player1Heart.setHP1();
+                            } else if (player1.currentHP() == 0) {
+                                GC.getEndScreen().lose(player1.getCharType());
+                                GC.getEndScreen().gameEnd();
                             }
                         }
                         for (Platform platform : GC.getPlatformList()) {
@@ -640,6 +644,22 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                         // System.out.println("RIGHT PRESSED");
                         right = true;
                         break;
+                    case KeyEvent.VK_W:
+                        // System.out.println("UP PRESSED");
+                        up = true;
+                        break;
+                    case KeyEvent.VK_S:
+                        // System.out.println("DOWN PRESSED");
+                        down = true;
+                        break;
+                    case KeyEvent.VK_A:
+                        // System.out.println("LEFT PRESSED");
+                        left = true;
+                        break;
+                    case KeyEvent.VK_D:
+                        // System.out.println("RIGHT PRESSED");
+                        right = true;
+                        break;
                 }
             }
 
@@ -659,8 +679,17 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                     case KeyEvent.VK_RIGHT:
                         right = false;
                         break;
+                    case KeyEvent.VK_W:
+                        up = false;
+                        break;
                     case KeyEvent.VK_S:
-                        sKey = false;
+                        down = false;
+                        break;
+                    case KeyEvent.VK_A:
+                        left = false;
+                        break;
+                    case KeyEvent.VK_D:
+                        right = false;
                         break;
                 }
             }
