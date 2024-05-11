@@ -35,6 +35,7 @@ public class GameCanvas extends JComponent {
     private Hearts player1Hearts, player2Hearts;
     private FaceUI playerFaces;
     private EndScreen endScreen;
+    private Background background;
 
     // Constructor initializes the players, the platforms, the graphics, and the
     // bullets.
@@ -57,26 +58,27 @@ public class GameCanvas extends JComponent {
         player2Hearts = new Hearts(-300, -300);
         playerFaces = new FaceUI(-300, -300, -300, -300);
         endScreen = new EndScreen();
+        background = new Background();
 
         // base platforms
-        OOBplatform = new Platform(-900, -900, 1000, 20, Color.WHITE, false);
-        platform1 = new Platform(0, 500, 250, 20, Color.yellow, false);
-        platform2 = new Platform(750, 500, 250, 20, Color.yellow, false);
+        OOBplatform = new Platform(-900, -900, 1000, 20, Color.WHITE, false, 2);
+        platform1 = new Platform(0, 500, 250, 20, Color.yellow, false, 0);
+        platform2 = new Platform(750, 500, 250, 20, Color.yellow, false, 0);
         // 1
-        platform3 = new Platform(50, 350, 250, 20, Color.RED, true);
-        platform4 = new Platform(375, 400, 250, 20, Color.RED, true);
-        platform5 = new Platform(700, 350, 250, 20, Color.RED, true);
+        platform3 = new Platform(50, 350, 250, 20, Color.RED, true, 0);
+        platform4 = new Platform(375, 400, 250, 20, Color.RED, true, 0);
+        platform5 = new Platform(700, 350, 250, 20, Color.RED, true, 0);
         // input NAME = new CLASS here
-        platform6 = new Platform(75, 200, 150, 20, Color.RED, true);
-        platform7 = new Platform(300, 200, 150, 20, Color.RED, true);
+        platform6 = new Platform(75, 200, 150, 20, Color.RED, true, 1);
+        platform7 = new Platform(300, 200, 150, 20, Color.RED, true, 1);
         // platform8 = new Platform(475, 200, 150, 20, Color.RED, true);
-        platform9 = new Platform(550, 200, 150, 20, Color.RED, true);
-        platform10 = new Platform(775, 200, 150, 20, Color.RED, true);
-        playerCover1 = new Platform(50, 50, 10, 180, new Color(0, 0, 0, 0), false);
-        playerCover2 = new Platform(150, 50, 10, 180, new Color(0, 0, 0, 0), false);
-        playerCover3 = new Platform(0, 50, 1000, 50, new Color(0, 0, 0, 0), false);
-        playerCover4 = new Platform(850, 50, 10, 180, new Color(0, 0, 0, 0), false);
-        playerCover5 = new Platform(950, 50, 10, 180, new Color(0, 0, 0, 0), false);
+        platform9 = new Platform(550, 200, 150, 20, Color.RED, true, 1);
+        platform10 = new Platform(775, 200, 150, 20, Color.RED, true, 1);
+        playerCover1 = new Platform(50, 50, 10, 180, new Color(0, 0, 0, 0), false, 2);
+        playerCover2 = new Platform(150, 50, 10, 180, new Color(0, 0, 0, 0), false, 2);
+        playerCover3 = new Platform(0, 50, 1000, 50, new Color(0, 0, 0, 0), false, 2);
+        playerCover4 = new Platform(850, 50, 10, 180, new Color(0, 0, 0, 0), false, 2);
+        playerCover5 = new Platform(950, 50, 10, 180, new Color(0, 0, 0, 0), false, 2);
 
         platformlist.add(platform1);
         platformlist.add(platform2);
@@ -177,6 +179,7 @@ public class GameCanvas extends JComponent {
                 RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.setRenderingHints(rh);
+        background.draw(g2d);
         p1.draw(g2d);
         p2.draw(g2d);
 

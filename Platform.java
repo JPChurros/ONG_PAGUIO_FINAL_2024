@@ -20,16 +20,19 @@
 import java.awt.*;
 import java.awt.geom.*;
 
+import javax.swing.ImageIcon;
+
 //This class is responsible for handling the platform. It is coded in such a way that there are two variations of platforms, a hard platform and a soft platform. 
 //Hard platforms are platforms that you collide with in all 4 directions, but soft platforms allow you to jump ontop of them from the bottom.
 public class Platform {
 
-    private int x, y, width, height;
+    private int x, y, width, height, setSkin;
     private boolean isSoft;
     private Color color;
+    private Image platformSprite;
 
     // Initializes the platform
-    public Platform(int x, int y, int width, int height, Color color, boolean isSoft) {
+    public Platform(int x, int y, int width, int height, Color color, boolean isSoft, int setSkin) {
 
         this.x = x;
         this.y = y;
@@ -37,13 +40,21 @@ public class Platform {
         this.height = height;
         this.color = color;
         this.isSoft = isSoft;
+        this.setSkin = setSkin;
+        if(setSkin == 0){
+            platformSprite = new ImageIcon("platform0.png").getImage();
+        }
+        if(setSkin == 1){
+            platformSprite = new ImageIcon("platform1.png").getImage();
+        }
+        if(setSkin == 2){
+            platformSprite = new ImageIcon("platform2.png").getImage();
+        }
     }
 
     // Draws the Platform
     public void draw(Graphics2D g2d) {
-        Rectangle2D.Double temp = new Rectangle2D.Double(x, y, width, height);
-        g2d.setColor(color);
-        g2d.fill(temp);
+        g2d.drawImage(platformSprite, x, y, width, height, null);
     }
 
     // Accessor method returns the top left corner of the platform's x value of the
