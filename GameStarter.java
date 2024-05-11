@@ -23,6 +23,8 @@ public class GameStarter {
     // Main method instantiates gameframe, connects it to server and sets up the
     // gui.
     public static void main(String[] args) {
+        
+
         GameFrame gf = new GameFrame(1000, 600); // arbitrary
         gf.connectToServer();
         gf.setUpGUI();
