@@ -37,9 +37,9 @@ public class GameCanvas extends JComponent {
 
     // Constructor initializes the players, the platforms, the graphics, and the
     // bullets.
-    public GameCanvas(int CharType1, int CharType2) {
+    public GameCanvas(int CharType1, int CharType2) { // The Canvas is 1000 by 600
         p1 = new Player(100, 100, 20, 20, 0, 0, CharType1);
-        p2 = new Player(680, 100, 20, 20, 0, 0, CharType2);
+        p2 = new Player(900, 100, 20, 20, 0, 0, CharType2);
         // platformtest = new Platform(200, 200, 500, 20, Color.yellow, false);
         // platformSoftTest = new Platform(200, 450, 500, 20, Color.red, true);
         platformlist = new ArrayList<Platform>();
@@ -58,23 +58,34 @@ public class GameCanvas extends JComponent {
         // base platforms
         OOBplatform = new Platform(-900, -900, 1000, 20, Color.WHITE, false);
         platform1 = new Platform(0, 500, 250, 20, Color.yellow, false);
-        platform2 = new Platform(550, 500, 250, 20, Color.yellow, false);
+        platform2 = new Platform(750, 500, 250, 20, Color.yellow, false);
         // 1
-        platform3 = new Platform(100, 350, 150, 20, Color.RED, true);
-        platform4 = new Platform(325, 350, 150, 20, Color.RED, true);
-        platform5 = new Platform(550, 350, 150, 20, Color.RED, true);
+        platform3 = new Platform(50, 350, 250, 20, Color.RED, true);
+        platform4 = new Platform(375, 400, 250, 20, Color.RED, true);
+        platform5 = new Platform(700, 350, 250, 20, Color.RED, true);
         // input NAME = new CLASS here
+        platform6 = new Platform(50, 200, 150, 20, Color.RED, true);
+        platform7 = new Platform(250, 200, 150, 20, Color.RED, true);
+        // platform8 = new Platform(475, 200, 150, 20, Color.RED, true);
+        platform9 = new Platform(600, 200, 150, 20, Color.RED, true);
+        platform10 = new Platform(800, 200, 150, 20, Color.RED, true);
+
         platformlist.add(platform1);
         platformlist.add(platform2);
         platformlist.add(platform3);
         platformlist.add(platform4);
         platformlist.add(platform5);
+        platformlist.add(platform6);
+        platformlist.add(platform7);
+        // platformlist.add(platform8);
+        platformlist.add(platform9);
+        platformlist.add(platform10);
 
         playerList.add(p1);
         playerList.add(p2);
 
         // AmmoBox
-        ammoBox = new AmmoBox(390, 275, 20, 20);
+        ammoBox = new AmmoBox(500, 275, 20, 20);
     }
 
     // This method is incharge of drawing the hearts that signify the health of the

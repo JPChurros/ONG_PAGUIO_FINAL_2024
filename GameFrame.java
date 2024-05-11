@@ -86,7 +86,7 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
     public void connectToServer() { // I THINK THIS IS WHERE YOU HAVE TO PUT THE CODE THAT SCANS IT BUT LIKE IDEK
                                     // HOW ITS GONNA PASS IT TO SERVER
         try {
-            socket = new Socket("localhost", 23456); // LOCALHOST
+            socket = new Socket("localhost", 12345); // LOCALHOST
             DataInputStream in = new DataInputStream(socket.getInputStream());
             DataOutputStream out = new DataOutputStream(socket.getOutputStream());
             playerID = in.readInt();
@@ -197,6 +197,17 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                     player1.changeXSpeed(0);
                 }
 
+                // TP BACK TO STAGE TYPE BEAT
+                if (player1.getYPos() > height || player1.getXPos() > width) {
+                    if (playerID == 1) {
+                        player1.setYPos(50);
+                        player1.setXPos(100);
+                    } else {
+                        player1.setYPos(50);
+                        player1.setXPos(900);
+                    }
+
+                }
                 // bullet calculation
 
                 if (mouseHeld == 1) {
@@ -500,6 +511,7 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                         System.out.println("player2 got ammo");
                         System.out.println(totalBulletCounter2);
                     }
+
                 }
 
                 // COUNTERS
