@@ -449,6 +449,7 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                             } else if (player2.currentHP() == 1) {
                                 player2Heart.setHP1();
                             } else if (player2.currentHP() == 0) {
+                                player2Heart.setHP0();
                                 GC.getEndScreen().win(player1.getCharType());
                                 GC.getEndScreen().gameEnd();
                             }
@@ -481,6 +482,7 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                             } else if (player1.currentHP() == 1) {
                                 player1Heart.setHP1();
                             } else if (player1.currentHP() == 0) {
+                                player1Heart.setHP0();
                                 GC.getEndScreen().lose(player1.getCharType());
                                 GC.getEndScreen().gameEnd();
                             }

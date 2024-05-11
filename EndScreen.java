@@ -57,7 +57,7 @@ public class EndScreen {
     }
 
     public void draw(Graphics2D g){
-        g.setColor(new Color(0, 0, 0));
+        g.setColor(new Color(0, 0, 0, 99));
         g.fill(blackScreen);
         g.drawImage(pictureNow, picLocX, picLocY, 200, 200, null);
         g.drawImage(winOrLose, WLX, WLY, WLWidth, WLHeight, null);

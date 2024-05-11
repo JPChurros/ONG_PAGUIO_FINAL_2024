@@ -49,6 +49,10 @@ public class Hearts {
         imageNow = new ImageIcon("3HP.png").getImage();
     }
 
+    public void setHP0() {
+        imageNow = new ImageIcon("0HP.png").getImage();
+    }
+
     // Draws the image
     public void draw(Graphics2D g) {
         g.drawImage(imageNow, this.x, this.y, width, height, null);
