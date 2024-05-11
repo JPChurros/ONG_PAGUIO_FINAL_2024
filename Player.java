@@ -199,6 +199,37 @@ public class Player {
         currentHP -= 1;
     }
 
+    //Mutator Method that changes the character type
+    //done in initializing w/ server
+    public void setCharType(int cType){
+        charType = cType;
+        if (charType == 0) {
+            playerSpriteLeft = new ImageIcon("catpistol_LEFT.png").getImage();
+            playerSpriteRight = new ImageIcon("catpistol_RIGHT.png").getImage();
+            usedImageRN = playerSpriteLeft;
+            width = 42;
+            height = 59;
+            shootDelay = 15;
+            totalAmmo = 3;
+        } else if (charType == 1) {
+            playerSpriteLeft = new ImageIcon("hedgehog_LEFT.png").getImage();
+            playerSpriteRight = new ImageIcon("hedgehog_RIGHT.png").getImage();
+            usedImageRN = playerSpriteLeft;
+            width = 52;
+            height = 55;
+            shootDelay = 60;
+            totalAmmo = 2;
+        } else if (charType == 2) {
+            playerSpriteLeft = new ImageIcon("squirrel_LEFT.png").getImage();
+            playerSpriteRight = new ImageIcon("squirrel_RIGHT.png").getImage();
+            usedImageRN = playerSpriteLeft;
+            width = 51;
+            height = 53;
+            shootDelay = 5;
+            totalAmmo = 7;
+        }
+    }
+
     // Accessor Method that returns false if the player is not colliding with a
     // platform, returns true if it is.
     public boolean isColliding(Platform other) {

@@ -2,11 +2,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
+interface ButtonClickListener {
+    void onButtonClick(int buttonIndex);
+}
+
 public class PreGame extends JFrame {
     private JButton button1, button2, button3;
     private JLabel label1, label2, label3;
 
-    public PreGame(){
+    public PreGame(ButtonClickListener listener){
         setTitle("Choose Your Character");
         setSize(500, 250);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -73,29 +77,29 @@ public class PreGame extends JFrame {
 
         add(mainPanel);
 
-        button1.addActionListener(new ButtonClickListener());
-        button2.addActionListener(new ButtonClickListener());
-        button3.addActionListener(new ButtonClickListener());
-
         setVisible(true);
-    }
 
-    private class ButtonClickListener implements ActionListener {
-        public void actionPerformed(ActionEvent e){
-            JButton source = (JButton)e.getSource();
-
-            if(source == button1){
-
+        button1.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Call the callback method with the button index
+                listener.onButtonClick(0);
+                // Close the JFrame
+                dispose();
             }
-            else if(source == button2){
+        });
 
+        button2.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                listener.onButtonClick(1);
+                dispose();
             }
-            else if(source == button3){
+        });
 
+        button3.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                listener.onButtonClick(2);
+                dispose();
             }
-        }
-    }
-    public static void main(String[] args) {
-        new PreGame();
+        });
     }
 }

@@ -23,11 +23,20 @@ public class GameStarter {
     // Main method instantiates gameframe, connects it to server and sets up the
     // gui.
     public static void main(String[] args) {
-        
+        PreGame pg = new PreGame(new ButtonClickListener() {
+            public void onButtonClick(int buttonIndex) {
+                System.out.println("button clicked:" + buttonIndex);
+                // After button click, start GameFrame
+                startGameFrame(buttonIndex);
+            }
+        });
 
-        GameFrame gf = new GameFrame(1000, 600); // arbitrary
+    }
+
+    // Method to start GameFrame
+    private static void startGameFrame(int playerChoice) {
+        GameFrame gf = new GameFrame(1000, 600, playerChoice); // arbitrary
         gf.connectToServer();
         gf.setUpGUI();
-
     }
 }

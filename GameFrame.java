@@ -26,7 +26,7 @@ import java.net.*;
 
 public class GameFrame extends JFrame implements MouseListener, MouseMotionListener {
     private int width, height, xCord, yCord, baseBulletLife, baseBulletLife2, mouseX, mouseY, mouseHeld, p2mouseHeld,
-            p2mouseX, p2mouseY;
+            p2mouseX, p2mouseY, cType, cTypeOther;
     private int xCord2, yCord2;
     private float xVariable, yVariable, xVariable1, xVariable2, yVariable1, yVariable2;
     private float p2xVariable, p2yVariable, p2xVariable1, p2xVariable2, p2yVariable1, p2yVariable2;
@@ -49,10 +49,11 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
     private ReadFromServer rfsRunnable;
     private WriteToServer wtsRunnable;
 
-    public GameFrame(int w, int h) {
+    public GameFrame(int w, int h, int charType) {
         width = w;
         height = h;
-        GC = new GameCanvas(1, 1);
+        GC = new GameCanvas(cType, cTypeOther);
+        this.cType = charType;
         player1 = GC.getPlayer1();
         player2 = GC.getPlayer2();
         up = false;
@@ -124,6 +125,9 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                 totalBullet1 = player1.getTotalAmmo();
                 shootDelay2 = player2.getShootDelay();
                 totalBullet2 = player2.getTotalAmmo();
+                player1.setCharType(cType);
+                player2.setCharType(cTypeOther);
+                GC.setFaces(playerID);
 
                 if (player2.getLookRight() == 1) {
                     player2.lookRight();
@@ -719,6 +723,7 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                         p2mouseHeld = dataIn.readInt();
                         p2mouseX = dataIn.readInt();
                         p2mouseY = dataIn.readInt();
+                        cTypeOther = dataIn.readInt();
                     }
                 }
             } catch (IOException ex) {
@@ -759,6 +764,7 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                         dataOut.writeInt(mouseHeld);
                         dataOut.writeInt(mouseX);
                         dataOut.writeInt(mouseY);
+                        dataOut.writeInt(cType);
                         dataOut.flush();
                     }
                     try {
@@ -784,15 +790,12 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
         contentPane.setPreferredSize(new Dimension(width, height));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.pack(); // idk what this does no lie
-        cType1 = 2;
-        cType2 = 2;
         GC = new GameCanvas(cType1, cType2);
         contentPane.add(label);
         contentPane.add(GC);
         createPlayers();
         GC.createBullets(playerID);
         GC.createHearts(width, height);
-        GC.setFaces(playerID);
         this.setVisible(true);
         this.setLayout(null);
         setUpAnimationTimer();

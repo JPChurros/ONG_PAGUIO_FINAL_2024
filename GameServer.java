@@ -33,7 +33,7 @@ public class GameServer {
     private WriteToClient p1WriteRunnable, p2WriteRunnable;
 
     private int p1x, p1y, p2x, p2y, ammoX, ammoY, p1LR, p2LR, p1mouseHeld, p2mouseHeld, p1mouseX, p2mouseX, p1mouseY,
-            p2mouseY;
+            p2mouseY, p1cType, p2cType;
 
     // Constructor initializes the starting values of changing values (such as the
     // players x and y position, and where they hold their mouse)
@@ -138,6 +138,7 @@ public class GameServer {
                         p1mouseHeld = dataIn.readInt();
                         p1mouseX = dataIn.readInt();
                         p1mouseY = dataIn.readInt();
+                        p1cType = dataIn.readInt();
                     } else {
                         p2x = dataIn.readInt();
                         p2y = dataIn.readInt();
@@ -145,6 +146,7 @@ public class GameServer {
                         p2mouseHeld = dataIn.readInt();
                         p2mouseX = dataIn.readInt();
                         p2mouseY = dataIn.readInt();
+                        p2cType = dataIn.readInt();
                     }
                 }
             } catch (IOException ex) {
@@ -178,6 +180,7 @@ public class GameServer {
                         dataOut.writeInt(p2mouseHeld);
                         dataOut.writeInt(p2mouseX);
                         dataOut.writeInt(p2mouseY);
+                        dataOut.writeInt(p2cType);
                         dataOut.flush();
                     } else {
                         dataOut.writeInt(p1x);
@@ -186,6 +189,7 @@ public class GameServer {
                         dataOut.writeInt(p1mouseHeld);
                         dataOut.writeInt(p1mouseX);
                         dataOut.writeInt(p1mouseY);
+                        dataOut.writeInt(p1cType);
                         dataOut.flush();
                     }
                     try {
