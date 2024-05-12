@@ -453,8 +453,14 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                             bullet.setYPos(-1000, -1001);
                         }
                         if (bullet.isCollidingPlayer(player2) == true) {
-                            bullet.setXPos(-1000, -1001);
-                            bullet.setYPos(-1000, -1001);
+                            for(Bullet bulletin : bulletArray1) {
+                                bulletin.setXPos(-1000, -1001);
+                                bulletin.setYPos(-1000, -1001);
+                            }
+                            for(Bullet bulletin2 : bulletArray2){
+                                bulletin2.setXPos(-1000, -1001);
+                                bulletin2.setYPos(-1000, -1001);
+                            }
                             player2.minusHP();
                             if (player2.currentHP() == 2) {
                                 player2Heart.setHP2();
@@ -495,8 +501,14 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                         }
                         if (bullet.isCollidingPlayer(player1) == true) {
                             System.out.println("you hit him");
-                            bullet.setXPos(-1000, -1001);
-                            bullet.setYPos(-1000, -1001);
+                            for(Bullet bulletin : bulletArray1) {
+                                bulletin.setXPos(-1000, -1001);
+                                bulletin.setYPos(-1000, -1001);
+                            }
+                            for(Bullet bulletin2 : bulletArray2){
+                                bulletin2.setXPos(-1000, -1001);
+                                bulletin2.setYPos(-1000, -1001);
+                            }
                             player1.minusHP();
                             if (player1.currentHP() == 2) {
                                 player1Heart.setHP2();
