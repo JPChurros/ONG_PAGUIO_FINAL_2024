@@ -22,7 +22,7 @@ import javax.swing.*;
 
 //This class contains the code that draws the player. It also contains the methods that allow the player to check collission and move.
 public class Player {
-    private Image playerSpriteLeft, playerSpriteRight, usedImageRN;
+    private Image playerSpriteLeft, playerSpriteRight, usedImageRN, tempImage;
     private int xSpeed, ySpeed, xPos, yPos, width, height, charType, shootDelay, totalAmmo, rightIsTrue, currentHP;
     private boolean isFalling, jumpStatus;
 
@@ -40,6 +40,7 @@ public class Player {
         jumpStatus = false;
         rightIsTrue = 0;
         currentHP = 3;
+        tempImage = new ImageIcon("catpistol_LEFT.png").getImage();
         if (charType == 0) {
             playerSpriteLeft = new ImageIcon("catpistol_LEFT.png").getImage();
             playerSpriteRight = new ImageIcon("catpistol_RIGHT.png").getImage();
@@ -229,7 +230,11 @@ public class Player {
 
     //sets Character sprites
     public void setCharacterFinal(){
-        usedImageRN = playerSpriteLeft;
+        if(usedImageRN == tempImage){
+            usedImageRN = playerSpriteLeft;
+        } else if(usedImageRN == playerSpriteRight){
+            usedImageRN = playerSpriteRight;
+        }
     }
 
     // Accessor Method that returns false if the player is not colliding with a

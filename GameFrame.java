@@ -127,6 +127,8 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                 player1.setCharType(cType);
                 player2.setCharType(cTypeOther);
                 GC.setFaces(playerID);
+                player1.setCharacterFinal();
+                player2.setCharacterFinal();
 
                 for(Bullet bullet : bulletArray1){
                     bullet.setChar(cType);
