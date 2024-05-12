@@ -73,7 +73,7 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
     }
 
     public void createPlayers() {
-        System.out.println("CreatedPlayers!!!!!");
+        // System.out.println("CreatedPlayers!!!!!");
         if (playerID == 1) {
             player1 = GC.getPlayer1();
             player2 = GC.getPlayer2();
@@ -130,10 +130,10 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                 player1.setCharacterFinal();
                 player2.setCharacterFinal();
 
-                for(Bullet bullet : bulletArray1){
+                for (Bullet bullet : bulletArray1) {
                     bullet.setChar(cType);
                 }
-                for(Bullet bullet : bulletArray2){
+                for (Bullet bullet : bulletArray2) {
                     bullet.setChar(cTypeOther);
                 }
 
@@ -144,21 +144,16 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                 }
 
                 // movement
-                if (up == true && player1.isFalling() == false) { // NO WORKY
+                if (up == true && player1.isFalling() == false) {
                     player1.setJumpStatus(true);
-                    // GC.getPlayer1().setYPos(GC.getPlayer1().getYPos() - 100);
-                    // GC.getPlayer1().setFalling(true);
                 }
 
                 if (player1.isJumping() == true) {
-                    temp = temp - 5; // in this case temp is the distance travelled by the
-                                     // player. the value here should be the speed.
-                    player1.changeYSpeed(-17 + incrementor); // plus cuz it should slow
-                                                             // down.
+                    temp = temp - 5;
+                    player1.changeYSpeed(-17 + incrementor);
                     incrementor++;
-                    // System.out.println(GC.getPlayer1().getYSpeed());
                     if (incrementor + -17 == 0) {
-                        System.out.println("False");
+                        // System.out.println("False");
                         player1.setJumpStatus(false);
                         player1.setFalling(true);
                         temp = 0;
@@ -168,7 +163,6 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                 }
 
                 if (player1.isFalling() == true) {
-                    // System.out.println(incrementor2);
                     player1.changeYSpeed(incrementor2);
                     if (incrementor2 < 17) {
                         incrementor2++;
@@ -192,7 +186,7 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                     incrementor = 0;
                 }
 
-                if (left == true) { // NO WORKY
+                if (left == true) {
                     player1.lookLeft();
                     player1.changeXSpeed(-10);
                     if (player1.isJumping() == false) {
@@ -209,8 +203,9 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                     player1.changeXSpeed(0);
                 }
 
-                // TP BACK TO STAGE TYPE BEAT
-                if (player1.getYPos() > height || player1.getXPos() + player1.getWidth() > width || player1.getXPos() < 0) {
+                // TPs the player back to stage
+                if (player1.getYPos() > height || player1.getXPos() + player1.getWidth() > width
+                        || player1.getXPos() < 0) {
                     if (playerID == 1) {
                         player1.setYPos(50);
                         player1.setXPos(100);
@@ -250,7 +245,7 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                     if (player1.getCharType() == 0) {
                         baseBulletLife = 23;
                         if (shootDelayCounter1 <= 0 && totalBulletCounter1 > 0) {
-                            System.out.println("am shooting");
+                            // System.out.println("am shooting");
                             totalBulletCounter1 -= 1;
                             shootDelayCounter1 = shootDelay1;
                             for (int i = 0; i < bulletArray1.size(); i++) {
@@ -331,7 +326,7 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                 }
 
                 if (p2mouseHeld == 1) {
-                    System.out.println("p2holding button");
+                    // System.out.println("p2holding button");
                     int xPlayerCenter2 = (player2.getXPos() + player2.getWidth() / 2);
                     int yPlayerCenter2 = (player2.getYPos() + player2.getHeight() / 2);
                     xCord2 = p2mouseX - xPlayerCenter2; // Measures from center of player
@@ -359,7 +354,7 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
 
                     if (player2.getCharType() == 0) {
                         baseBulletLife2 = 23;
-                        System.out.println("other guy is shooting fr");
+                        // System.out.println("other guy is shooting fr");
                         if (shootDelayCounter2 <= 0 && totalBulletCounter2 > 0) {
                             totalBulletCounter2 -= 1;
                             shootDelayCounter2 = shootDelay2;
@@ -382,7 +377,7 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                     } else if (player2.getCharType() == 1) {
                         baseBulletLife2 = 17;
                         if (shootDelayCounter2 <= 0 && totalBulletCounter2 > 0) {
-                            System.out.println("other guy is shooting fr");
+                            // System.out.println("other guy is shooting fr");
                             totalBulletCounter2 -= 1;
                             shootDelayCounter2 = shootDelay2;
                             for (int i = 0; i < bulletArray2.size(); i++) {
@@ -419,9 +414,9 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                         }
                     } else if (player2.getCharType() == 2) {
                         baseBulletLife2 = 12;
-                        System.out.println("other guy is shooting fr og");
+                        // System.out.println("other guy is shooting fr og");
                         if (shootDelayCounter2 <= 0 && totalBulletCounter2 > 0) {
-                            System.out.println("other guy is shooting fr");
+                            // System.out.println("other guy is shooting fr");
                             totalBulletCounter2 -= 1;
                             shootDelayCounter2 = shootDelay2;
                             for (int i = 0; i < bulletArray2.size(); i++) {
@@ -453,11 +448,11 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                             bullet.setYPos(-1000, -1001);
                         }
                         if (bullet.isCollidingPlayer(player2) == true) {
-                            for(Bullet bulletin : bulletArray1) {
+                            for (Bullet bulletin : bulletArray1) {
                                 bulletin.setXPos(-1000, -1001);
                                 bulletin.setYPos(-1000, -1001);
                             }
-                            for(Bullet bulletin2 : bulletArray2){
+                            for (Bullet bulletin2 : bulletArray2) {
                                 bulletin2.setXPos(-1000, -1001);
                                 bulletin2.setYPos(-1000, -1001);
                             }
@@ -500,12 +495,12 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                             bullet.setYPos(-1000, -1001);
                         }
                         if (bullet.isCollidingPlayer(player1) == true) {
-                            System.out.println("you hit him");
-                            for(Bullet bulletin : bulletArray1) {
+                            // System.out.println("you hit him");
+                            for (Bullet bulletin : bulletArray1) {
                                 bulletin.setXPos(-1000, -1001);
                                 bulletin.setYPos(-1000, -1001);
                             }
-                            for(Bullet bulletin2 : bulletArray2){
+                            for (Bullet bulletin2 : bulletArray2) {
                                 bulletin2.setXPos(-1000, -1001);
                                 bulletin2.setYPos(-1000, -1001);
                             }
@@ -549,14 +544,14 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                     if (player1.isCollidingAmmo(GC.getAmmoBox())) {
                         GC.getAmmoBox().setYPos(-950);
                         totalBulletCounter1 = totalBullet1;
-                        System.out.println("player1 got ammo");
-                        System.out.println(totalBulletCounter1);
+                        // System.out.println("player1 got ammo");
+                        // System.out.println(totalBulletCounter1);
                     }
                     if (player2.isCollidingAmmo(GC.getAmmoBox())) {
                         GC.getAmmoBox().setYPos(-950);
                         totalBulletCounter2 = totalBullet2;
-                        System.out.println("player2 got ammo");
-                        System.out.println(totalBulletCounter2);
+                        // System.out.println("player2 got ammo");
+                        // System.out.println(totalBulletCounter2);
                     }
 
                 }
@@ -566,35 +561,35 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                 shootDelayCounter2 -= 1;
                 spawnTimer -= 1;
 
-                if(spawnTimer == 0){
-                    for(Platform platform : GC.getCoverList()){
+                if (spawnTimer == 0) {
+                    for (Platform platform : GC.getCoverList()) {
                         platform.setX(2000);
                     }
                 }
 
                 for (Platform platform : GC.getPlatformList()) {
                     if (player1.isColliding(platform)) {
-                        System.out.println("Colliding");
+                        // System.out.println("Colliding");
                         int direction = player1.collidingDirection(platform);
                         if (platform.isSoft() == false) {
                             if (direction == 1) { // TOP WALL
-                                System.out.println("direction = 1");
+                                // System.out.println("direction = 1");
                                 player1.setYPos(platform.getYPos() - player1.getHeight());
                                 player1.setFalling(false);
                             }
                             if (direction == 2) {
-                                System.out.println("direction = 2");
+                                // System.out.println("direction = 2");
                                 player1.setYPos(platform.getYPos() + platform.getHeight());
                                 player1.setFalling(true);
 
                             }
                             if (direction == 3) { // LEFT WALL
-                                System.out.println("Direction == 3");
+                                // System.out.println("Direction == 3");
                                 player1.setXPos(platform.getXPos() - player1.getWidth());
                                 player1.setFalling(true);
                             }
                             if (direction == 4) { // RIGHT WALL
-                                System.out.println("Direction = 4");
+                                // System.out.println("Direction = 4");
                                 player1.setXPos(platform.getXPos() + platform.getWidth());
                                 player1.setFalling(true);
                             }
@@ -605,24 +600,21 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                         }
                         if (platform.isSoft() == true) {
                             if (direction == 1) { // TOP WALL
-                                System.out.println("direction = 1");
+                                // System.out.println("direction = 1");
                                 player1.setYPos(platform.getYPos() - player1.getHeight());
                                 player1.setFalling(false);
                             }
                             if (direction == 3) { // LEFT WALL
-                                System.out.println("Direction == 3");
+                                // System.out.println("Direction == 3");
                                 player1.setXPos(platform.getXPos() - player1.getWidth());
                                 player1.setFalling(true);
                             }
                             if (direction == 4) { // RIGHT WALL
-                                System.out.println("Direction = 4");
+                                // System.out.println("Direction = 4");
                                 player1.setXPos(platform.getXPos() + platform.getWidth());
                                 player1.setFalling(true);
                             }
 
-                            // else{
-                            // GC.getPlayer1().setFalling(true);
-                            // }
                         }
                     }
                 }

@@ -1,3 +1,22 @@
+
+/**
+	@author Charles Matthew L. Ong (234579)
+    @author Gabriel Syd O. Paguio (234725)
+	@version May 11, 2024
+	
+	I have not discussed the Java language code in my program 
+	with anyone other than my instructor or the teaching assistants 
+	assigned to this course.
+
+	I have not used Java language code obtained from another student, 
+	or any other unauthorized source, either modified or unmodified.
+
+	If any Java language code or documentation used in my program 
+	was obtained from another source, such as a textbook or website, 
+	that has been clearly noted with a proper citation in the comments 
+	of my program.
+**/
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -6,11 +25,15 @@ interface ButtonClickListener {
     void onButtonClick(int buttonIndex);
 }
 
+// This class is responsible for allowing the player to pick which character
+// they want to play. It instantiates three buttons with an image and a short
+// description of the character.
 public class PreGame extends JFrame {
     private JButton button1, button2, button3;
     private JLabel label1, label2, label3;
 
-    public PreGame(ButtonClickListener listener){
+    // Constructor initializes the values and instantiates everything.
+    public PreGame(ButtonClickListener listener) {
         setTitle("Choose Your Character");
         setSize(500, 250);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -33,9 +56,12 @@ public class PreGame extends JFrame {
         button2.setPreferredSize(buttonSize);
         button3.setPreferredSize(buttonSize);
 
-        label1 = new JLabel("<html><br>Uses a rifle <br>Shoots long range<br>Medium Shooting Speed<br>Magazine Size = 3 <br>SPECIAL: None</html>");
-        label2 = new JLabel("<html><br>Uses a shotgun <br>Shoots close range<br>Slow Shooting Speed<br>Magazine Size = 2<br>SPECIAL: shoots 3 at once</html>");
-        label3 = new JLabel("<html><br>Uses a submachine gun <br>Shoots mid range<br>Fast Shooting Speed<br>Magazine Size = 7<br>SPECIAL: None</html>");
+        label1 = new JLabel(
+                "<html><br>Uses a rifle <br>Shoots long range<br>Medium Shooting Speed<br>Magazine Size = 3 <br>SPECIAL: None</html>");
+        label2 = new JLabel(
+                "<html><br>Uses a shotgun <br>Shoots close range<br>Slow Shooting Speed<br>Magazine Size = 2<br>SPECIAL: shoots 3 at once</html>");
+        label3 = new JLabel(
+                "<html><br>Uses a submachine gun <br>Shoots mid range<br>Fast Shooting Speed<br>Magazine Size = 7<br>SPECIAL: None</html>");
 
         JPanel row1 = new JPanel(new FlowLayout(FlowLayout.CENTER));
         JPanel row2 = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -52,19 +78,19 @@ public class PreGame extends JFrame {
         row6.add(label3);
 
         JPanel gridPanel1 = new JPanel(new FlowLayout());
-        
+
         gridPanel1.add(button1);
         gridPanel1.add(label1);
         gridPanel1.add(iconLabel1);
 
         JPanel gridPanel2 = new JPanel(new FlowLayout());
-        
+
         gridPanel2.add(button2);
         gridPanel2.add(label2);
         gridPanel2.add(iconLabel2);
 
         JPanel gridPanel3 = new JPanel(new FlowLayout());
-        
+
         gridPanel3.add(button3);
         gridPanel3.add(label3);
         gridPanel3.add(iconLabel3);

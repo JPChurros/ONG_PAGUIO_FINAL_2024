@@ -25,7 +25,7 @@ import java.util.*;
 public class GameCanvas extends JComponent {
     private Player p1, p2, player1, player2;
     private Platform OOBplatform, platform1, platform2, platform3, platform4, platform5, platform6, platform7,
-             platform9, platform10, playerCover1, playerCover2, playerCover3, playerCover4, playerCover5;
+            platform9, platform10, playerCover1, playerCover2, playerCover3, playerCover4, playerCover5;
     private AmmoBox ammoBox;
     private ArrayList<Platform> platformlist, coverList;
     private ArrayList<Bullet> bulletList1, bulletList2;
@@ -40,16 +40,11 @@ public class GameCanvas extends JComponent {
     public GameCanvas(int CharType1, int CharType2) { // The Canvas is 1000 by 600
         p1 = new Player(100, 100, 20, 20, 0, 0, CharType1);
         p2 = new Player(900, 100, 20, 20, 0, 0, CharType2);
-        // platformtest = new Platform(200, 200, 500, 20, Color.yellow, false);
-        // platformSoftTest = new Platform(200, 450, 500, 20, Color.red, true);
         platformlist = new ArrayList<Platform>();
         coverList = new ArrayList<Platform>();
         bulletList1 = new ArrayList<Bullet>();
         bulletList2 = new ArrayList<Bullet>();
         playerList = new ArrayList<Player>();
-
-        // platformlist.add(platformtest);
-        // platformlist.add(platformSoftTest);
 
         // player graphics
         player1Hearts = new Hearts(-300, -300);
@@ -69,7 +64,6 @@ public class GameCanvas extends JComponent {
         // input NAME = new CLASS here
         platform6 = new Platform(75, 200, 150, 20, Color.RED, true, 1);
         platform7 = new Platform(300, 200, 150, 20, Color.RED, true, 1);
-        // platform8 = new Platform(475, 200, 150, 20, Color.RED, true);
         platform9 = new Platform(550, 200, 150, 20, Color.RED, true, 1);
         platform10 = new Platform(775, 200, 150, 20, Color.RED, true, 1);
         playerCover1 = new Platform(50, 50, 10, 180, new Color(0, 0, 0, 0), false, 2);
@@ -85,7 +79,6 @@ public class GameCanvas extends JComponent {
         platformlist.add(platform5);
         platformlist.add(platform6);
         platformlist.add(platform7);
-        // platformlist.add(platform8);
         platformlist.add(platform9);
         platformlist.add(platform10);
         platformlist.add(playerCover1);
@@ -182,8 +175,6 @@ public class GameCanvas extends JComponent {
         p2.draw(g2d);
 
         OOBplatform.draw(g2d);
-        // platformtest.draw(g2d);
-        // platformSoftTest.draw(g2d);
 
         for (Bullet bullet : bulletList1) {
             bullet.draw(g2d);
@@ -252,16 +243,18 @@ public class GameCanvas extends JComponent {
     }
 
     // Accessor method that returns endScreen.
-    public EndScreen getEndScreen(){
+    public EndScreen getEndScreen() {
         return endScreen;
     }
 
-    //Accessor method for coverList
-    public ArrayList<Platform> getCoverList(){
+    // Accessor method for coverList
+    public ArrayList<Platform> getCoverList() {
         return coverList;
     }
 
-    public void setCoverOrig(){
+    // Code that traps the player within a confined space for a few seconds before
+    // allowing them to move.
+    public void setCoverOrig() {
         playerCover1.setX(50);
         playerCover2.setX(150);
         playerCover3.setX(0);
