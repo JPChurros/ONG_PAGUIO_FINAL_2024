@@ -18,16 +18,14 @@
 **/
 
 import java.awt.*;
-import java.awt.geom.AffineTransform;
 import javax.swing.*;
 import java.util.*;
-import javax.swing.Timer;
 
 //This class extends JComponent and is incharge of drawing the players aswell as the platforms. It is also incharge of handling the bullets created by the players.
 public class GameCanvas extends JComponent {
     private Player p1, p2, player1, player2;
     private Platform OOBplatform, platform1, platform2, platform3, platform4, platform5, platform6, platform7,
-            platform8, platform9, platform10, playerCover1, playerCover2, playerCover3, playerCover4, playerCover5;
+             platform9, platform10, playerCover1, playerCover2, playerCover3, playerCover4, playerCover5;
     private AmmoBox ammoBox;
     private ArrayList<Platform> platformlist, coverList;
     private ArrayList<Bullet> bulletList1, bulletList2;

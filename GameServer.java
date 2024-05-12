@@ -32,7 +32,7 @@ public class GameServer {
     private ReadFromClient p1ReadRunnable, p2ReadRunnable;
     private WriteToClient p1WriteRunnable, p2WriteRunnable;
 
-    private int p1x, p1y, p2x, p2y, ammoX, ammoY, p1LR, p2LR, p1mouseHeld, p2mouseHeld, p1mouseX, p2mouseX, p1mouseY,
+    private int p1x, p1y, p2x, p2y, p1LR, p2LR, p1mouseHeld, p2mouseHeld, p1mouseX, p2mouseX, p1mouseY,
             p2mouseY, p1cType, p2cType;
 
     // Constructor initializes the starting values of changing values (such as the
@@ -47,8 +47,6 @@ public class GameServer {
         p2y = 100;
         p1LR = 1;
         p2LR = 0;
-        ammoX = 390;
-        ammoY = 275;
 
         p1mouseHeld = 0;
         p2mouseHeld = 0;

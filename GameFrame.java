@@ -33,13 +33,12 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
     private Container contentPane;
     private GameCanvas GC;
     private Timer animationTimer;
-    private boolean up, down, left, right, upW, downS, leftA, rightD;
-    private Platform testPlatform1;
+    private boolean up, down, left, right;
     private Player player1, player2;
     private Hearts player1Heart, player2Heart;
     private JLabel label;
-    private int AmmoClaimCounter, shootDelay1, shootDelayCounter1, totalBullet1, totalBulletCounter1, shootDelay2,
-            shootDelayCounter2, totalBullet2, totalBulletCounter2, p2shooting, spawnTimer;
+    private int shootDelay1, shootDelayCounter1, totalBullet1, totalBulletCounter1, shootDelay2,
+            shootDelayCounter2, totalBullet2, totalBulletCounter2, spawnTimer;
     private Socket socket;
     private int playerID;
     private ArrayList<Bullet> bulletArray1, bulletArray2;
@@ -65,7 +64,6 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
         temp = 0;
         incrementor = 0;
         incrementor2 = 0;
-        AmmoClaimCounter = 180;
         mouseX = 0;
         mouseY = 0;
         totalBulletCounter1 = 0;
@@ -562,7 +560,6 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                 }
 
                 // COUNTERS
-                AmmoClaimCounter -= 1;
                 shootDelayCounter1 -= 1;
                 shootDelayCounter2 -= 1;
                 spawnTimer -= 1;

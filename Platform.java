@@ -18,7 +18,6 @@
 **/
 
 import java.awt.*;
-import java.awt.geom.*;
 
 import javax.swing.ImageIcon;
 
@@ -28,7 +27,6 @@ public class Platform {
 
     private int x, y, width, height, setSkin;
     private boolean isSoft;
-    private Color color;
     private Image platformSprite;
 
     // Initializes the platform
@@ -38,7 +36,6 @@ public class Platform {
         this.y = y;
         this.width = width;
         this.height = height;
-        this.color = color;
         this.isSoft = isSoft;
         this.setSkin = setSkin;
         if(setSkin == 0){
@@ -85,6 +82,10 @@ public class Platform {
     // mutator to update platform x
     public void setX(int temp){
         x = temp;
+    }
+
+    public int returnSkin(){
+        return setSkin;
     }
 
 }

@@ -19,12 +19,10 @@
 
 import java.awt.*;
 import javax.swing.*;
-import java.awt.geom.*;
 
 //This class is responsible for the Spawning of the AmmoBox. When the player touches the AmmoBox it will provide them with ammo to shoot.
 public class AmmoBox {
     private int xPos, yPos, width, height;
-    private boolean isFalling, jumpStatus;
     private Image imageNow;
 
     // Constructor initializes the size of the AmmoBox

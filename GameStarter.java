@@ -23,7 +23,7 @@ public class GameStarter {
     // Main method instantiates gameframe, connects it to server and sets up the
     // gui.
     public static void main(String[] args) {
-        PreGame pg = new PreGame(new ButtonClickListener() {
+        new PreGame(new ButtonClickListener() {
             public void onButtonClick(int buttonIndex) {
                 System.out.println("button clicked:" + buttonIndex);
                 // After button click, start GameFrame
