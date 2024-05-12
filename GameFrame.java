@@ -23,6 +23,7 @@ import java.awt.event.*;
 import java.util.ArrayList;
 import java.io.*;
 import java.net.*;
+import java.util.Scanner;
 
 public class GameFrame extends JFrame implements MouseListener, MouseMotionListener {
     private int width, height, xCord, yCord, baseBulletLife, baseBulletLife2, mouseX, mouseY, mouseHeld, p2mouseHeld,
@@ -86,7 +87,12 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
     public void connectToServer() { // I THINK THIS IS WHERE YOU HAVE TO PUT THE CODE THAT SCANS IT BUT LIKE IDEK
                                     // HOW ITS GONNA PASS IT TO SERVER
         try {
-            socket = new Socket("localhost", 12345); // LOCALHOST
+            Scanner console = new Scanner(System.in);
+            System.out.println("IP Address: ");
+            String ipAddress = console.nextLine();
+            System.out.println("Port Number: ");
+            int portNumber = Integer.parseInt((console.nextLine()));
+            socket = new Socket(ipAddress, portNumber); // LOCALHOST
             DataInputStream in = new DataInputStream(socket.getInputStream());
             DataOutputStream out = new DataOutputStream(socket.getOutputStream());
             playerID = in.readInt();
@@ -209,9 +215,11 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                     if (playerID == 1) {
                         player1.setYPos(50);
                         player1.setXPos(100);
+                        player1.setFalling(true);
                     } else {
                         player1.setYPos(50);
                         player1.setXPos(900);
+                        player1.setFalling(true);
                     }
 
                 }

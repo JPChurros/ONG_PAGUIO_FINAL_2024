@@ -56,7 +56,7 @@ public class GameServer {
         p2mouseY = 0;
 
         try {
-            ss = new ServerSocket(12345); // SOCKET HERE
+            ss = new ServerSocket(55555); // SOCKET HERE
         } catch (BindException bindException) {
             System.out.println("Socket already in use, please pick a new one.");
         } catch (IOException ie) {
