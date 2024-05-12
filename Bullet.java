@@ -64,6 +64,10 @@ public class Bullet {
 
     // This method is responsible for drawing the bullet.
     public void draw(Graphics2D g2d) {
+        boxX = Math.min(x1, x2);
+        boxY = Math.min(y1, y2);
+        boxWidth = Math.abs(x2 - x1);
+        boxHeight = Math.abs(y2 - y1);
         g2d.drawImage(projectileSprite, boxX, boxY, width * 2, height * 2, null);
     }
 
