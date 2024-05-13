@@ -21,7 +21,7 @@ import java.awt.*;
 import javax.swing.*;
 
 //This class is incharge of setting up the Face Icons to indicate which player is which. It does this by using preexisting icons and checking the type of character being used.
-public class FaceUI {
+public class FaceUI extends ImageObject{
 
     public int x, y, x2, y2, width, height;
     public Image p1Face, p2Face;
@@ -88,5 +88,9 @@ public class FaceUI {
     public void draw(Graphics2D g) {
         g.drawImage(p1Face, this.x, this.y, width, height, null);
         g.drawImage(p2Face, this.x2, this.y2, width, height, null);
+    }
+
+    public Image getImage(){
+        return p1Face;
     }
 }

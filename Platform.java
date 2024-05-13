@@ -23,7 +23,7 @@ import javax.swing.ImageIcon;
 
 //This class is responsible for handling the platform. It is coded in such a way that there are two variations of platforms, a hard platform and a soft platform. 
 //Hard platforms are platforms that you collide with in all 4 directions, but soft platforms allow you to jump ontop of them from the bottom.
-public class Platform {
+public class Platform extends ImageObject{
 
     private int x, y, width, height, setSkin;
     private boolean isSoft;
@@ -87,6 +87,11 @@ public class Platform {
     // This is in charge of returning the skin type.
     public int returnSkin() {
         return setSkin;
+    }
+
+    //abstract class to return image when called
+    public Image getImage(){
+        return platformSprite;
     }
 
 }

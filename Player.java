@@ -21,7 +21,7 @@ import java.awt.*;
 import javax.swing.*;
 
 //This class contains the code that draws the player. It also contains the methods that allow the player to check collission and move.
-public class Player {
+public class Player extends ImageObject{
     private Image playerSpriteLeft, playerSpriteRight, usedImageRN, tempImage;
     private int xSpeed, ySpeed, xPos, yPos, width, height, charType, shootDelay, totalAmmo, rightIsTrue, currentHP;
     private boolean isFalling, jumpStatus;
@@ -66,6 +66,11 @@ public class Player {
             shootDelay = 5;
             totalAmmo = 7;
         }
+    }
+
+    //abstract method to return current image
+    public Image getImage(){
+        return usedImageRN;
     }
 
     // This function constantly gets called during the timer to move the player
@@ -230,9 +235,9 @@ public class Player {
 
     // This method sets the Character sprites.
     public void setCharacterFinal() {
-        if (usedImageRN == tempImage) {
+        if (getImage() == tempImage) {
             usedImageRN = playerSpriteLeft;
-        } else if (usedImageRN == playerSpriteRight) {
+        } else if (getImage() == playerSpriteRight) {
             usedImageRN = playerSpriteRight;
         }
     }
