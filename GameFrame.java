@@ -25,6 +25,7 @@ import java.io.*;
 import java.net.*;
 import java.util.Scanner;
 
+//GameFrame is in charge of handling user inputs to control movement, and shooting. This class is also in charge of connecting to the GameServer.
 public class GameFrame extends JFrame implements MouseListener, MouseMotionListener {
     private int width, height, xCord, yCord, baseBulletLife, baseBulletLife2, mouseX, mouseY, mouseHeld, p2mouseHeld,
             p2mouseX, p2mouseY, cType, cTypeOther;
@@ -49,6 +50,7 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
     private ReadFromServer rfsRunnable;
     private WriteToServer wtsRunnable;
 
+    // Constructor initializes the variables.
     public GameFrame(int w, int h, int charType) {
         width = w;
         height = h;
@@ -73,8 +75,9 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
         shootDelayCounter1 = shootDelay1;
     }
 
+    // This method is in charge of creating the players and ensuring that the player
+    // is in charge of the correct sprite.
     public void createPlayers() {
-        // System.out.println("CreatedPlayers!!!!!");
         if (playerID == 1) {
             player1 = GC.getPlayer1();
             player2 = GC.getPlayer2();
@@ -84,11 +87,11 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
         }
     }
 
-    public void connectToServer(String IPAddress, int Port) { // I THINK THIS IS WHERE YOU HAVE TO PUT THE CODE THAT
-                                                              // SCANS IT BUT LIKE IDEK
-        // HOW ITS GONNA PASS IT TO SERVER
+    // This method is in charge of conencting to the gameserver. It also waits for
+    // both players before starting the gameframe.
+    public void connectToServer(String IPAddress, int Port) {
         try {
-            socket = new Socket(IPAddress, Port); // LOCALHOST
+            socket = new Socket(IPAddress, Port);
             DataInputStream in = new DataInputStream(socket.getInputStream());
             DataOutputStream out = new DataOutputStream(socket.getOutputStream());
             playerID = in.readInt();
@@ -105,12 +108,13 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
         }
     }
 
+    // This sets up the animation timer that runs at 60fps
     private void setUpAnimationTimer() {
         int interval = 1000 / 60;
         ActionListener al = new ActionListener() {
             @Override
+            // This method is in charge of any and all movement in the gameframe.
             public void actionPerformed(ActionEvent ae) {
-
                 bulletArray1 = GC.getBulletList1();
                 bulletArray2 = GC.getBulletList2();
                 player1Heart = GC.getPlayer1Hearts();
@@ -625,23 +629,28 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
         };
         animationTimer = new Timer(interval, al);
         animationTimer.start();
+
     }
 
+    // This method was written in order to comply with the MouseListener interface.
     @Override
     public void mouseClicked(MouseEvent e) {
 
     }
+    // This method was written in order to comply with the MouseListener interface.
 
     @Override
     public void mouseEntered(MouseEvent e) {
 
     }
+    // This method was written in order to comply with the MouseListener interface.
 
     @Override
     public void mouseExited(MouseEvent e) {
 
     }
 
+    // This method was written in order to comply with the MouseListener interface.
     @Override
     public void mousePressed(MouseEvent e) {
         mouseX = e.getX();
@@ -649,21 +658,28 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
         mouseHeld = 1;
     }
 
+    // This method was written in order to comply with the MouseListener interface.
     @Override
     public void mouseReleased(MouseEvent e) {
         mouseHeld = 0;
     }
 
+    // This method was written in order to comply with the MouseMotionListener
+    // interface.
     @Override
     public void mouseDragged(MouseEvent e) {
         mouseX = e.getX();
         mouseY = e.getY();
     }
 
+    // This method was written in order to comply with the MouseMotionListener
+    // interface.
     @Override
     public void mouseMoved(MouseEvent e) {
     }
 
+    // This method is in charge of setting up the key listeners to make sure that
+    // the player moves when pressed.
     private void setUpKeyListener() {
         KeyListener kl = new KeyListener() {
             public void keyTyped(KeyEvent ke) {
@@ -707,6 +723,8 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                 }
             }
 
+            // This method is in charge of handling when the key is released and setting it
+            // to false when it is.
             public void keyReleased(KeyEvent ke) {
                 int keyCode = ke.getKeyCode();
                 System.out.println("Key has been released");
@@ -742,19 +760,22 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
         this.setFocusable(true);
     }
 
+    // This class is in charge of reading data from the server. It also waits for
+    // both players to join before starting
     private class ReadFromServer implements Runnable {
         private DataInputStream dataIn;
 
+        // Constructor Initializes DataInputStream
         public ReadFromServer(DataInputStream in) {
             dataIn = in;
-            System.out.println("RFS Runnable created");
-
         }
 
+        // This method is in charge of reading the player's x position, his current
+        // state, and where the mouse is so that the player can shoot.
         public void run() {
-            try { // reads the values of the ENEMY so you know where to put them on screen
+            try {
                 while (true) {
-                    if (player2 != null) { // if player2 exists, it sets enemy's position to there.
+                    if (player2 != null) {
                         player2.setXPos(dataIn.readInt());
                         player2.setYPos(dataIn.readInt());
                         player2.setLookRight(dataIn.readInt());
@@ -769,6 +790,7 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
             }
         }
 
+        // This method waits for a message from server before starting the threads.
         public void waitForStartMsg() {
             try {
                 String startMsg = dataIn.readUTF();
@@ -783,15 +805,19 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
         }
     }
 
+    // This class is in charge of writing to the server the player's position and
+    // where his mouse is located.
     private class WriteToServer implements Runnable {
         private DataOutputStream dataOut;
 
+        // Constructor initializes the data output stream
         public WriteToServer(DataOutputStream out) {
             dataOut = out;
-            System.out.println("WTS Runnable created");
-
+            // System.out.println("WTS Runnable created");
         }
 
+        // This method is incharge of writing to the server the player's position and
+        // mouse location.
         public void run() {
             try {
                 while (true) {
@@ -817,6 +843,7 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
         }
     }
 
+    // This method is in charge of setting up the gui
     public void setUpGUI() {
         contentPane = this.getContentPane();
         label = new JLabel();

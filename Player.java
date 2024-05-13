@@ -200,9 +200,9 @@ public class Player {
         currentHP -= 1;
     }
 
-    //Mutator Method that changes the character type
-    //done in initializing w/ server
-    public void setCharType(int cType){
+    // Mutator Method that changes the character type
+    // done in initializing w/ server
+    public void setCharType(int cType) {
         charType = cType;
         if (charType == 0) {
             playerSpriteLeft = new ImageIcon("catpistol_LEFT.png").getImage();
@@ -228,11 +228,11 @@ public class Player {
         }
     }
 
-    //sets Character sprites
-    public void setCharacterFinal(){
-        if(usedImageRN == tempImage){
+    // This method sets the Character sprites.
+    public void setCharacterFinal() {
+        if (usedImageRN == tempImage) {
             usedImageRN = playerSpriteLeft;
-        } else if(usedImageRN == playerSpriteRight){
+        } else if (usedImageRN == playerSpriteRight) {
             usedImageRN = playerSpriteRight;
         }
     }
@@ -283,7 +283,3 @@ public class Player {
         }
     }
 }
-
-// do we want to make a player class or do we want to make three classes for
-// each player type and then have them all implement
-// an interface called player

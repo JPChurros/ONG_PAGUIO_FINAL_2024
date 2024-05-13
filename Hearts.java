@@ -49,6 +49,7 @@ public class Hearts {
         imageNow = new ImageIcon("3HP.png").getImage();
     }
 
+    // Draws the image to show zero hearts.
     public void setHP0() {
         imageNow = new ImageIcon("0HP.png").getImage();
     }

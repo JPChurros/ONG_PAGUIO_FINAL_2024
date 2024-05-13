@@ -38,13 +38,13 @@ public class Platform {
         this.height = height;
         this.isSoft = isSoft;
         this.setSkin = setSkin;
-        if(setSkin == 0){
+        if (setSkin == 0) {
             platformSprite = new ImageIcon("platform0.png").getImage();
         }
-        if(setSkin == 1){
+        if (setSkin == 1) {
             platformSprite = new ImageIcon("platform1.png").getImage();
         }
-        if(setSkin == 2){
+        if (setSkin == 2) {
             platformSprite = new ImageIcon("platform2.png").getImage();
         }
     }
@@ -80,11 +80,12 @@ public class Platform {
     }
 
     // mutator to update platform x
-    public void setX(int temp){
+    public void setX(int temp) {
         x = temp;
     }
 
-    public int returnSkin(){
+    // This is in charge of returning the skin type.
+    public int returnSkin() {
         return setSkin;
     }
 
