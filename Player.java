@@ -21,7 +21,7 @@ import java.awt.*;
 import javax.swing.*;
 
 //This class contains the code that draws the player. It also contains the methods that allow the player to check collission and move.
-public class Player extends ImageObject{
+public class Player extends ImageObject {
     private Image playerSpriteLeft, playerSpriteRight, usedImageRN, tempImage;
     private int xSpeed, ySpeed, xPos, yPos, width, height, charType, shootDelay, totalAmmo, rightIsTrue, currentHP;
     private boolean isFalling, jumpStatus;
@@ -68,8 +68,8 @@ public class Player extends ImageObject{
         }
     }
 
-    //abstract method to return current image
-    public Image getImage(){
+    // abstract method to return current image
+    public Image getImage() {
         return usedImageRN;
     }
 
