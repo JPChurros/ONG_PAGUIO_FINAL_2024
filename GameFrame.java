@@ -727,7 +727,7 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
             // to false when it is.
             public void keyReleased(KeyEvent ke) {
                 int keyCode = ke.getKeyCode();
-                System.out.println("Key has been released");
+                // System.out.println("Key has been released");
                 switch (keyCode) {
                     case KeyEvent.VK_UP:
                         up = false;
