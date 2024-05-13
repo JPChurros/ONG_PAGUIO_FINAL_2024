@@ -32,8 +32,6 @@ public class GameStarter {
         int portNumber = Integer.parseInt((console.nextLine()));
         new PreGame(new ButtonClickListener() {
             public void onButtonClick(int buttonIndex) {
-                System.out.println("button clicked:" + buttonIndex);
-                // After button click, start GameFrame
                 startGameFrame(buttonIndex, ipAddress, portNumber);
             }
         });
