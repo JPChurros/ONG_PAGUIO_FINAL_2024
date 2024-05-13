@@ -88,10 +88,11 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                                     // HOW ITS GONNA PASS IT TO SERVER
         try {
             Scanner console = new Scanner(System.in);
-            System.out.println("IP Address: ");
+            System.out.print("IP Address: ");
             String ipAddress = console.nextLine();
-            System.out.println("Port Number: ");
+            System.out.print("Port Number: ");
             int portNumber = Integer.parseInt((console.nextLine()));
+            System.out.println("");
             socket = new Socket(ipAddress, portNumber); // LOCALHOST
             DataInputStream in = new DataInputStream(socket.getInputStream());
             DataOutputStream out = new DataOutputStream(socket.getOutputStream());
@@ -110,12 +111,11 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
     }
 
     private void setUpAnimationTimer() {
-        int interval = 1000 / 60; // i remember diego mentioning something like this when we went drinking.
+        int interval = 1000 / 60;
         ActionListener al = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
 
-                // p2 stuff
                 bulletArray1 = GC.getBulletList1();
                 bulletArray2 = GC.getBulletList2();
                 player1Heart = GC.getPlayer1Hearts();
@@ -475,9 +475,9 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                                 GC.getEndScreen().gameEnd();
                             }
                             GC.getPlayer1().setXPos(100);
-                            GC.getPlayer1().setYPos(100);
+                            GC.getPlayer1().setYPos(50);
                             GC.getPlayer2().setXPos(900);
-                            GC.getPlayer2().setYPos(100);
+                            GC.getPlayer2().setYPos(50);
                             GC.setCoverOrig();
                             totalBulletCounter1 = 0;
                             totalBulletCounter2 = 0;
@@ -523,9 +523,9 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
                                 GC.getEndScreen().gameEnd();
                             }
                             GC.getPlayer1().setXPos(100);
-                            GC.getPlayer1().setYPos(100);
+                            GC.getPlayer1().setYPos(50);
                             GC.getPlayer2().setXPos(900);
-                            GC.getPlayer2().setYPos(100);
+                            GC.getPlayer2().setYPos(50);
                             GC.setCoverOrig();
                             totalBulletCounter1 = 0;
                             totalBulletCounter2 = 0;

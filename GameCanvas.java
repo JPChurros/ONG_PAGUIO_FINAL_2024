@@ -38,8 +38,8 @@ public class GameCanvas extends JComponent {
     // Constructor initializes the players, the platforms, the graphics, and the
     // bullets.
     public GameCanvas(int CharType1, int CharType2) { // The Canvas is 1000 by 600
-        p1 = new Player(100, 100, 20, 20, 0, 0, CharType1);
-        p2 = new Player(900, 100, 20, 20, 0, 0, CharType2);
+        p1 = new Player(100, 50, 20, 20, 0, 0, CharType1);
+        p2 = new Player(900, 50, 20, 20, 0, 0, CharType2);
         platformlist = new ArrayList<Platform>();
         coverList = new ArrayList<Platform>();
         bulletList1 = new ArrayList<Bullet>();
@@ -255,10 +255,10 @@ public class GameCanvas extends JComponent {
     // Code that traps the player within a confined space for a few seconds before
     // allowing them to move.
     public void setCoverOrig() {
-        playerCover1.setX(50);
-        playerCover2.setX(150);
-        playerCover3.setX(0);
-        playerCover4.setX(850);
-        playerCover5.setX(950);
+        playerCover1.setX(0);
+        playerCover2.setX(200);
+        playerCover3.setX(-50);
+        playerCover4.setX(800);
+        playerCover5.setX(1000);
     }
 }
