@@ -84,16 +84,11 @@ public class GameFrame extends JFrame implements MouseListener, MouseMotionListe
         }
     }
 
-    public void connectToServer() { // I THINK THIS IS WHERE YOU HAVE TO PUT THE CODE THAT SCANS IT BUT LIKE IDEK
-                                    // HOW ITS GONNA PASS IT TO SERVER
+    public void connectToServer(String IPAddress, int Port) { // I THINK THIS IS WHERE YOU HAVE TO PUT THE CODE THAT
+                                                              // SCANS IT BUT LIKE IDEK
+        // HOW ITS GONNA PASS IT TO SERVER
         try {
-            Scanner console = new Scanner(System.in);
-            System.out.print("IP Address: ");
-            String ipAddress = console.nextLine();
-            System.out.print("Port Number: ");
-            int portNumber = Integer.parseInt((console.nextLine()));
-            System.out.println("");
-            socket = new Socket(ipAddress, portNumber); // LOCALHOST
+            socket = new Socket(IPAddress, Port); // LOCALHOST
             DataInputStream in = new DataInputStream(socket.getInputStream());
             DataOutputStream out = new DataOutputStream(socket.getOutputStream());
             playerID = in.readInt();

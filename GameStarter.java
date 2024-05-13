@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 /**
  * @author Charles Matthew L. Ong (234579)
  * @author Gabriel Syd O. Paguio (234725)
@@ -23,20 +25,25 @@ public class GameStarter {
     // Main method instantiates gameframe, connects it to server and sets up the
     // gui.
     public static void main(String[] args) {
+        Scanner console = new Scanner(System.in);
+        System.out.print("IP Address: ");
+        String ipAddress = console.nextLine();
+        System.out.print("Port Number: ");
+        int portNumber = Integer.parseInt((console.nextLine()));
         new PreGame(new ButtonClickListener() {
             public void onButtonClick(int buttonIndex) {
                 System.out.println("button clicked:" + buttonIndex);
                 // After button click, start GameFrame
-                startGameFrame(buttonIndex);
+                startGameFrame(buttonIndex, ipAddress, portNumber);
             }
         });
 
     }
 
     // Method to start GameFrame
-    private static void startGameFrame(int playerChoice) {
+    private static void startGameFrame(int playerChoice, String IP, int Port) {
         GameFrame gf = new GameFrame(1000, 600, playerChoice); // arbitrary
-        gf.connectToServer();
+        gf.connectToServer(IP, Port);
         gf.setUpGUI();
     }
 }
